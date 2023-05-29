@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DayCardItemComponent } from '../day-card-item/day-card-item.component';
 
 @Component({
   selector: 'app-day-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DayCardItemComponent],
   templateUrl: './day-card.component.html',
   styleUrls: ['./day-card.component.scss']
 })
@@ -19,13 +20,13 @@ export class DayCardComponent {
     ngOnInit(): void {
       this.budgetSections = [{
         name: "Income",
-        amount: 0
+        amount: -100
       }, {
         name: "Expenses",
-        amount: 0
+        amount: 23
       }, {
         name: "Savings",
-        amount: 0
+        amount: 10
       }]
     }
 

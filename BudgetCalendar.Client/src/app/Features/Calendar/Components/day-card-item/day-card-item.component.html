@@ -1,1 +1,8 @@
-<p>day-card-item works!</p>
+<div class="item">
+<div class="Item-Name">
+    {{name}}
+</div>
+<div class="Item-Amount" [ngClass]="{'expense' : amount! < 0}">
+    {{amount}}
+</div>
+</div>

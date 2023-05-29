@@ -1,15 +1,13 @@
-<div class="card-outside">
+<div class="card">
     <div class="day-number">
         {{dayNumber}}
     </div>
-    <div class="budgetSection" *ngFor="let item of budgetSections">
-        <div class="budgetSectionName">
-            {{item.name}}
-        </div>
-        <div class="budgetSectionAmount">
-            {{item.amount}}
-        </div>
-        
+    <div>
+
+    <div class="item-container">
+    <div  *ngFor="let item of budgetSections">
+        <app-day-card-item [name]="item.name" [amount]="item.amount" ></app-day-card-item>
+    </div>
     </div>
 
 </div>
