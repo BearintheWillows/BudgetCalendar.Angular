@@ -16,25 +16,26 @@ export class DayCardComponent {
   
   @Input() dayNumber?: number;
   total: number = 0;
+  previousDayTotal: number = 0;
 
   constructor() { }
   
     ngOnInit(): void {
-//       this.budgetSections = [{
-//         name: "Income",
-//         amount: -100
-//       }, {
-//         name: "Expenses",
-//         amount: 23
-//       }, {
-//         name: "Savings",
-//         amount: 10
-//       },
-//     {
-//       name: "Income",
-//       amount: -100
-//     },
-// ]
+      this.budgetSections = [{
+        name: "Income",
+        amount: -100
+      }, {
+        name: "Expenses",
+        amount: 23
+      }, {
+        name: "Savings",
+        amount: 10
+      },
+    {
+      name: "Income",
+      amount: -100
+    },
+]
 
   this.budgetSections.forEach(element => {
     this.total += element.amount;

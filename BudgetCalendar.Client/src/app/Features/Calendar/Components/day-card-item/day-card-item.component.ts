@@ -18,7 +18,7 @@ export class DayCardItemComponent {
 
   ngOnInit(): void {
     //if amout is negative, then add negative class to element
-
+ 
   }
 
 
