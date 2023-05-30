@@ -1,9 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CalendarDay } from 'src/app/CalendarDay';
+
 import { CalendarChunkPipe } from '../../../../Pipes/calendar-chunk.pipe';
 import { DayCardItemComponent } from '../day-card-item/day-card-item.component';
 import { DayCardComponent } from '../day-card/day-card.component';
+import { CalendarDay } from '../../models/CalendarDay';
+import { Observable } from 'rxjs';
+import { CalendarStateService } from '../services/calendar-state.service';
+
 
 @Component({
   selector: 'app-calendar-table',
@@ -19,6 +23,12 @@ import { DayCardComponent } from '../day-card/day-card.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarTableComponent {
+
+  @Inject(CalendarStateService)
+  private calendarStateService: CalendarStateService = new CalendarStateService;
+  
+
+  public $currentMonth: Observable<number> = new Observable<number>();
   public calendar: CalendarDay[] = [];
   public monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -27,10 +37,15 @@ export class CalendarTableComponent {
   public displayMonthNumber: number = 0;
   public monthIndex: number = 0;
 
-  constructor() { }
-
   ngOnInit(): void {
     this.generateCalendarDays(this.monthIndex);
+    this.$currentMonth = this.calendarStateService.currentMonth$;
+
+    this.$currentMonth.subscribe((monthIndex: number) => {
+      console.log(monthIndex);
+      this.monthIndex = monthIndex;
+    })
+
   }
 
   private generateCalendarDays(monthIndex: number): void {
@@ -83,12 +98,12 @@ export class CalendarTableComponent {
 
 
   public increaseMonth() {
-    this.monthIndex++;
+    this.calendarStateService.increaseMonth()
     this.generateCalendarDays(this.monthIndex);
   }
 
   public decreaseMonth() {
-    this.monthIndex--
+    this.calendarStateService.decreaseMonth()
     this.generateCalendarDays(this.monthIndex);
   }
 

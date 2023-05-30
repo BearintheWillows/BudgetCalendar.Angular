@@ -6,8 +6,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CalendarStateService {
 
-  private _currentMonth = new BehaviorSubject<number>(new Date().getMonth());
-  public currentMonth = this._currentMonth.asObservable();
+  private _currentMonth = new BehaviorSubject<number>(0);
+  public currentMonth$ = this._currentMonth.asObservable();
 
-  constructor() { }
+  
+  public increaseMonth(): void {
+    this._currentMonth.next(this._currentMonth.getValue() + 1);
+  }
+
+  public decreaseMonth(): void {
+    this._currentMonth.next(this._currentMonth.getValue() - 1);
+  }
+
+  public resetMonth(): void {
+    this._currentMonth.next(new Date().getMonth());
+  }
+
 }
