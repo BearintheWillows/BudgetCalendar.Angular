@@ -19,8 +19,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of calendar | calendarChunk: 7; let i = index">
-        <td class="calendar-day" [ngClass]="{ 'today': c.isToday}" *ngFor="let c of row; let j = index">
-            <app-day-card [dayNumber]="c.date.getDate()" ></app-day-card>
+        <td class="calendar-day" [ngClass]="{ 'today': c.isToday, 'month': c.month != displayMonthNumber }" *ngFor="let c of row; let j = index">
+          <app-day-card [dayNumber]="c.date.getDate()" ></app-day-card>
         </td>
       </tr>
     </tbody>

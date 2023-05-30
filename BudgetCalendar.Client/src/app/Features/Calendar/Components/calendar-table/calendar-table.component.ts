@@ -19,7 +19,8 @@ export class CalendarTableComponent {
     "July", "August", "September", "October", "November", "December"
   ];
   public displayMonth: string = '';
-  private monthIndex: number = 0;
+  public displayMonthNumber: number = 0;
+  public monthIndex: number = 0;
 
   constructor() { }
 
@@ -30,17 +31,23 @@ export class CalendarTableComponent {
   private generateCalendarDays(monthIndex: number): void {
     this.calendar = [];
 
-    // we set the date 
+    // Sets the day to last day of specified month
     let day: Date = new Date(new Date().setMonth(new Date().getMonth() + monthIndex));
-
-    // set the dispaly month for UI
+    
+    // set the dispaly month for UI.
+    // getMonth() returns a number between 0 and 11, so we need to use it as an index for the monthNames array
     this.displayMonth = this.monthNames[day.getMonth()];
+    this.displayMonthNumber = day.getMonth();
 
     let startingDateOfCalendar = this.getStartDateForCalendar(day);
-
+  
     let dateToAdd = startingDateOfCalendar;
 
-    for (var i = 0; i < 35; i++) {
+    let loopNumber = this.getNumberOfFullWeeksToFitInCalendar(startingDateOfCalendar);
+
+    console.log(`loopnumber: ${loopNumber}`);
+
+    for (var i = 0; i < loopNumber * 7; i++) {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
     }
@@ -48,15 +55,47 @@ export class CalendarTableComponent {
 
   private getStartDateForCalendar(selectedDate: Date){
     // for the day we selected let's get the previous month last day
-    let lastDayOfPreviousMonth = new Date(selectedDate.setDate(-2));
+    // we need to set the day to 0 to get the last day of the previous month.
+//check if first day of month is monday, if not, then get the last monday of previous month
+    let firstDayOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
 
-    // start by setting the starting date of the calendar same as the last day of previous month
-    let startingDateOfCalendar: Date = lastDayOfPreviousMonth;
+    if (firstDayOfMonth.getDay() != 1) {
+      // get the last monday of previous month
+      let lastMondayOfPreviousMonth = new Date(firstDayOfMonth.setDate(firstDayOfMonth.getDate() - firstDayOfMonth.getDay() + 1));
+      return lastMondayOfPreviousMonth;
+    } else {
+      return firstDayOfMonth;
+    }
+  }
 
+  private getNumberOfFullWeeksToFitInCalendar(selectedDate: Date) {
+    // for the day we selected, work out how many day untill the end of the next month if the selected date is not the 1st of the month
+    // if the selected date is the 1st of the month, then we need to work out how many days untill the end of the current month
+    
+    // Get the date of the last day of the next month.
+
+    console.log(`selectedDate: ${selectedDate}`);
+
+    if (selectedDate.getDate() === 1) {
+      let lastDayOfCurrentMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1 , 0);
+      console.log(`lastDayOfCurrentMonth: ${lastDayOfCurrentMonth}`);
+      return Math.ceil(lastDayOfCurrentMonth.getDate() / 7 )
+    } else {
+      let lastDayOfNextMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 2, 0 )
+      let daysUntillEndOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 0).getDate() - selectedDate.getDate();
+      console.log(`daysUntillEndOfNextMonth: ${daysUntillEndOfMonth + lastDayOfNextMonth.getDate()}`);
+      console.log(Math.ceil((daysUntillEndOfMonth + lastDayOfNextMonth.getDate()) / 7 ));
+     
+      return Math.ceil(Math.ceil((daysUntillEndOfMonth + lastDayOfNextMonth.getDate()) / 7 ));
+    }
     
 
-    return startingDateOfCalendar;
+    return 0;
+  
+
+  
   }
+
 
   public increaseMonth() {
     this.monthIndex++;
