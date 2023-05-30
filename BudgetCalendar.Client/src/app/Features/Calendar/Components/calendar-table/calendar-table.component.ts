@@ -1,14 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarDay } from 'src/app/CalendarDay';
-import { CalendarChunkPipe } from '../calendar-chunk.pipe';
+import { CalendarChunkPipe } from '../../../../Pipes/calendar-chunk.pipe';
 import { DayCardItemComponent } from '../day-card-item/day-card-item.component';
 import { DayCardComponent } from '../day-card/day-card.component';
 
 @Component({
   selector: 'app-calendar-table',
   standalone: true,
-  imports: [CommonModule, CalendarChunkPipe, DayCardItemComponent, DayCardComponent],
+  imports: [
+            CommonModule,
+            CalendarChunkPipe,
+            DayCardItemComponent,
+            DayCardComponent
+      ],
   templateUrl: './calendar-table.component.html',
   styleUrls: ['./calendar-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

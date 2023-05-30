@@ -1,20 +1,20 @@
 
-// 1. Function first ( colors, SVGs, calc can be overrided
+// // 1. Function first ( colors, SVGs, calc can be overrided
 
-@import "styles/vendors/bootstrap-funcs";
+// @import "~vendors/bootstrap-funcs";
 
-// 2 Overrides
+// // 2 Overrides
 
-@import "styles/vendors/vendors-dir";
+// @import "~utilities/utilities-dir";
 
-// 3. Rest of bootstrap and vendors
+// // 3. Rest of bootstrap and vendors
 
-@import "styles/vendors/vendors-dir";
+// @import "~vendors/vendors-dir";
 
-// 4. Custom Scss
-@import "styles/base/base-dir";
-@import "styles/components/components-dir";
-@import "styles/layout/layout-dir";
-@import "styles/pages/pages-dir";
-@import "styles/themes/themes-dir";
-@import "styles/utilities/utilities-dir";
+// // 4. Custom Scss
+// @import "~base/base-dir";
+// @import "~components/components-dir";
+// @import "~layout/layout-dir";
+// @import "~pages/pages-dir";
+// @import "~themes/themes-dir";
+
