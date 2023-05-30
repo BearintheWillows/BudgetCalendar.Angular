@@ -54,7 +54,6 @@ export class CalendarTableComponent {
       let lastMondayOfPreviousMonth;
       do{
         lastMondayOfPreviousMonth = new Date(firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 1));
-        console.log(lastMondayOfPreviousMonth)
       } while (firstDayOfMonth.getDay() != 1)
       
       return lastMondayOfPreviousMonth;
