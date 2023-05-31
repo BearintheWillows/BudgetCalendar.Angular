@@ -20,7 +20,7 @@ import { CalendarStateService } from '../services/calendar-state.service';
       ],
   templateUrl: './calendar-table.component.html',
   styleUrls: ['./calendar-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class CalendarTableComponent {
 
@@ -28,7 +28,7 @@ export class CalendarTableComponent {
   private calendarStateService: CalendarStateService = new CalendarStateService;
   
 
-  public $currentMonth: Observable<number> = new Observable<number>();
+  public $currentMonth: Observable<number> = this.calendarStateService.currentMonth$;
   public calendar: CalendarDay[] = [];
   public monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -39,7 +39,6 @@ export class CalendarTableComponent {
 
   ngOnInit(): void {
     this.generateCalendarDays(this.monthIndex);
-    this.$currentMonth = this.calendarStateService.currentMonth$;
 
     this.$currentMonth.subscribe((monthIndex: number) => {
       console.log(monthIndex);
@@ -50,9 +49,10 @@ export class CalendarTableComponent {
 
   private generateCalendarDays(monthIndex: number): void {
     this.calendar = [];
+    let today = new Date();
 
-    let day: Date = new Date(new Date().setMonth(new Date().getMonth() + monthIndex));
-
+    let day: Date = new Date(today.getFullYear(), today.getMonth() + monthIndex);
+   
     this.displayMonth = this.monthNames[day.getMonth()];
     this.displayMonthNumber = day.getMonth();
 
@@ -98,12 +98,12 @@ export class CalendarTableComponent {
 
 
   public increaseMonth() {
-    this.calendarStateService.increaseMonth()
+    this.monthIndex++;
     this.generateCalendarDays(this.monthIndex);
   }
 
   public decreaseMonth() {
-    this.calendarStateService.decreaseMonth()
+    this.monthIndex--;
     this.generateCalendarDays(this.monthIndex);
   }
 
