@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 
 @Component({
   selector: 'app-day-card',
   standalone: true,
-  imports: [CommonModule, DayCardItemComponent,],
+  imports: [CommonModule, DayCardItemComponent],
   templateUrl: './day-card.component.html',
   styleUrls: ['./day-card.component.scss']
 })

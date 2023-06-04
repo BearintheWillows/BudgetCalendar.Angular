@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {CalendarChunkPipe} from "../../pipes/calendar-chunk.pipe";
+import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
+import {DayCardComponent} from "../day-card/day-card.component";
+import {CalendarStateService} from "../../services/calendar-state.service";
+import {Observable} from "rxjs";
+import {CalendarDay} from "../../models/calendar-day";
 
 @Component({
   selector: 'app-calendar-table',

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal, Signal} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
