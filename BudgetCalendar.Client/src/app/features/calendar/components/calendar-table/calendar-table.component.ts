@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {CalendarChunkPipe} from "../../pipes/calendar-chunk.pipe";
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
@@ -25,8 +25,6 @@ export class CalendarTableComponent {
   @Inject(CalendarStateService)
   private calendarStateService: CalendarStateService = new CalendarStateService;
 
-
-  public $currentMonth: Observable<number> = this.calendarStateService.currentMonth$;
   public calendar: CalendarDay[] = [];
   public monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -38,11 +36,13 @@ export class CalendarTableComponent {
   ngOnInit(): void {
     this.generateCalendarDays(this.monthIndex);
 
-    this.$currentMonth.subscribe((monthIndex: number) => {
-      console.log(monthIndex);
-      this.monthIndex = monthIndex;
-    })
+    this.monthIndex = this.calendarStateService.selectedMonth();
+    console.log(this.monthIndex);
 
+  }
+
+  ngOnChanges(): void {
+    console.log(this.monthIndex)
   }
 
   private generateCalendarDays(monthIndex: number): void {
