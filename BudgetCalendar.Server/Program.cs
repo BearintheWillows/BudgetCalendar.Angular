@@ -2,6 +2,7 @@ using System.Text;
 using BudgetCalendar.Server.Auth.Data;
 using BudgetCalendar.Server.Auth.Entities;
 using BudgetCalendar.Server.Auth.Services;
+using BudgetCalendar.Server.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,11 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     }
 );
 
+builder.Services.AddDbContext<DataDbContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DataDbConnection"));
+    }
+);
 // Add Identity
 
 builder.Services.AddIdentity<User, Role>(options =>
