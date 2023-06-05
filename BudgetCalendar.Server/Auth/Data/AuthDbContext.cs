@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgetCalendar.Server.Auth.Data;
+
+using Configs;
+
 public class AuthDbContext : IdentityDbContext<User>
 {
     public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
@@ -14,6 +17,6 @@ public class AuthDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(builder);
 
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        builder.ApplyConfiguration( new RoleConfiguration() );
     }
 }

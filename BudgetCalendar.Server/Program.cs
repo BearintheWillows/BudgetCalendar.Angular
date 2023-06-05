@@ -115,4 +115,13 @@ using (var scope = scopeFactory.CreateScope())
     await AuthDbInitializer.SeedUsers(userManager, roleManager, configuration);
 }
 
+var newScopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = newScopeFactory.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataDbContext>();
+    DataDbInitializer.Initialize(context);
+}
+
+
+
 app.Run();

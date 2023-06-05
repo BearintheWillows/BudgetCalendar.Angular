@@ -9,8 +9,7 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
 	{
 		builder.ToTable("Budgets");
 		builder.HasKey(x => x.Id);
-		builder.Property(x => x.Name).IsRequired();
-		builder.Property(x => x.Amount).IsRequired();
+		builder.Property(x => x.Amount).IsRequired().HasColumnType("decimal(18,2)");
 		builder.Property( x => x.StartDate ).IsRequired();
 		builder.Property(x => x.TransactionType).IsRequired();
 		builder.Property(x => x.AccountId).IsRequired();

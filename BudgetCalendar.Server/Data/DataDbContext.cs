@@ -5,6 +5,7 @@ namespace BudgetCalendar.Server.Data;
 
 using System.Reflection;
 using Models;
+using Models.Configs;
 using Models.Interfaces;
 
 public class DataDbContext : DbContext
@@ -23,7 +24,9 @@ public class DataDbContext : DbContext
     {
         base.OnModelCreating(builder);
         
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        builder.ApplyConfiguration(new AccountConfiguration());
+        builder.ApplyConfiguration(new CategoryConfiguration());
+        builder.ApplyConfiguration(new BudgetConfiguration());
     }
 
     private static void UpdateTimestamps(object sender, EntityEntryEventArgs e)
