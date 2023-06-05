@@ -11,6 +11,6 @@ public class Account : IHasTimestamps
     public DateTime Added      { get; set; }
     public DateTime? Modified   { get; set; } 
     public DateTime? Deleted    { get; set; } 
-    // public int UserId { get; set; }
+    public string UserId { get; set; }
     public ICollection<Budget> Budgets { get; set; } = new List<Budget>();
 }

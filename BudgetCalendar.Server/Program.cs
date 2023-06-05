@@ -3,6 +3,7 @@ using BudgetCalendar.Server.Auth.Data;
 using BudgetCalendar.Server.Auth.Entities;
 using BudgetCalendar.Server.Auth.Services;
 using BudgetCalendar.Server.Data;
+using BudgetCalendar.Server.Data.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +84,7 @@ builder.Services.AddAuthentication(opt =>
 //Custom Services
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

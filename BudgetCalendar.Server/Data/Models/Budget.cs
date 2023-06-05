@@ -17,7 +17,7 @@ public class Budget : IHasTimestamps
     public DateTime  Added      { get; set; }
     public int       AccountId  { get; set; } = 0;
     public int       CategoryId { get; set; } = 0;
-    // public int UserId { get; set; }
+    public string UserId { get; set; }
     public TransactionType TransactionType { get; set; } = TransactionType.Expense;
     public Account Account { get; set; } = null!;
     public Category Category { get; set; } = null!;
