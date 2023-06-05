@@ -3,27 +3,25 @@ using BudgetCalendar.Server.Data.Enums;
 
 namespace BudgetCalendar.Server.Data.Models;
 
-public class Budget 
+using Interfaces;
+
+public class Budget : IHasTimestamps
 {
-    public int Id { get; set; }
+    public int      Id         { get; set; }
+    public string   Name       { get; set; } = string.Empty;
+    public decimal  Amount     { get; set; } = 0;
+    public DateTime StartDate  { get; set; } = DateTime.Now;
+    public DateTime? EndDate    { get; set; }
+    public bool     IsArchived { get; set; } = false;
+    public DateTime? Deleted    { get; set; }
+    public DateTime? Modified   { get; set; }
+    public DateTime Added      { get; set; }
+    public int      AccountId  { get; set; } = 0;
+    public int      CategoryId { get; set; } = 0;
+    // public int UserId { get; set; }
+    public TransactionType TransactionType { get; set; } = TransactionType.Expense;
+    public Account Account { get; set; } = null!;
+    public Category Category { get; set; } = null!;
 
-    public string Name { get; set; } = string.Empty;
-
-    public string Description { get; set; } = string.Empty;
-
-    public DateTime StartDate { get; set; }
-
-    public DateTime? EndDate { get; set; }
-
-    public TransactionType TransactionType { get; set; }
-
-    public Recurring bool { get; set; }
-
-    public RecurringInterval RecurringInterval { get; set; }
-
-    public decimal Amount { get; set; }
-
-    public int UserId { get; set; }
-
-
+    // public User User { get; set; } = null!;
 }
