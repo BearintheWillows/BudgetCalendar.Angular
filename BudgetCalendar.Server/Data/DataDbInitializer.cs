@@ -12,9 +12,6 @@ public static class DataDbInitializer
 		{
 			context.Categories.AddRange( GeneratCategories() );
 		}
-		
-		
-		context.SaveChanges();
 
 		if ( !context.Accounts.Any() )
 		{
@@ -25,12 +22,7 @@ public static class DataDbInitializer
 		
 		context.SaveChanges();
 		
-		if ( !context.Budgets.Any() )
-		{
-			context.Budgets.AddRange( GenerateBudgets() );
-		}
 		
-		context.SaveChanges();
 
 
 	}
@@ -65,89 +57,6 @@ public static class DataDbInitializer
 			};
 	}
 	
-	public static IEnumerable<Budget> GenerateBudgets()
-	{
-		return new List<Budget>
-			{
-			new()
-				{
-				Amount = 20,
-				StartDate = new DateTime( 2023, 06, 05 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 15,
-				TransactionType = TransactionType.Expense
-				},
-			new()
-				{
-				Amount = 23,
-				StartDate = new DateTime( 2023, 06, 03 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 16,
-				TransactionType = TransactionType.Expense
-				},
-			new()
-				{
-				Amount = 30,
-				StartDate = new DateTime( 2023, 06, 20 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 17,
-				TransactionType = TransactionType.Expense
-				},
-			new()
-				{
-				Amount = 21,
-				StartDate = new DateTime( 2023, 06, 20 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 18,
-				TransactionType = TransactionType.Expense
-				},
-			new()
-				{
-				Amount = 200,
-				StartDate = new DateTime( 2023, 06, 13 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 19,
-				TransactionType = TransactionType.Expense
-				},
-			new()
-				{
-				Amount = 20,
-				StartDate = new DateTime( 2023, 06, 16 ),
-				EndDate = null,
-				IsArchived = false,
-				Deleted = null,
-				Modified = null,
-				Added = DateTime.Now,
-				AccountId = 3,
-				CategoryId = 19,
-				TransactionType = TransactionType.Expense
-				},
-			};
-	}
+	
 
 }

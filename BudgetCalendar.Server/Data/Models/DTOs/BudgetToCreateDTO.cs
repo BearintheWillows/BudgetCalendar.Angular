@@ -16,5 +16,6 @@ public class BudgetToCreateDTO
 
     public int CategoryId { get; set; }
 
-    public string ReccuringInterval { get; set; }
+    public string? ReccuringInterval { get; set; }
+
 }

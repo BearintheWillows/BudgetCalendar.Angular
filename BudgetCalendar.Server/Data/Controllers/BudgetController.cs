@@ -40,10 +40,19 @@ public class BudgetController : ControllerBase
         return budget;
     }
 
+
     [HttpPost]
     public async Task<ActionResult<BudgetDTO>> Post(BudgetToCreateDTO budgetDTO)
     {
-        var budget = await _budgetService.CreateOneBudget(budgetDTO);
+        BudgetDTO? budget;
+        Console.WriteLine( budgetDTO.ReccuringInterval.ToString() );
+        if (budgetDTO.ReccuringInterval != null)
+        {
+            budget = await _budgetService.CreateRecurringBudget( budgetDTO );
+        } else
+        {
+            budget = await _budgetService.CreateOneBudget(budgetDTO);
+        }
 
         return CreatedAtAction(nameof(GetById), new { Id = budget.Id }, new HttpResponseDTO<BudgetDTO>
         {

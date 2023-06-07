@@ -1,7 +1,7 @@
 namespace BudgetCalendar.Server.Data.Enums;
 
 
-    public enum RecurringInterval
+    public enum RecurringBudgetInterval
     {
         None = 0,
         Daily = 1,

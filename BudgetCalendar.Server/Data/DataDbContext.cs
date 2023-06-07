@@ -27,6 +27,7 @@ public class DataDbContext : DbContext
         builder.ApplyConfiguration(new AccountConfiguration());
         builder.ApplyConfiguration(new CategoryConfiguration());
         builder.ApplyConfiguration(new BudgetConfiguration());
+        builder.ApplyConfiguration(new RecurringBudgetSequenceConfiguration());
     }
 
     private static void UpdateTimestamps(object sender, EntityEntryEventArgs e)

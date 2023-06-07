@@ -78,11 +78,15 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<byte[]>("Icon")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("bit");
@@ -90,8 +94,12 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RecurringBudgetSequenceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
@@ -105,6 +113,8 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                     b.HasIndex("AccountId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("RecurringBudgetSequenceId");
 
                     b.ToTable("Budgets", (string)null);
                 });
@@ -130,6 +140,29 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                     b.ToTable("Categories", (string)null);
                 });
 
+            modelBuilder.Entity("BudgetCalendar.Server.Data.Models.RecurringBudgetSequence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Interval")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RecurringBudgetSequence");
+                });
+
             modelBuilder.Entity("BudgetCalendar.Server.Data.Models.Budget", b =>
                 {
                     b.HasOne("BudgetCalendar.Server.Data.Models.Account", "Account")
@@ -144,9 +177,17 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BudgetCalendar.Server.Data.Models.RecurringBudgetSequence", "RecurringBudgetSequence")
+                        .WithMany("Budgets")
+                        .HasForeignKey("RecurringBudgetSequenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Account");
 
                     b.Navigation("Category");
+
+                    b.Navigation("RecurringBudgetSequence");
                 });
 
             modelBuilder.Entity("BudgetCalendar.Server.Data.Models.Account", b =>
@@ -155,6 +196,11 @@ namespace BudgetCalendar.Server.Migrations.DataDb
                 });
 
             modelBuilder.Entity("BudgetCalendar.Server.Data.Models.Category", b =>
+                {
+                    b.Navigation("Budgets");
+                });
+
+            modelBuilder.Entity("BudgetCalendar.Server.Data.Models.RecurringBudgetSequence", b =>
                 {
                     b.Navigation("Budgets");
                 });
