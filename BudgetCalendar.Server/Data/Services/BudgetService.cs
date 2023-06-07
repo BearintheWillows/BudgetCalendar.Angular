@@ -1,6 +1,6 @@
 ﻿using BudgetCalendar.Server.Data.Enums;
 using BudgetCalendar.Server.Data.Models;
-using BudgetCalendar.Server.Data.Models.DTOs.BudgetDTOs;
+using BudgetCalendar.Server.Data.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -10,7 +10,7 @@ public interface IBudgetService
 {
     Task<List<BudgetDTO>> GetAll();
     Task<BudgetDTO?> GetById(int id);
-    Task<BudgetDTO?> Create(BudgetToCreateDTO budgetDto);
+    Task<BudgetDTO?> CreateOneBudget(BudgetToCreateDTO budgetDto);
     Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetDto);
     Task<bool?> Delete(int id);
 
@@ -18,14 +18,16 @@ public interface IBudgetService
 
 public class BudgetService : IBudgetService
 {
+    private readonly IAccountsService _accountsService;
     private readonly DataDbContext _context;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly string? _userId;
 
-    public BudgetService( DataDbContext context, IHttpContextAccessor httpContextAccessor )
+    public BudgetService( DataDbContext context, IHttpContextAccessor httpContextAccessor, IAccountsService accountsService )
     {
         _context = context;
         _httpContextAccessor = httpContextAccessor;
+        _accountsService = accountsService;
 
         _userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
@@ -43,6 +45,8 @@ public class BudgetService : IBudgetService
             
         }).ToListAsync();
     }
+
+    
 
     public async Task<BudgetDTO?> GetById(int id)
     {
@@ -64,7 +68,7 @@ public class BudgetService : IBudgetService
         };
     }
 
-    public async Task<BudgetDTO?> Create(BudgetToCreateDTO budgetDto)
+    public async Task<BudgetDTO?> CreateOneBudget(BudgetToCreateDTO budgetDto)
     {
 
         if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ))
@@ -94,6 +98,46 @@ public class BudgetService : IBudgetService
             EndDate = budget.EndDate,
             TransactionType = budget.TransactionType.ToString().ToLower()
         };
+    }
+
+    public async Task<bool> CreateRecurringBudget(BudgetToCreateDTO budgetDto)
+    {
+        List<Budget> budgets = new List<Budget>();
+
+        if (account == null)
+        {
+            return false;
+        }
+
+        if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ) )
+        {
+            return false;
+        }
+
+        var budget = new Budget()
+        {
+            Amount = budgetDto.Amount,
+            EndDate = null,
+            TransactionType = transactionType,
+            AccountId = budgetDto.AccountId,
+            CategoryId = budgetDto.CategoryId,
+            UserId = _userId
+        };
+
+        foreach (var item in this.GetDatesInRange(budgetDto.StartDate, null, RecurringInterval.Yearly))
+        {
+            budget.StartDate = item;
+            budgets.Add( budget );
+        };
+
+
+
+
+
+        await _context.Budgets.AddRangeAsync(budgets);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetToUpdateDto)
@@ -142,5 +186,49 @@ public class BudgetService : IBudgetService
         await _context.SaveChangesAsync();
 
         return true;
+    }
+
+    //get all dates within date range at a specific interval
+    private List<DateTime> GetDatesInRange(DateTime startDate, DateTime? endDate, RecurringInterval interval)
+    {
+        var dates = new List<DateTime>();
+        if (endDate == null)
+        {
+            endDate = new DateTime( startDate.Year + 10 );
+        }
+
+        for (var dt = startDate; dt <= endDate; dt = dt.AddDays(this.GetInterval(interval)))
+        {
+            dates.Add(dt);
+        }
+
+        return dates;
+    }
+
+    //get intervals for daily, weekly, bi-weekly, monthly and yearly
+    private int GetInterval(RecurringInterval reccuringInterval)
+    {
+        var intervalInDays = 0;
+
+        switch (reccuringInterval.ToString().ToLower())
+        {
+            case "daily":
+                intervalInDays = 1;
+                break;
+            case "weekly":
+                intervalInDays = 7;
+                break;
+            case "bi-weekly":
+                intervalInDays = 14;
+                break;
+            case "monthly":
+                intervalInDays = 30;
+                break;
+            case "yearly":
+                intervalInDays = 365;
+                break;
+        }
+
+        return intervalInDays;
     }
 }

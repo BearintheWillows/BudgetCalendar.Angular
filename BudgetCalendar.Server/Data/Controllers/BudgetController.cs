@@ -1,5 +1,4 @@
 ﻿using BudgetCalendar.Server.Data.Models.DTOs;
-using BudgetCalendar.Server.Data.Models.DTOs.BudgetDTOs;
 using BudgetCalendar.Server.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +43,7 @@ public class BudgetController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<BudgetDTO>> Post(BudgetToCreateDTO budgetDTO)
     {
-        var budget = await _budgetService.Create(budgetDTO);
+        var budget = await _budgetService.CreateOneBudget(budgetDTO);
 
         return CreatedAtAction(nameof(GetById), new { Id = budget.Id }, new HttpResponseDTO<BudgetDTO>
         {
