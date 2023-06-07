@@ -10,8 +10,8 @@ public class BudgetDTO
 
     public DateTime? EndDate { get; set; }
 
-    public DateTime Modified { get; set; }
+    public DateTime? Modified { get; set; }
 
-    public TransactionType TransactionType { get; set; }
+    public string TransactionType { get; set; }
 
 }

@@ -10,7 +10,7 @@ public class BudgetToCreateDTO
 
     public DateTime? EndDate { get; set; }
 
-    public TransactionType TransactionType { get; set; }
+    public string TransactionType { get; set; }
 
     public int AccountId { get; set; }
 

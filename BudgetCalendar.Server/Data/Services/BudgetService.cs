@@ -1,4 +1,5 @@
-﻿using BudgetCalendar.Server.Data.Models;
+﻿using BudgetCalendar.Server.Data.Enums;
+using BudgetCalendar.Server.Data.Models;
 using BudgetCalendar.Server.Data.Models.DTOs.BudgetDTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -9,8 +10,8 @@ public interface IBudgetService
 {
     Task<List<BudgetDTO>> GetAll();
     Task<BudgetDTO?> GetById(int id);
-    Task<BudgetToCreateDTO?> Create(BudgetDTO budgetDto);
-    Task<BudgetToUpdateDTO?> Update(int id, BudgetDTO budgetDto);
+    Task<BudgetDTO?> Create(BudgetToCreateDTO budgetDto);
+    Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetDto);
     Task<bool?> Delete(int id);
 
 }
@@ -37,8 +38,8 @@ public class BudgetService : IBudgetService
             Amount = c.Amount,
             StartDate = c.StartDate,
             EndDate = c.EndDate,
-            Modified = c.Modified,
-            TransactionType = c.TransactionType
+            Modified = (DateTime)c.Modified,
+            TransactionType = c.TransactionType.ToString().ToLower()
             
         }).ToListAsync();
     }
@@ -58,21 +59,28 @@ public class BudgetService : IBudgetService
             Amount = budget.Amount,
             StartDate = budget.StartDate,
             EndDate = budget.EndDate,
-            Modified = budget.Modified,
-            TransactionType = budget.TransactionType
+            Modified = (DateTime)budget.Modified,
+            TransactionType = budget.TransactionType.ToString().ToLower()
         };
     }
 
     public async Task<BudgetDTO?> Create(BudgetToCreateDTO budgetDto)
     {
+
+        if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ))
+        {
+            return null;
+        }
         var budget = new Budget()
         {
             Amount = budgetDto.Amount,
             StartDate = budgetDto.StartDate,
             EndDate = budgetDto.EndDate,
-            TransactionType = budgetDto.TransactionType,
+            TransactionType = transactionType,
             AccountId = budgetDto.AccountId,
             CategoryId = budgetDto.CategoryId,
+            UserId = _userId
+
         };
 
         _context.Budgets.Add(budget);
@@ -84,7 +92,7 @@ public class BudgetService : IBudgetService
             Amount = budget.Amount,
             StartDate = budget.StartDate,
             EndDate = budget.EndDate,
-            TransactionType = budget.TransactionType
+            TransactionType = budget.TransactionType.ToString().ToLower()
         };
     }
 
@@ -111,7 +119,7 @@ public class BudgetService : IBudgetService
             StartDate = budget.StartDate,
             EndDate = budget.EndDate,
             Modified = (DateTime)budget.Modified,
-            TransactionType = budget.TransactionType
+            TransactionType = budget.TransactionType.ToString().ToLower()
         };
     }
 

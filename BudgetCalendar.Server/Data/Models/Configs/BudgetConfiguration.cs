@@ -16,7 +16,7 @@ public class BudgetConfiguration : IEntityTypeConfiguration<Budget>
 		builder.Property(x => x.CategoryId).IsRequired();
 		builder.HasOne(x => x.Account).WithMany(x => x.Budgets).HasForeignKey(x => x.AccountId);
 		builder.HasOne(x => x.Category).WithMany(x => x.Budgets).HasForeignKey(x => x.CategoryId);
-		// builder.Property(x => x.UserId).IsRequired();
-		// builder.HasOne(x => x.User).WithMany(x => x.Budgets).HasForeignKey(x => x.UserId);
+		 /*builder.Property(x => x.UserId).IsRequired();
+		builder.HasOne(x => x.User).WithMany(x => x.Budgets).HasForeignKey(x => x.UserId);*/
 	}
 }
