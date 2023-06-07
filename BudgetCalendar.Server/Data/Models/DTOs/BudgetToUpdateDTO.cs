@@ -2,7 +2,7 @@
 
 namespace BudgetCalendar.Server.Data.Models.DTOs;
 
-public class BudgetToUpdateDTO
+public class BudgetToUpdateDto
 {
     public int Id { get; set; }
 

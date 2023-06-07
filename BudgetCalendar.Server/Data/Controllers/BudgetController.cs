@@ -18,77 +18,57 @@ public class BudgetController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<BudgetDTO>>> Get()
+    public async Task<ActionResult<List<BudgetDto>>> Get()
     {
         return await _budgetService.GetAll();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<BudgetDTO>> GetById(int id)
+    public async Task<ActionResult<BudgetDto>> GetById(int id)
     {
         var budget = await _budgetService.GetById(id);
 
         if (budget == null)
         {
-            return NotFound(new HttpResponseDTO<object>
-            {
-                isSuccess = false,
-                Errors = new List<string> { "Budget not found" }
-            } );
+            return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
         }
 
-        return budget;
+        return Ok(new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Retrieved"));
     }
 
 
     [HttpPost]
-    public async Task<ActionResult<BudgetDTO>> Post(BudgetToCreateDTO budgetDTO)
+    public async Task<ActionResult<BudgetDto>> Post(BudgetToCreateDto budgetDto)
     {
-        BudgetDTO? budget;
-        Console.WriteLine( budgetDTO.ReccuringInterval.ToString() );
-        if (budgetDTO.ReccuringInterval != null)
+        BudgetDto? budget;
+        Console.WriteLine( budgetDto.ReccuringInterval.ToString() );
+        if (budgetDto.ReccuringInterval != null)
         {
-            budget = await _budgetService.CreateRecurringBudget( budgetDTO );
+            budget = await _budgetService.CreateRecurringBudget( budgetDto );
         } else
         {
-            budget = await _budgetService.CreateOneBudget(budgetDTO);
+            budget = await _budgetService.CreateOneBudget(budgetDto);
         }
 
-        return CreatedAtAction(nameof(GetById), new { Id = budget.Id }, new HttpResponseDTO<BudgetDTO>
-        {
-            isSuccess = true,
-            Data = budget
-        } );
+        return CreatedAtAction(nameof(GetById), new { Id = budget.Id }, new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Created" ));
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, BudgetToUpdateDTO budgetDTO)
+    public async Task<IActionResult> Put(int id, BudgetToUpdateDto budgetDto)
     {
-         if ( id != budgetDTO.Id )
+         if ( id != budgetDto.Id )
          {
-         	return BadRequest(new HttpResponseDTO<object>
-             {
-                isSuccess = false,
-                Errors = new List<string> { "Id mismatch" }
-             } );
+             return BadRequest( new HttpResponseDto<object>( false, "Id mismatch" ) );
          }
 
-        var budget = await _budgetService.Update(id, budgetDTO);
+         var budget = await _budgetService.Update(id, budgetDto);
 
-        if (budget == null)
-        {
-            return NotFound(new HttpResponseDTO<object>
-            {
-                isSuccess = false,
-                Errors = new List<string> { "Budget not found" }
-            } );
-        }
+         if (budget == null)
+         {
+             return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
+         }
 
-        return Ok(new HttpResponseDTO<BudgetDTO>
-        {
-            isSuccess = true,
-            Data = budget
-        } );
+         return Ok(new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Updated" ));
     }
 
     [HttpDelete("{id}")]
@@ -98,16 +78,9 @@ public class BudgetController : ControllerBase
 
         if (budget == null)
         {
-            return NotFound(new HttpResponseDTO<object>
-            {
-                isSuccess = false,
-                Errors = new List<string> { "Budget not found" }
-            } );
+            return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
         }
 
-        return Ok(new HttpResponseDTO<BudgetDTO>
-        {
-            isSuccess = true,
-        } );
+        return Ok(new HttpResponseDto<BudgetDto>(true, "Budget Successfully Deleted" ));
     }
 }

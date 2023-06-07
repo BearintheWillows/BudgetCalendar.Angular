@@ -8,10 +8,10 @@ namespace BudgetCalendar.Server.Data.Services;
 
 public interface IAccountsService
 {
-    Task<List<AccountDTO>> GetAll();
-    Task<AccountDTO?> GetById(int id);
-    Task<AccountDTO?> Create(AccountDTO accountDto);
-    Task<AccountDTO?> Update(int id, AccountDTO accountDto);
+    Task<List<AccountDto>> GetAll();
+    Task<AccountDto?> GetById(int id);
+    Task<AccountDto?> Create(AccountDto accountDto);
+    Task<AccountDto?> Update(int id, AccountDto accountDto);
     Task<bool?> Delete(int id);
 
 }
@@ -31,9 +31,9 @@ public class AccountsService : IAccountsService
         _userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
-    public async Task<List<AccountDTO>> GetAll()
+    public async Task<List<AccountDto>> GetAll()
     {
-        return await _context.Accounts.Where(c => c.UserId == _userId).Select(c => new AccountDTO()
+        return await _context.Accounts.Where(c => c.UserId == _userId).Select(c => new AccountDto()
         {
             Id = c.Id,
             Name = c.Name,
@@ -41,7 +41,7 @@ public class AccountsService : IAccountsService
         }).ToListAsync();
     }
 
-    public async Task<AccountDTO?> GetById(int id)
+    public async Task<AccountDto?> GetById(int id)
     {
         var account = await _context.Accounts.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
 
@@ -50,7 +50,7 @@ public class AccountsService : IAccountsService
             return null;
         }
 
-        return new AccountDTO()
+        return new AccountDto()
         {
             Id = account.Id,
             Name = account.Name,
@@ -58,19 +58,19 @@ public class AccountsService : IAccountsService
         };
     }   
 
-    public async Task<AccountDTO?> Create(AccountDTO accountDto)
+    public async Task<AccountDto?> Create(AccountDto accountDto)
     {
         var account = new Account()
         {
             Name = accountDto.Name,
-            Balance = accountDto.Balance,
+            Balance = ( decimal ) accountDto.Balance,
             UserId = _userId
         };
 
         _context.Accounts.Add(account);
         await _context.SaveChangesAsync();
 
-        return new AccountDTO()
+        return new AccountDto()
         {
             Id = account.Id,
             Name = account.Name,
@@ -78,7 +78,7 @@ public class AccountsService : IAccountsService
         };
     }
 
-    public async Task<AccountDTO?> Update(int id, AccountDTO accountDto)
+    public async Task<AccountDto?> Update(int id, AccountDto accountDto)
     {
         var account = await _context.Accounts.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
 
@@ -87,12 +87,19 @@ public class AccountsService : IAccountsService
             return null;
         }
 
-        account.Name = accountDto.Name;
-        account.Balance = accountDto.Balance;
+        if ( accountDto.Name != null)
+        {
+            account.Name = accountDto.Name;
+        }
+
+        if ( accountDto.Balance != null)
+        {
+            account.Balance = ( decimal ) accountDto.Balance;
+        }
 
         await _context.SaveChangesAsync();
 
-        return new AccountDTO()
+        return new AccountDto()
         {
             Id = account.Id,
             Name = account.Name,

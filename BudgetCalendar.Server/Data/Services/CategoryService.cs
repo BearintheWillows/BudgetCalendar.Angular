@@ -10,10 +10,10 @@ using Models.DTOs;
 
 public interface ICategoryService
 {
-	Task<List<CategoryDTO>> GetAll();
-	Task<CategoryDTO?>      GetById(int        id);
-	Task<CategoryDTO?>      Create(CategoryDTO categoryDto);
-	Task<CategoryDTO?>      Update(int         id, CategoryDTO categoryDto);
+	Task<List<CategoryDto>> GetAll();
+	Task<CategoryDto?>      GetById(int        id);
+	Task<CategoryDto?>      Create(CategoryDto categoryDto);
+	Task<CategoryDto?>      Update(int         id, CategoryDto categoryDto);
 	Task<bool?>             Delete(int         id);
 }
 
@@ -33,16 +33,16 @@ public class CategoryService : ICategoryService
 		_userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 	
-	public async Task<List<CategoryDTO>> GetAll()
+	public async Task<List<CategoryDto>> GetAll()
 	{
-		return await _context.Categories.Where( c => c.UserId == _userId ).Select( c => new CategoryDTO()
+		return await _context.Categories.Where( c => c.UserId == _userId ).Select( c => new CategoryDto()
 			{
 			Id = c.Id,
 			Name = c.Name
 			} ).ToListAsync();
 	}
 	
-	public async Task<CategoryDTO?> GetById(int id)
+	public async Task<CategoryDto?> GetById(int id)
 	{
 		var category = await _context.Categories.Where( c => c.UserId == _userId ).FirstOrDefaultAsync( c => c.Id == id );
 
@@ -51,14 +51,14 @@ public class CategoryService : ICategoryService
 			return null;
 		}
 
-		return new CategoryDTO()
+		return new CategoryDto()
 			{
 			Id = category.Id,
 			Name = category.Name
 			};
 	}
 
-	public async Task<CategoryDTO?> Create(CategoryDTO categoryDto)
+	public async Task<CategoryDto?> Create(CategoryDto categoryDto)
 	{
 		var category = new Category()
 			{
@@ -74,14 +74,14 @@ public class CategoryService : ICategoryService
 		
 		await _context.SaveChangesAsync();
 
-		return new CategoryDTO()
+		return new CategoryDto()
 			{
 			Id = category.Id,
 			Name = category.Name
 			};
 	}
 
-	public async Task<CategoryDTO?> Update(int id, CategoryDTO categoryDto)
+	public async Task<CategoryDto?> Update(int id, CategoryDto categoryDto)
 	{
 		
 		var category = await _context.Categories.Where( c => c.UserId == _userId ).FirstOrDefaultAsync( c => c.Id == id );
@@ -95,7 +95,7 @@ public class CategoryService : ICategoryService
 
 		await _context.SaveChangesAsync();
 		
-		return new CategoryDTO()
+		return new CategoryDto()
 		{
 			Id = category.Id,
 			Name = category.Name

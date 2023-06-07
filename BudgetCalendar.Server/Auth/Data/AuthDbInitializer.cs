@@ -14,7 +14,7 @@ public class AuthDbInitializer
         {
             User user = new User
             {
-                UserName = "Admin",
+                UserName = "SuperAdmin",
                 Email = configuration["FallBackAdmin:Email"],
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,

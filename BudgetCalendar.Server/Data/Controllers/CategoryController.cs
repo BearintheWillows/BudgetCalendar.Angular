@@ -18,48 +18,50 @@ public class CategoryController : ControllerBase
 	}
 	
 	[HttpGet]
-	public async Task<ActionResult<List<CategoryDTO>>> Get()
+	public async Task<ActionResult<List<CategoryDto>>> Get()
 	{
-		return await _categoryService.GetAll();
+		List<CategoryDto> categories = await _categoryService.GetAll();
+		
+		return Ok(new HttpResponseDto<List<CategoryDto>>(true, categories, "Categories Successfully Retrieved"));
 	}
 	
 	[HttpGet("{id}")]
-	public async Task<ActionResult<CategoryDTO>> GetById(int id)
+	public async Task<ActionResult<CategoryDto>> GetById(int id)
 	{
 		var category = await _categoryService.GetById(id);
 
 		if ( category == null )
 		{
-			return NotFound();
+			return NotFound(new HttpResponseDto<object>( false, "Category not found" ));
 		}
 
-		return category;
+		return Ok( new HttpResponseDto<CategoryDto>( true, category, "Category Successfully Retrieved" ) );
 	}
 	
 	[HttpPost]
-	public async Task<ActionResult<CategoryDTO>> Post(CategoryDTO categoryDTO)
+	public async Task<ActionResult<CategoryDto>> Post(CategoryDto categoryDto)
 	{
-		var category = await _categoryService.Create(categoryDTO);
+		var category = await _categoryService.Create(categoryDto);
 
-		return CreatedAtAction(nameof(GetById), new { Id = category.Id }, category);
+		return CreatedAtAction(nameof(GetById), new { Id = category.Id }, new HttpResponseDto<CategoryDto>(true, category, "Category Successfully Created"));
 	}
 	
 	[HttpPut("{id}")]
-	public async Task<IActionResult> Put(int id, CategoryDTO categoryDTO)
+	public async Task<IActionResult> Put(int id, CategoryDto categoryDto)
 	{
-		// if ( id != categoryDTO.Id )
-		// {
-		// 	return BadRequest();
-		// }
+		if ( id != categoryDto.Id )
+		{
+			return BadRequest(new HttpResponseDto<object>(false, "Category Id mismatch"));
+		}
 
-		var category = await _categoryService.Update(id, categoryDTO);
+		var category = await _categoryService.Update(id, categoryDto);
 
 		if ( category == null )
 		{
-			return NotFound();
+			return NotFound( new HttpResponseDto<object>(false, "Category not found"  ));
 		}
 
-		return Ok(category);
+		return Ok( new HttpResponseDto<CategoryDto>(true, category, "Category Successfully Updated"));
 	}
 	
 	[HttpDelete("{id}")]
@@ -69,10 +71,10 @@ public class CategoryController : ControllerBase
 
 		if ( isDeleted == false )
 		{
-			return NotFound();
+			return NotFound(new HttpResponseDto<object>(false, "Category not found"  ));
 		}
 
-		return Ok(isDeleted);
+		return Ok(new HttpResponseDto<object>(true, "Category Successfully Deleted"));
 	}
 	
 	

@@ -15,8 +15,8 @@ public class AuthController : ControllerBase
     private readonly UserManager<User> _userManager;
     private readonly ITokenService _tokenService;
     private readonly RoleManager<Role> _roleManager;
-    private List<string> Errors = new List<string>();
-    private bool IsSuccessful = true;
+    private List<string> _errors = new List<string>();
+    private bool _isSuccessful = true;
 
     public AuthController(UserManager<User> userManager, ITokenService tokenService, RoleManager<Role> roleManager)
     {
@@ -39,31 +39,31 @@ public class AuthController : ControllerBase
 
         if (userForRegistration == null)
         {
-            Errors.Add("User object is null");
-            IsSuccessful = false;
+            _errors.Add("User object is null");
+            _isSuccessful = false;
         }
 
         if (emailExist != null)
         {
-            Errors.Add("Email already exists");
-            IsSuccessful = false;
+            _errors.Add("Email already exists");
+            _isSuccessful = false;
         }
 
         if (!roleExist)
         {
-            Errors.Add("Role does not exist");
-            IsSuccessful = false;
+            _errors.Add("Role does not exist");
+            _isSuccessful = false;
         }
 
         if (!ModelState.IsValid)
         {
-            Errors.Add("Invalid model object");
-            IsSuccessful = false;
+            _errors.Add("Invalid model object");
+            _isSuccessful = false;
         }
 
-        if (!IsSuccessful)
+        if (!_isSuccessful)
         {
-            return BadRequest(new RegistrationResponseDto { IsSuccessful = false, Errors = Errors });
+            return BadRequest(new RegistrationResponseDto { IsSuccessful = false, Errors = _errors });
         }
 
         User user = userForRegistration.Adapt<User>();

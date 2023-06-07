@@ -2,7 +2,7 @@
 
 namespace BudgetCalendar.Server.Data.Models.DTOs;
 
-public class BudgetDTO
+public class BudgetDto
 {
     public int Id { get; set; }
     public decimal Amount { get; set; } = 0;

@@ -8,11 +8,11 @@ namespace BudgetCalendar.Server.Data.Services;
 
 public interface IBudgetService
 {
-    Task<List<BudgetDTO>> GetAll();
-    Task<BudgetDTO?> GetById(int id);
-    Task<BudgetDTO?> CreateOneBudget(BudgetToCreateDTO budgetDto);
-    Task<BudgetDTO?> CreateRecurringBudget( BudgetToCreateDTO budgetDto );
-    Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetDto);
+    Task<List<BudgetDto>> GetAll();
+    Task<BudgetDto?> GetById(int id);
+    Task<BudgetDto?> CreateOneBudget(BudgetToCreateDto budgetDto);
+    Task<BudgetDto?> CreateRecurringBudget( BudgetToCreateDto budgetDto );
+    Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetDto);
     Task<bool?> Delete(int id);
 
 }
@@ -33,9 +33,9 @@ public class BudgetService : IBudgetService
         _userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
-    public async Task<List<BudgetDTO>> GetAll()
+    public async Task<List<BudgetDto>> GetAll()
     {
-        return await _context.Budgets.Where(c => c.UserId == _userId).Select(c => new BudgetDTO()
+        return await _context.Budgets.Where(c => c.UserId == _userId).Select(c => new BudgetDto()
         {
             Id = c.Id,
             Amount = c.Amount,
@@ -48,7 +48,7 @@ public class BudgetService : IBudgetService
 
     
 
-    public async Task<BudgetDTO?> GetById(int id)
+    public async Task<BudgetDto?> GetById(int id)
     {
         var budget = await _context.Budgets.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
 
@@ -57,7 +57,7 @@ public class BudgetService : IBudgetService
             return null;
         }
 
-        return new BudgetDTO()
+        return new BudgetDto()
         {
             Id = budget.Id,
             Amount = budget.Amount,
@@ -68,7 +68,7 @@ public class BudgetService : IBudgetService
         };
     }
 
-    public async Task<BudgetDTO?> CreateOneBudget(BudgetToCreateDTO budgetDto)
+    public async Task<BudgetDto?> CreateOneBudget(BudgetToCreateDto budgetDto)
     {
 
         if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ))
@@ -88,7 +88,7 @@ public class BudgetService : IBudgetService
         _context.Budgets.Add(budget);
         await _context.SaveChangesAsync();
 
-        return new BudgetDTO()
+        return new BudgetDto()
         {
             Id = budget.Id,
             Amount = budget.Amount,
@@ -98,7 +98,7 @@ public class BudgetService : IBudgetService
         };
     }
 
-    public async Task<BudgetDTO?> CreateRecurringBudget(BudgetToCreateDTO budgetDto)
+    public async Task<BudgetDto?> CreateRecurringBudget(BudgetToCreateDto budgetDto)
     {
         List<Budget> budgets = new List<Budget>();
 
@@ -138,7 +138,7 @@ public class BudgetService : IBudgetService
 
         
 
-        return new BudgetDTO()
+        return new BudgetDto()
         {
             Id = 1,
             Amount = budgetDto.Amount,
@@ -149,7 +149,7 @@ public class BudgetService : IBudgetService
         };
     }
 
-    public async Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetToUpdateDto)
+    public async Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetToUpdateDto)
     {
         if ( !Enum.TryParse<TransactionType>( budgetToUpdateDto.TransactionType, out var transactionType ) )
         {
@@ -170,7 +170,7 @@ public class BudgetService : IBudgetService
 
         await _context.SaveChangesAsync();
 
-        return new BudgetDTO()
+        return new BudgetDto()
         {
             Id = budget.Id,
             Amount = budget.Amount,
