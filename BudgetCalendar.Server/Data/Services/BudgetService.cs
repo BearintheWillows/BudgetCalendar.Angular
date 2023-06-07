@@ -98,6 +98,11 @@ public class BudgetService : IBudgetService
 
     public async Task<BudgetDTO?> Update(int id, BudgetToUpdateDTO budgetToUpdateDto)
     {
+        if ( !Enum.TryParse<TransactionType>( budgetToUpdateDto.TransactionType, out var transactionType ) )
+        {
+            return null;
+        }
+
         var budget = await _context.Budgets.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
 
         if (budget == null)
@@ -108,7 +113,8 @@ public class BudgetService : IBudgetService
         budget.Amount = budgetToUpdateDto.Amount;
         budget.StartDate = budgetToUpdateDto.StartDate;
         budget.EndDate = budgetToUpdateDto.EndDate;
-        budget.TransactionType = budgetToUpdateDto.TransactionType;
+        budget.TransactionType = transactionType;
+        
 
         await _context.SaveChangesAsync();
 

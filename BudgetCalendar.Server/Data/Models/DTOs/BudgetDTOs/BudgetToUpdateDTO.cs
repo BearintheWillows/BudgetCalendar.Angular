@@ -16,7 +16,7 @@ public class BudgetToUpdateDTO
 
     public int CategoryId { get; set; }
 
-    public TransactionType TransactionType { get; set; }
+    public string TransactionType { get; set; }
 
     public bool IsArchived { get; set; }
 }
