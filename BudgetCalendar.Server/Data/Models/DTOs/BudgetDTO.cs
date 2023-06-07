@@ -1,6 +1,6 @@
 ﻿using BudgetCalendar.Server.Data.Enums;
 
-namespace BudgetCalendar.Server.Data.Models.DTOs.BudgetDTOs;
+namespace BudgetCalendar.Server.Data.Models.DTOs;
 
 public class BudgetDTO
 {
