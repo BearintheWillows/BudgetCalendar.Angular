@@ -37,7 +37,8 @@ public class AccountsService : IAccountsService
         {
             Id = c.Id,
             Name = c.Name,
-            Balance = c.Balance
+            Balance = c.Balance,
+            Modified = c.Modified
         }).ToListAsync();
     }
 

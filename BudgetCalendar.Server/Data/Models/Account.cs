@@ -4,6 +4,7 @@ using Interfaces;
 
 public class Account : IHasTimestamps
 {
+    //TODO: Fix Modified for accounts
     public int      Id         { get; set; }
     public string   Name       { get; set; } = string.Empty;
     public decimal  Balance    { get; set; }

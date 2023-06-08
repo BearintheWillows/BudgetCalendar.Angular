@@ -10,11 +10,11 @@ public class AuthDbInitializer
         IConfiguration configuration
     )
     {
-        if (userManager.FindByNameAsync("SuperAdmin").Result == null)
+        if (userManager.FindByNameAsync("Admin").Result == null)
         {
             User user = new User
             {
-                UserName = "SuperAdmin",
+                UserName = "Admin",
                 Email = configuration["FallBackAdmin:Email"],
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,

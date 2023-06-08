@@ -6,4 +6,6 @@ public class AccountDto
     public string? Name    { get; set; } 
     public decimal? Balance { get; set; }
     
+    public DateTime? Modified { get; set; }
+    
 }
