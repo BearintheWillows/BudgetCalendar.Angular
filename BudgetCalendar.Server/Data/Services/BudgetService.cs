@@ -125,23 +125,28 @@ public class BudgetService : IBudgetService
         {
             return null;
         }
+        
+        
+        var recurringBudgetSequence = new RecurringBudgetSequence(budgetDto.RecurringBudgetSequence!.StartDate, budgetDto.RecurringBudgetSequence.EndDate, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true));
 
-        //parse budgetDto.ReccuringInterval
-        RecurringBudgetInterval interval = (RecurringBudgetInterval)Enum.Parse(typeof(RecurringBudgetInterval), budgetDto.ReccuringInterval!);
+        var rbs = _context.RecurringBudgetSequences.Add(recurringBudgetSequence).Entity;
+        
+        _context.SaveChanges();
 
-        foreach (var item in this.GetDatesInRange(budgetDto.StartDate, null, interval))
+        foreach (var item in this.GetDatesInRange(budgetDto.RecurringBudgetSequence.StartDate, null, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true)))
         {
             var budget = new Budget()
             {
                 Amount = budgetDto.Amount,
-            
-                TransactionType = transactionType,
+                Date = item,
+                Note = budgetDto.Note ?? null,
+                Color = budgetDto.Color ?? null,
                 AccountId = budgetDto.AccountId,
                 CategoryId = budgetDto.CategoryId,
-            //TODO: Add the rest of the properties
-            UserId = _userId
+                TransactionType = transactionType,
+                RecurringBudgetSequenceId = rbs.Id,
+                UserId = _userId
             };
-           
             budgets.Add( budget );
         };
 
@@ -155,14 +160,31 @@ public class BudgetService : IBudgetService
         _context.SaveChanges();
 
         
-
+        //TODO FIX RETURN DTO
         return new BudgetDto()
         {
             Id = 1,
-            Amount = budgetDto.Amount,
+            Amount = budgets[0].Amount,
+            Date = budgets[0].Date,
+            Note = budgets[0].Note,
+            Color = budgets[0].Color,
+            Account = new AccountDto()
+            {
+                Name = budgets[0].Account.Name,
+            },
+            Category = new CategoryDto()
+            {
+                Name = budgets[0].Category.Name,
+            },
+            TransactionType = budgets[0].TransactionType.ToString().ToLower(),
+            RecurringBudgetSequence = new RecurringBudgetSequenceDto()
+            {
+                Id = rbs.Id,
+                StartDate = rbs.StartDate,
+                EndDate = rbs.EndDate,
+                Interval = rbs.Interval.ToString().ToLower()
+            },
         
-            TransactionType = budgetDto.TransactionType.ToString().ToLower(),
-            Modified = null
         };
     }
 

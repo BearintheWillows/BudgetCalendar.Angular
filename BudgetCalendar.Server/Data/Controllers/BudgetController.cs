@@ -48,8 +48,7 @@ public class BudgetController : ControllerBase
     public async Task<ActionResult<BudgetDto>> Post(BudgetToCreateDto budgetDto)
     {
         BudgetDto? budget;
-        Console.WriteLine( budgetDto.ReccuringInterval.ToString() );
-        if (budgetDto.ReccuringInterval != null)
+     if (budgetDto.RecurringBudgetSequence != null)
         {
             budget = await _budgetService.CreateRecurringBudget( budgetDto );
         } else

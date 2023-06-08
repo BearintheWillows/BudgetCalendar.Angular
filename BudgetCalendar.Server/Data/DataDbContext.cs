@@ -15,7 +15,7 @@ public class DataDbContext : DbContext
         ChangeTracker.Tracked += UpdateTimestamps;
         ChangeTracker.StateChanged += UpdateTimestamps;
     }
-    
+    public DbSet<RecurringBudgetSequence> RecurringBudgetSequences { get; set; } = null!;
     public DbSet<Budget> Budgets { get; set; } = null!;
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;

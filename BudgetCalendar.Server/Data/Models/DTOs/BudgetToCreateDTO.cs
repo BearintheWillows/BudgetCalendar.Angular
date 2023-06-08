@@ -5,10 +5,14 @@ namespace BudgetCalendar.Server.Data.Models.DTOs;
 public class BudgetToCreateDto
 {
     public decimal Amount { get; set; }
-
-    public DateTime StartDate { get; set; }
-
-    public DateTime? EndDate { get; set; }
+    
+    public DateTime? Date { get; set; }
+    
+    public string? Note { get; set; }
+    
+    public string? Color { get; set; }
+    
+    public string? Icon { get; set; }
 
     public string TransactionType { get; set; }
 
@@ -16,6 +20,6 @@ public class BudgetToCreateDto
 
     public int CategoryId { get; set; }
 
-    public string? ReccuringInterval { get; set; }
+    public RecurringBudgetSequenceDto? RecurringBudgetSequence { get; set; }
 
 }
