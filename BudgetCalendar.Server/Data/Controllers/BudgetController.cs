@@ -20,7 +20,14 @@ public class BudgetController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<BudgetDto>>> Get()
     {
-        return await _budgetService.GetAll();
+        var budgets = await _budgetService.GetAll();
+
+        if ( budgets.Count > 0 )
+        {
+            return Ok(new HttpResponseDto<List<BudgetDto>>( true, budgets, "Budgets Successfully Retrieved" ));
+        }
+
+        return NotFound( new HttpResponseDto<object>( false, "No Budgets Found" ));
     }
 
     [HttpGet("{id}")]

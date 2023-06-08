@@ -35,14 +35,32 @@ public class BudgetService : IBudgetService
 
     public async Task<List<BudgetDto>> GetAll()
     {
-        return await _context.Budgets.Where(c => c.UserId == _userId).Select(c => new BudgetDto()
+        return await _context.Budgets.Include(c => c.Account).Include(c => c.Category).Where(c => c.UserId == _userId).Select(c => new BudgetDto()
         {
             Id = c.Id,
             Amount = c.Amount,
-    
+            Date = c.Date,
+            IsArchived = c.IsArchived, 
             Modified = (DateTime)c.Modified,
-            TransactionType = c.TransactionType.ToString().ToLower()
-            //TODO: Add the rest of the properties
+            TransactionType = c.TransactionType.ToString().ToLower(),
+            Note = c.Note,
+            Color = c.Color,
+            Icon = c.Icon,
+            Account = new AccountDto()
+                {
+                Name = c.Account.Name,
+                },
+            Category = new CategoryDto()
+                {
+                Name = c.Category.Name,
+                },
+            RecurringBudgetSequence = new RecurringBudgetSequenceDto()
+                {
+                    Id = c.RecurringBudgetSequence.Id,
+                    StartDate = c.RecurringBudgetSequence.StartDate,
+                    EndDate = c.RecurringBudgetSequence.EndDate ,
+                    Interval = c.RecurringBudgetSequence.Interval.ToString().ToLower()
+                },
         }).ToListAsync();
     }
 
@@ -142,8 +160,7 @@ public class BudgetService : IBudgetService
         {
             Id = 1,
             Amount = budgetDto.Amount,
-            StartDate = budgetDto.StartDate,
-            EndDate = budgetDto.EndDate,
+        
             TransactionType = budgetDto.TransactionType.ToString().ToLower(),
             Modified = null
         };
