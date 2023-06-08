@@ -104,7 +104,8 @@ public class AccountsService : IAccountsService
         {
             Id = account.Id,
             Name = account.Name,
-            Balance = account.Balance
+            Balance = account.Balance,
+            Modified = account.Modified,
         };
     }   
 
