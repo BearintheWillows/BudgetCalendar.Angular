@@ -17,7 +17,7 @@ public interface ICategoryService
 	Task<bool?>             Delete(int         id);
 }
 
-[Authorize]
+
 public class CategoryService : ICategoryService
 {
 	private readonly DataDbContext        _context;

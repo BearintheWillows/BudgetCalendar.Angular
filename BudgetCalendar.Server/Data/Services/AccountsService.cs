@@ -16,7 +16,7 @@ public interface IAccountsService
 
 }
 
-[Authorize]
+
 public class AccountsService : IAccountsService
 {
     private readonly DataDbContext _context;

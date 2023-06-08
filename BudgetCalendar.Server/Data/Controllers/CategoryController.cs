@@ -2,7 +2,6 @@ namespace BudgetCalendar.Server.Data.Controllers;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using Models.DTOs;
 using Services;
 
