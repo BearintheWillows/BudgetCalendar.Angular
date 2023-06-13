@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {inject} from "@angular/core/testing";
 import {Router} from "@angular/router";
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -21,11 +22,15 @@ export class LoginFormComponent {
   form: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email], ],
       password: ['', [Validators.required, Validators.minLength(6)], ],
     });
+  }
+
+  ngOnInit() {
+    console.log(this.authService.isAuthenticated())
   }
 
   onSubmit() {
