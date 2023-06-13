@@ -12,9 +12,9 @@ import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-brow
 
 bootstrapApplication(AppComponent, {
     providers: [
-
     importProvidersFrom(BrowserAnimationsModule),
     provideRouter(APP_ROUTES),
+    provideAnimations(),
     provideAnimations()
 ]
 })
