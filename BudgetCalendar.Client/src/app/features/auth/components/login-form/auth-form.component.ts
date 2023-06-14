@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { AuthService } from 'src/app/services/auth.service';
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-auth-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CardModule,
+    PasswordModule,
+    InputTextModule],
+  templateUrl: './auth-form.component.html',
+  styleUrls: ['./auth-form.component.scss']
 })
-export class LoginFormComponent {
+export class AuthFormComponent {
 
+  @Input() tabRoute!: string;
   form: FormGroup;
 
 
@@ -22,6 +31,9 @@ export class LoginFormComponent {
       email: ['', [Validators.required, Validators.email], ],
       password: ['', [Validators.required, Validators.minLength(6)], ],
     });
+
+    console.log(this.tabRoute)
+  
   }
 
   ngOnInit() {

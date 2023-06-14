@@ -1,14 +1,5 @@
-<div class="card">
-<p-tabView [(activeIndex)]="activeIndex">
-    <p-tabPanel header="Login">
-        <!-- <app-login></app-login> -->
-        login
-
-    </p-tabPanel>
-    <p-tabPanel header="register">
-        <!-- <app-register></app-register> -->
-        register
-    </p-tabPanel>
-</p-tabView>
+<div class="container">
+<p-tabMenu [model]="tabMenuItems" [activeItem]="activeItem"  (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+    
 </div>
 

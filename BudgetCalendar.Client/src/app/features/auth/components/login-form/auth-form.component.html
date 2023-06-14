@@ -1,0 +1,15 @@
+
+
+<p-card title="">
+    <form [formGroup]="form">
+        <span class="p-float-label">
+            <input  pInputText formControlName="email" required />
+            <label for="email">Email</label>
+        </span>
+
+        <span class="p-float-label">
+            <p-password  formControlName="password" [feedback]="false" > </p-password>   
+            <label for="password">Password</label>
+        </span>
+    </form>
+</p-card>
