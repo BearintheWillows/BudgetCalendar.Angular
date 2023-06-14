@@ -16,5 +16,5 @@ export class AuthService {
 
   public loginUser = (body: IUserForAuthenticationDto) => {
     return this.httpClient.post('https://localhost:44305/api/auth/login', body);
-  })
+  };
 }
