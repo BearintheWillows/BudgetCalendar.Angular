@@ -4,14 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10% 10%;
-    
-}
+    padding-top: 18vh;
 
-
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link 
-{
     
 }
 
@@ -21,8 +15,6 @@
     border-top: 1px solid #ebebeb;
     
 }
-
-//add border to right if first child or left if last child
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:first-child:not(.p-tabmenuitem.p-highlight) .p-menuitem-link{
     border-right: 2px solid #ebebeb;

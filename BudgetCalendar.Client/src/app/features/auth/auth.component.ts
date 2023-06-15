@@ -14,10 +14,14 @@ import { MenuItem } from 'primeng/api';
     imports: [CommonModule, TabMenuModule, CardModule, AuthFormComponent]
 })
 export class AuthComponent {
-  tabMenuItems!: MenuItem[];
-  activeItem!: MenuItem;
 
   private router = inject(Router);
+  
+  tabMenuItems!: MenuItem[];
+  activeItem!: MenuItem;
+  tabRoute: string = this.router.url.split('/')[2].toLowerCase();
+
+  
 
   ngOnInit(): void {
     this.tabMenuItems = [
@@ -26,11 +30,14 @@ export class AuthComponent {
   ];
 
   this.activeItem = this.tabMenuItems[0];
+
+  console.log(this.tabRoute);
 }
 
 
   onActiveItemChange(event: MenuItem){
     this.activeItem = event;
+    
 }
 
   activateLast() {
