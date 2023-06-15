@@ -1,6 +1,6 @@
 
 
-<p-card title="">
+<p-card title= "">
     <form [formGroup]="form">
         <span class="p-float-label">
             <input  pInputText formControlName="email" required />
@@ -12,4 +12,7 @@
             <label for="password">Password</label>
         </span>
     </form>
+
+    <button pButton type="submit" label="Login" (click)="onSubmit()" [disabled]="!form.valid">{{tabRoute}}</button>
 </p-card>
+
