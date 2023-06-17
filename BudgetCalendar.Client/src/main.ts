@@ -21,12 +21,11 @@ bootstrapApplication(AppComponent, {
             tokenGetter: () => {
                 return localStorage.getItem('access_token');
             },
-            allowedDomains: ['localhost:5000'],
-            disallowedRoutes: ['localhost:5000/api/auth']
+            allowedDomains: ['localhost:44831'],
+            disallowedRoutes: []
         }
     })),
     provideAnimations(),
-    provideAnimations()
 ]
 })
   .catch(err => console.error(err));

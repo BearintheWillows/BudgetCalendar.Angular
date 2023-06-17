@@ -9,6 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AuthMode } from '../../auth.constants';
+import { IUserForAuthenticationDto } from '../../_models/iUserForAuthenticationDto';
+import { IUserForAuthenticationResponse } from '../../_models/iUserForAuthenticationResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -27,8 +30,10 @@ import { AuthMode } from '../../auth.constants';
 export class AuthFormComponent {
 
   @Input()authMode!: AuthMode;
+  @Input()returnUrl: string = '';
   registerMode: boolean = true;
   form: FormGroup;
+  
 
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
@@ -45,15 +50,34 @@ export class AuthFormComponent {
       this.form.removeControl('confirmPassword');
     }
 
+    console.log(this.returnUrl);
     console.log(this.authMode);
   }
 
   onSubmit() {
-    const val = this.form.value;
 
-    console.log(val);
-    
+    if (this.form.valid) {
+      const val = this.form.value;
+      const user: IUserForAuthenticationDto = {
+        email: val.email,
+        password: val.password
+      };
 
-
+      this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
+        if (response.isAuthSuccessful) {
+          localStorage.setItem('token', response.token || '');
+          this.router.navigate([this.returnUrl]);
+        } else {
+          this.form.setErrors({
+            'auth': response.errorMessage
+          });
+        }
+      }
+      , (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+      );
+    }
   }
 }
+

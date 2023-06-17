@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { AuthMode, Endpoints } from './auth.constants';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CardModule } from 'primeng/card';
@@ -15,11 +15,13 @@ import { MenuItem } from 'primeng/api';
 })
 export class AuthComponent {
 
+  private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   
   tabMenuItems!: MenuItem[];
   activeItem!: MenuItem;
   authMode: AuthMode = AuthMode.Login;
+  returnUrl: string = '';
 
   
 
@@ -36,6 +38,10 @@ export class AuthComponent {
   } else {
     this.authMode = AuthMode.Login;
   }
+
+  this.activatedRoute.queryParams.subscribe(params => {
+    this.returnUrl = params['returnUrl'] || '/';
+  });
 }
 
 
