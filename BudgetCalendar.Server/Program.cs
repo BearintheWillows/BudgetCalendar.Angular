@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
-
+var CorsPolicy = "CorsPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,10 +23,10 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy("CorsPolicy",
+        options.AddPolicy(CorsPolicy,
                            builder => builder.AllowAnyOrigin()
-                                             .AllowAnyMethod()
                                              .AllowAnyHeader()
+                                              
                                              .Build()
         );
     }
@@ -105,10 +105,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseRouting();
+app.UseCors(CorsPolicy);
+app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("CorePolicy");
+
 
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 using (var scope = scopeFactory.CreateScope())
@@ -125,7 +128,5 @@ using (var scope = newScopeFactory.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<DataDbContext>();
     DataDbInitializer.Initialize(context);
 }
-
-
 
 app.Run();
