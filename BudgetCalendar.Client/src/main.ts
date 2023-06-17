@@ -16,18 +16,17 @@ bootstrapApplication(AppComponent, {
     providers: [
     provideHttpClient(),
     provideRouter(APP_ROUTES),
-    importProvidersFrom(BrowserAnimationsModule,
-      JwtModule.forRoot({
+    importProvidersFrom(BrowserAnimationsModule, JwtModule.forRoot({
         config: {
-          tokenGetter: () => {
-            return localStorage.getItem('access_token');
+            tokenGetter: () => {
+                return localStorage.getItem('access_token');
             },
             allowedDomains: ['localhost:5000'],
             disallowedRoutes: ['localhost:5000/api/auth']
-            }})
-            ),
-    
+        }
+    })),
     provideAnimations(),
+    provideAnimations()
 ]
 })
   .catch(err => console.error(err));

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Router} from "@angular/router";
-import { Endpoints } from './endpoints.const';
+import { AuthMode, Endpoints } from './auth.constants';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CardModule } from 'primeng/card';
 import { AuthFormComponent } from "./components/login-form/auth-form.component";
@@ -19,7 +19,7 @@ export class AuthComponent {
   
   tabMenuItems!: MenuItem[];
   activeItem!: MenuItem;
-  tabRoute: string = this.router.url.split('/')[2].toLowerCase();
+  authMode: AuthMode = AuthMode.Login;
 
   
 
@@ -30,8 +30,12 @@ export class AuthComponent {
   ];
 
   this.activeItem = this.tabMenuItems[0];
-
-  console.log(this.tabRoute);
+  
+  if (this.router.url === Endpoints.register) {
+    this.authMode = AuthMode.Register;
+  } else {
+    this.authMode = AuthMode.Login;
+  }
 }
 
 

@@ -1,18 +1,28 @@
 
-
-<p-card title= "">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="authForm">
         <span class="p-float-label">
-            <input  pInputText formControlName="email" required />
+            <input class="authInputs"  pInputText formControlName="email" required />
             <label for="email">Email</label>
         </span>
 
         <span class="p-float-label">
-            <p-password  formControlName="password" [feedback]="false" > </p-password>   
+            <p-password class="authInputs"   formControlName="password" [feedback]="false" > </p-password>   
             <label for="password">Password</label>
         </span>
-    </form>
 
-    <button pButton type="submit" label="Login" (click)="onSubmit()" [disabled]="!form.valid">{{tabRoute}}</button>
-</p-card>
+        <ng-container *ngIf="authMode == 'register'">
+
+        <span class="p-float-label">
+                <p-password class="authInputs"   formControlName="confirmPassword" [feedback]="false" > </p-password>   
+                <label for="confirmPassword">Confirm Password</label>
+        </span>
+        </ng-container>
+
+        <div class="buttonGroup">
+        <button pButton pRipple class="submitButton" type="submit" label={{authMode.toString()}}  [disabled]="!form.valid"></button>
+        <button pButton pRipple type="reset" label="Reset"></button>
+   </div> 
+</form>
+
+  
 
