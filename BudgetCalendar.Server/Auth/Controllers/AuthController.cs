@@ -35,7 +35,6 @@ public class AuthController : ControllerBase
                 return task.Result;
             }
         ).Result;
-        var roleExist = await _roleManager.RoleExistsAsync(userForRegistration.Role!);
 
         if (userForRegistration == null)
         {
@@ -46,12 +45,6 @@ public class AuthController : ControllerBase
         if (emailExist != null)
         {
             _errors.Add("Email already exists");
-            _isSuccessful = false;
-        }
-
-        if (!roleExist)
-        {
-            _errors.Add("Role does not exist");
             _isSuccessful = false;
         }
 
@@ -68,9 +61,9 @@ public class AuthController : ControllerBase
 
         User user = userForRegistration.Adapt<User>();
 
-        user.UserName = $"{userForRegistration.FirstName}.{userForRegistration.LastName}@{userForRegistration.OrganizationName}";
+        user.UserName = userForRegistration.Email.Split('/' )[0];
 
-        var result = await _userManager.CreateAsync(user, "password");
+        var result = await _userManager.CreateAsync(user, userForRegistration.Password);
 
         if (!result.Succeeded)
         {
@@ -78,9 +71,6 @@ public class AuthController : ControllerBase
 
             return BadRequest(new RegistrationResponseDto { IsSuccessful = false, Errors = errors });
         }
-
-
-        await _userManager.AddToRoleAsync(user, userForRegistration.Role!);
 
         return Ok(new RegistrationResponseDto { IsSuccessful = true });
     }
