@@ -1,4 +1,4 @@
-import { IUserForAuthenticationDto } from "src/app/features/auth/_models/iUserForAuthenticationDto";
+import { IUserForAuthenticationDto } from "src/app/features/auth/_interfaces/iUserForAuthentication.dto";
 
 export interface IHttpResponse {
     isSuccess: boolean;

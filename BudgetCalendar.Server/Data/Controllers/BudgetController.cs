@@ -1,4 +1,5 @@
 ﻿using BudgetCalendar.Server.Data.Models.DTOs;
+using BudgetCalendar.Server.Data.Models.DTOs.BudgetDtos;
 using BudgetCalendar.Server.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,7 @@
 ﻿using BudgetCalendar.Server.Data.Enums;
 using BudgetCalendar.Server.Data.Models;
 using BudgetCalendar.Server.Data.Models.DTOs;
+using BudgetCalendar.Server.Data.Models.DTOs.BudgetDtos;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -41,7 +42,6 @@ public class BudgetService : IBudgetService
             Amount = c.Amount,
             Date = c.Date,
             IsArchived = c.IsArchived, 
-            Modified = (DateTime)c.Modified,
             TransactionType = c.TransactionType.ToString().ToLower(),
             Note = c.Note,
             Color = c.Color,
@@ -80,7 +80,7 @@ public class BudgetService : IBudgetService
             Id = budget.Id,
             Amount = budget.Amount,
             
-            Modified = (DateTime)budget.Modified,
+    
             TransactionType = budget.TransactionType.ToString().ToLower()
             //TODO: Add the rest of the properties
         };
@@ -214,7 +214,7 @@ public class BudgetService : IBudgetService
             Id = budget.Id,
             Amount = budget.Amount,
      //TODO: Add the rest of the properties
-            Modified = (DateTime)budget.Modified,
+ 
             TransactionType = budget.TransactionType.ToString().ToLower()
         };
     }

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, Signal, signal } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IUserForAuthenticationDto } from './_models/iUserForAuthenticationDto';
+import { IUserForAuthenticationDto } from './_interfaces/iUserForAuthentication.dto';
 import { environment } from 'src/environments/environment.development';
 import { ApiPaths } from '../../shared/_enums/apiPaths';
-import { IUserForAuthenticationResponse } from './_models/iUserForAuthenticationResponse';
-import { IUserForRegistration } from './_models/iUserForRegistration';
-import { IRegistrationResponse } from './_models/iRegistrationResponse';
+import { IUserForAuthenticationResponse } from './_interfaces/iAuthenticationResponse.dto';
+import { IUserForRegistration } from './_interfaces/iUserForRegistration.dto';
+import { IRegistrationResponse } from './_interfaces/iRegistrationResponse.dto';
 import { AuthStateService } from 'src/app/services/auth-state.service';
 @Injectable({
   providedIn: 'root'

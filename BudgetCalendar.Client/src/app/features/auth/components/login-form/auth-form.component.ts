@@ -1,6 +1,6 @@
 import { AuthStateService } from './../../../../services/auth-state.service';
-import { IUserForAuthenticationDto } from 'src/app/features/auth/_models/iUserForAuthenticationDto';
-import { IUserForRegistration } from './../../_models/iUserForRegistration';
+import { IUserForAuthenticationDto } from 'src/app/features/auth/_interfaces/iUserForAuthentication.dto';
+import { IUserForRegistration } from '../../_interfaces/iUserForRegistration.dto';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -12,9 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AuthMode } from '../../auth.constants';
-import { IUserForAuthenticationResponse } from '../../_models/iUserForAuthenticationResponse';
+import { IUserForAuthenticationResponse } from '../../_interfaces/iAuthenticationResponse.dto';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IRegistrationResponse } from '../../_models/iRegistrationResponse';
+import { IRegistrationResponse } from '../../_interfaces/iRegistrationResponse.dto';
 
 
 @Component({
