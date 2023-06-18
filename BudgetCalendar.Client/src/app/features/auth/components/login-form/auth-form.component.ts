@@ -1,10 +1,11 @@
+import { AuthStateService } from './../../../../services/auth-state.service';
 import { IUserForAuthenticationDto } from 'src/app/features/auth/_models/iUserForAuthenticationDto';
 import { IUserForRegistration } from './../../_models/iUserForRegistration';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/features/auth/auth.service';
 
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
@@ -38,7 +39,7 @@ export class AuthFormComponent {
   
 
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private authStateService: AuthStateService) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email], ],
       password: ['', [Validators.required, Validators.minLength(6)], ],
@@ -85,7 +86,7 @@ export class AuthFormComponent {
       this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
         if (response.isAuthSuccessful) {
           localStorage.setItem('token', response.token || '');
-          this.authService.sendAuthStateChange(response.isAuthSuccessful);
+          this.authStateService.sendAuthStateChange(response.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         } else {
           this.form.setErrors({
