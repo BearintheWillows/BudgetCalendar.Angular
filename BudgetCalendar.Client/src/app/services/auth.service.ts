@@ -23,6 +23,16 @@ export class AuthService {
     this.authenticationState.set(isAuthenticated);
   }
 
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      return !this.jwtHelper.isTokenExpired(token);
+    }
+
+    return false;
+  }
+
 
   public login = (body: IUserForAuthenticationDto) => {
     return this.httpClient.post<IUserForAuthenticationResponse>(`${this.baseUrl}${ApiPaths.Login}`, body);
