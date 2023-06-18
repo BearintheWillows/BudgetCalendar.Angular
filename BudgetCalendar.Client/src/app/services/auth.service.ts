@@ -11,14 +11,14 @@ import { IRegistrationResponse } from '../features/auth/_models/iRegistrationRes
   providedIn: 'root'
 })
 export class AuthService {
+  
+  public isAuthenticated = signal(false);
 
   jwtHelper = inject(JwtHelperService);
   httpClient = inject(HttpClient);
 
   baseUrl = environment.baseUrl;
 
-
-  public isAuthenticated = signal(false);
 
   public login = (body: IUserForAuthenticationDto) => {
     return this.httpClient.post<IUserForAuthenticationResponse>(`${this.baseUrl}${ApiPaths.Login}`, body);

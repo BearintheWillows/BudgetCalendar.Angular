@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './shared/_guards/auth.guard';
 
 export const APP_ROUTES: Routes = [
   {
@@ -8,7 +9,8 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'calendar',
-    loadChildren: () => import('./features/calendar/calendar.routes').then(m => m.CALENDAR_ROUTES)
+    loadChildren: () => import('./features/calendar/calendar.routes').then(m => m.CALENDAR_ROUTES),
+    canActivate: [AuthGuard]
   },
   {
     path: 'auth',
