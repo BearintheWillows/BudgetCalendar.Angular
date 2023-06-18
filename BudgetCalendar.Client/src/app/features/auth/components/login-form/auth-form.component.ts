@@ -85,6 +85,7 @@ export class AuthFormComponent {
       this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
         if (response.isAuthSuccessful) {
           localStorage.setItem('token', response.token || '');
+          this.authService.sendAuthStateChange(response.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         } else {
           this.form.setErrors({

@@ -12,12 +12,16 @@ import { IRegistrationResponse } from '../features/auth/_models/iRegistrationRes
 })
 export class AuthService {
   
-  public isAuthenticated = signal(false);
+  public authenticationState = signal(false);
 
   jwtHelper = inject(JwtHelperService);
   httpClient = inject(HttpClient);
 
   baseUrl = environment.baseUrl;
+
+  public sendAuthStateChange = (isAuthenticated: boolean) => {
+    this.authenticationState.set(isAuthenticated);
+  }
 
 
   public login = (body: IUserForAuthenticationDto) => {
@@ -27,4 +31,11 @@ export class AuthService {
   public register = (body: IUserForRegistration) => {
     return this.httpClient.post<IRegistrationResponse>(`${this.baseUrl}${ApiPaths.Register}`, body)
   }
+
+  public logout = () => {
+    localStorage.removeItem("token");
+    this.sendAuthStateChange(false);
+  }
+
+
 }

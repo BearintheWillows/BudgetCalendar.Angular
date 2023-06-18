@@ -8,5 +8,5 @@ export const AuthGuard: CanActivateChildFn = (
   ) => {
   const auth = inject(AuthService);
   console.log(`Authguard says no`)
-  return auth.isAuthenticated();
+  return auth.authenticationState();
 };
