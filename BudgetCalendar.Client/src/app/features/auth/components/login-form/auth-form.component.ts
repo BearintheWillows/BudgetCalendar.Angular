@@ -68,6 +68,7 @@ export class AuthFormComponent {
 
     if (this.authMode === AuthMode.Login) {
       this.form.removeControl('confirmPassword');
+      this.form.removeValidators([validatePasswordMatch()]);
     }
 
     console.log(this.returnUrl);

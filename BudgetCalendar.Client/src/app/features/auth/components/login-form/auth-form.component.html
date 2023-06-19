@@ -17,7 +17,7 @@
         </span>
         <div class="errors">
         <small *ngIf="validateControl('password') && hasError('password', 'required')" class="p-error">- Password is required</small>
-        <small *ngIf="validateControl('confirmPassword') && form.errors?.['misMatch'] " class="p-error">- Passwords do not match.</small>
+        <small *ngIf="validateControl('password') && form.errors?.['misMatch'] && confirmPassword" class="p-error">- Passwords do not match.</small>
         <small *ngIf="validateControl('password') && password?.errors?.['minlength']" class="p-error">- Minimum Password Length - 6</small>
         
         </div>
