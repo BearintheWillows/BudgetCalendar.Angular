@@ -15,9 +15,13 @@
             <p-password class="authInputs" [ngClass]="{'ng-invalid': password?.invalid}" formControlName="password" [feedback]="false" > </p-password>   
             <label for="password">Password*</label>
         </span>
-        <small *ngIf="validateControl('password') && hasError('password', 'required')" class="p-error">Password is required</small>
-        <small *ngIf="validateControl('password') && hasError('password', 'minLength')" class="p-error">Minimum Password Length - 6</small>
+        <div class="errors">
+        <small *ngIf="validateControl('password') && hasError('password', 'required')" class="p-error">- Password is required</small>
+        <small *ngIf="validateControl('confirmPassword') && form.errors?.['misMatch'] " class="p-error">- Passwords do not match.</small>
+        <small *ngIf="validateControl('password') && password?.errors?.['minlength']" class="p-error">- Minimum Password Length - 6</small>
+        
         </div>
+    </div>
 
         <ng-container *ngIf="authMode == 'register'">
 
@@ -26,7 +30,11 @@
                     <p-password class="authInputs" [ngClass]="{'ng-invalid': confirmPassword?.invalid}"  formControlName="confirmPassword" [feedback]="false" > </p-password>   
                     <label for="confirmPassword">Confirm Password*</label>
             </span>
-            <small *ngIf="validateControl('confirmPassword') && hasError('confirmPassword', 'required')" class="p-error">Confirm Password is required</small>
+            <div class="errors">
+            <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['required']" class="p-error">Confirm Password is required</small>
+            <small *ngIf="validateControl('confirmPassword') && form.errors?.['misMatch']" class="p-error">Passwords do not match.</small>
+            <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['minlength']" class="p-error">Minimum Password Length - 6</small>
+            </div>
         </div>
     </ng-container>
 

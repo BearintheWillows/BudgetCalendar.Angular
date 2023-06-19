@@ -16,6 +16,8 @@ import { AuthMode } from '../../auth.constants';
 import { IUserForAuthenticationResponse } from '../../_interfaces/iAuthenticationResponse.dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IRegistrationResponse } from '../../_interfaces/iRegistrationResponse.dto';
+import ValidatePasswordMatch from '../../_validators/password-match.validator';
+import validatePasswordMatch from '../../_validators/password-match.validator';
 
 
 @Component({
@@ -43,9 +45,22 @@ export class AuthFormComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private authStateService: AuthStateService) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email], ],
-      password: ['', [Validators.required, Validators.minLength(6)], ],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6),], ],
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        updateOn: 'blur'
+     } ],
+      password: ['', {
+        validators: [Validators.required, Validators.minLength(6)],
+        updateOn: 'blur'
+      }],
+      confirmPassword: ['', {
+        validators: [Validators.required, Validators.minLength(6)],
+        updateOn: 'blur'
+      }
+    ]},
+    {
+      validators: [validatePasswordMatch(),],
+      updateOn: 'change'
     });
   }
 
@@ -57,6 +72,10 @@ export class AuthFormComponent {
 
     console.log(this.returnUrl);
     console.log(this.authMode);
+  }
+
+  ngOnChanges() {
+    console.log(this.form.errors);
   }
 
   onSubmit() {
@@ -129,7 +148,7 @@ export class AuthFormComponent {
       }
 
       public validateControl(controlName: string) {
-        return this.form.controls[controlName].invalid && this.form.controls[controlName].dirty;
+        return this.form.controls[controlName].invalid && this.form.controls[controlName].touched;
       }
     
       public hasError(controlName: string, errorName: string) {

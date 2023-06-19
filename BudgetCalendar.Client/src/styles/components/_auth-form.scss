@@ -24,6 +24,11 @@
         font-size: 2rem;
     }
 
+    .errors {
+        display: flex;
+        flex-direction: column;
+    }
+
     div.field{
         height: 8rem;
     }
