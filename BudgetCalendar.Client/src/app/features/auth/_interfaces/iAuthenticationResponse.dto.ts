@@ -1,5 +1,5 @@
 export interface IUserForAuthenticationResponse {
-    isSuccessful: boolean;
+    isAuthSuccessful: boolean;
     token?: string;
     errorMessage?: string;
     refreshToken?: string;

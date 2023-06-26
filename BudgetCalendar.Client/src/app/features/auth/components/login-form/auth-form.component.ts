@@ -67,8 +67,7 @@ export class AuthFormComponent {
   ngOnInit() {
 
     if (this.authMode === AuthMode.Login) {
-      this.form.removeControl('confirmPassword');
-      this.form.removeValidators([validatePasswordMatch()]);
+      this.confirmPassword?.disable();
     }
 
     console.log(this.returnUrl);
@@ -91,6 +90,8 @@ export class AuthFormComponent {
       password: val.password,
       }
       
+      console.log(user);
+
       this.sendUserLogin(user);
 
     } else if (this.authMode == 'register'){
@@ -108,14 +109,13 @@ export class AuthFormComponent {
 
     sendUserLogin(user: IUserForAuthenticationDto){
       this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
-        if (response.isSuccessful) {
+        if (response.isAuthSuccessful) {
+          
           localStorage.setItem('token', response.token || '');
-          this.authStateService.sendAuthStateChange(response.isSuccessful);
+          this.authStateService.sendAuthStateChange(response.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
         } else {
-          this.form.setErrors({
-            'auth': response.errorMessage
-          });
+          console.log(response);
         }
       }
       , (error: HttpErrorResponse) => {
