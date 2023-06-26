@@ -12,7 +12,7 @@ import { AuthStateService } from 'src/app/services/auth-state.service';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
 
   jwtHelper = inject(JwtHelperService);
   httpClient = inject(HttpClient);
@@ -31,6 +31,7 @@ export class AuthService {
   public logout = () => {
     localStorage.removeItem("token");
     this.authStateService.sendAuthStateChange(false);
+
   }
 
 

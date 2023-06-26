@@ -21,7 +21,7 @@ bootstrapApplication(AppComponent, {
             tokenGetter: () => {
                 return localStorage.getItem('access_token');
             },
-            allowedDomains: ['localhost:44831'],
+            allowedDomains: ['localhost:7031'],
             disallowedRoutes: []
         }
     })),

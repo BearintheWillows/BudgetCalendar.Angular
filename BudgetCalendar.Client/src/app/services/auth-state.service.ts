@@ -17,10 +17,12 @@ export class AuthStateService {
   public isUserAuthenticated = (): boolean => {
     const token = localStorage.getItem("token");
 
-    if (token) {
-      return !this.jwtHelper.isTokenExpired(token);
+    if (token && !this.jwtHelper.isTokenExpired(token)){
+      this.authenticationState.set(true);
+      return true;
     }
 
+    this.authenticationState.set(false);
     return false;
   }
 }
