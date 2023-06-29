@@ -33,18 +33,18 @@ public class AccountsService : IAccountsService
 
     public async Task<List<AccountDto>> GetAll()
     {
-        return await _context.Accounts.Where(c => c.UserId == _userId).Select(c => new AccountDto()
+        return await _context.Accounts.Where(dayOfWeek => dayOfWeek.UserId == _userId).Select(dayOfWeek => new AccountDto()
         {
-            Id = c.Id,
-            Name = c.Name,
-            Balance = c.Balance,
-            Modified = c.Modified
+            Id = dayOfWeek.Id,
+            Name = dayOfWeek.Name,
+            Balance = dayOfWeek.Balance,
+            Modified = dayOfWeek.Modified
         }).ToListAsync();
     }
 
     public async Task<AccountDto?> GetById(int id)
     {
-        var account = await _context.Accounts.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var account = await _context.Accounts.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (account == null)
         {
@@ -81,7 +81,7 @@ public class AccountsService : IAccountsService
 
     public async Task<AccountDto?> Update(int id, AccountDto accountDto)
     {
-        var account = await _context.Accounts.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var account = await _context.Accounts.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (account == null)
         {
@@ -111,7 +111,7 @@ public class AccountsService : IAccountsService
 
     public async Task<bool?> Delete(int id)
     {
-        var account = await _context.Accounts.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var account = await _context.Accounts.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (account == null)
         {

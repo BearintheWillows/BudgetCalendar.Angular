@@ -36,30 +36,30 @@ public class BudgetService : IBudgetService
 
     public async Task<List<BudgetDto>> GetAll()
     {
-        return await _context.Budgets.Include(c => c.Account).Include(c => c.Category).Where(c => c.UserId == _userId).Select(c => new BudgetDto()
+        return await _context.Budgets.Include(dayOfWeek => dayOfWeek.Account).Include(dayOfWeek => dayOfWeek.Category).Where(dayOfWeek => dayOfWeek.UserId == _userId).Select(dayOfWeek => new BudgetDto()
         {
-            Id = c.Id,
-            Amount = c.Amount,
-            Date = c.Date,
-            IsArchived = c.IsArchived, 
-            TransactionType = c.TransactionType.ToString().ToLower(),
-            Note = c.Note,
-            Color = c.Color,
-            Icon = c.Icon,
+            Id = dayOfWeek.Id,
+            Amount = dayOfWeek.Amount,
+            Date = dayOfWeek.Date,
+            IsArchived = dayOfWeek.IsArchived, 
+            TransactionType = dayOfWeek.TransactionType.ToString().ToLower(),
+            Note = dayOfWeek.Note,
+            Color = dayOfWeek.Color,
+            Icon = dayOfWeek.Icon,
             Account = new AccountDto()
                 {
-                Name = c.Account.Name,
+                Name = dayOfWeek.Account.Name,
                 },
             Category = new CategoryDto()
                 {
-                Name = c.Category.Name,
+                Name = dayOfWeek.Category.Name,
                 },
             RecurringBudgetSequence = new RecurringBudgetSequenceDto()
                 {
-                    Id = c.RecurringBudgetSequence.Id,
-                    StartDate = c.RecurringBudgetSequence.StartDate,
-                    EndDate = c.RecurringBudgetSequence.EndDate ,
-                    Interval = c.RecurringBudgetSequence.Interval.ToString().ToLower()
+                    Id = dayOfWeek.RecurringBudgetSequence.Id,
+                    StartDate = dayOfWeek.RecurringBudgetSequence.StartDate,
+                    EndDate = dayOfWeek.RecurringBudgetSequence.EndDate ,
+                    Interval = dayOfWeek.RecurringBudgetSequence.Interval.ToString().ToLower()
                 },
         }).ToListAsync();
     }
@@ -68,7 +68,7 @@ public class BudgetService : IBudgetService
 
     public async Task<BudgetDto?> GetById(int id)
     {
-        var budget = await _context.Budgets.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var budget = await _context.Budgets.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (budget == null)
         {
@@ -195,7 +195,7 @@ public class BudgetService : IBudgetService
             return null;
         }
 
-        var budget = await _context.Budgets.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var budget = await _context.Budgets.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (budget == null)
         {
@@ -221,7 +221,7 @@ public class BudgetService : IBudgetService
 
     public async Task<bool?> Delete(int id)
     {
-        var budget = await _context.Budgets.Where(c => c.UserId == _userId).FirstOrDefaultAsync(c => c.Id == id);
+        var budget = await _context.Budgets.Where(dayOfWeek => dayOfWeek.UserId == _userId).FirstOrDefaultAsync(dayOfWeek => dayOfWeek.Id == id);
 
         if (budget == null)
         {

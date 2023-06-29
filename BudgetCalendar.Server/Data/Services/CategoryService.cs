@@ -35,16 +35,16 @@ public class CategoryService : ICategoryService
 	
 	public async Task<List<CategoryDto>> GetAll()
 	{
-		return await _context.Categories.Where( c => c.UserId == _userId ).Select( c => new CategoryDto()
+		return await _context.Categories.Where( dayOfWeek => dayOfWeek.UserId == _userId ).Select( dayOfWeek => new CategoryDto()
 			{
-			Id = c.Id,
-			Name = c.Name
+			Id = dayOfWeek.Id,
+			Name = dayOfWeek.Name
 			} ).ToListAsync();
 	}
 	
 	public async Task<CategoryDto?> GetById(int id)
 	{
-		var category = await _context.Categories.Where( c => c.UserId == _userId ).FirstOrDefaultAsync( c => c.Id == id );
+		var category = await _context.Categories.Where( dayOfWeek => dayOfWeek.UserId == _userId ).FirstOrDefaultAsync( dayOfWeek => dayOfWeek.Id == id );
 
 		if ( category == null )
 		{
@@ -84,7 +84,7 @@ public class CategoryService : ICategoryService
 	public async Task<CategoryDto?> Update(int id, CategoryDto categoryDto)
 	{
 		
-		var category = await _context.Categories.Where( c => c.UserId == _userId ).FirstOrDefaultAsync( c => c.Id == id );
+		var category = await _context.Categories.Where( dayOfWeek => dayOfWeek.UserId == _userId ).FirstOrDefaultAsync( dayOfWeek => dayOfWeek.Id == id );
 
 		if ( category == null )
 		{
@@ -105,7 +105,7 @@ public class CategoryService : ICategoryService
 	public async Task<bool?> Delete(int id)
 	{
 		
-		var category = await _context.Categories.Where( c => c.UserId == _userId ).FirstOrDefaultAsync( c => c.Id == id );
+		var category = await _context.Categories.Where( dayOfWeek => dayOfWeek.UserId == _userId ).FirstOrDefaultAsync( dayOfWeek => dayOfWeek.Id == id );
 
 		if ( category == null )
 		{

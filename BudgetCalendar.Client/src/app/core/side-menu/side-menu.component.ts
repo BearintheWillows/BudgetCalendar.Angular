@@ -25,6 +25,7 @@ export class SideMenuComponent {
 
   ngOnInit() {
     this.authStateService.isUserAuthenticated();
+    console.log(this.authState())
     this.items = [
       {
         label: 'Logout',
