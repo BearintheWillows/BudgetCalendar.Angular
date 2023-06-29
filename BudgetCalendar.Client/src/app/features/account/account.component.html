@@ -1,1 +1,26 @@
-<p>account works!</p>
+<p-table [value]="accounts()" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Last Modified</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-account>
+    <tr>
+      <td>{{ account.name}}</td>
+      <td>{{ account.balance }}</td>
+      <td>{{ account.modified ?? 'N/A' }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <tr>
+      <td colspan="1" class="text-right">Net Worth</td>
+      <td>{{accountService.totalBalance()}}</td>
+      <td></td>
+    </tr>
+  </ng-template>
+
+</p-table>
+
+
