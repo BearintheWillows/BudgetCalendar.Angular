@@ -32,11 +32,26 @@ export class SideMenuComponent {
         icon: './assets/logout-svgrepo-com.svg',
         command: () => this.logout()
       },
+      {
+        label: 'Calendar',
+        icon: `./assets/calendar/calendar-simple-${this.getDayToday()}-svgrepo-com.svg`,
+        command: () => this.router.navigate(['/calendar'])
+      },
+      {
+        label: 'Account',
+        icon: './assets/bank-svgrepo-com.svg',
+        command: () => this.router.navigate(['/account'])
+      }
     ];
+
   }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
+  }
+
+  getDayToday() {
+    return new Date().getDate();
   }
 }
