@@ -1,4 +1,4 @@
-<p-table [value]="accounts()" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table *ngIf="accounts()" [value]="!isReconcileMode ? accounts() : accountModels()" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
     <tr>
       <th>Name</th>
@@ -9,18 +9,28 @@
   <ng-template pTemplate="body" let-account>
     <tr>
       <td>{{ account.name}}</td>
-      <td>{{ account.balance }}</td>
+      <td *ngIf="!isReconcileMode; else reconcileForm ">{{ account.balance | currency: 'GBP':'symbol': '1.2-2':'en-GB' }}</td>
+      <ng-template #reconcileForm>
+        <td><p-inputNumber [(ngModel)]="account.balance"></p-inputNumber></td>
+      </ng-template>
       <td>{{ account.modified ?? 'N/A' }}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="footer">
     <tr>
       <td colspan="1" class="text-right">Net Worth</td>
-      <td>{{accountService.totalBalance()}}</td>
-      <td></td>
+      <td>account.balance</td>
     </tr>
-  </ng-template>
+    <tr>
+      <td colspan="1" class="text-right">Last Reconciled: </td>
+      <td><p-button color="primary" (click)="reconcileAction()">{{isReconcileMode ? "Save" : "Reconcile"}}</p-button></td>
+    </tr>
 
+  </ng-template>
 </p-table>
+
+
+
+
 
 

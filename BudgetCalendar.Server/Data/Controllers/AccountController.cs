@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetCalendar.Server.Data.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
+
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
@@ -31,6 +34,19 @@ public class AccountController : ControllerBase
         }
 
         return account;
+    }
+    
+    [HttpPut( "reconcile" )]
+    public async Task<IActionResult> PatchAll(ICollection<AccountDto> accounts)
+    {
+        var isUpdated = await _accountsService.UpdateAllBalances(accounts);
+
+        if (isUpdated == false)
+        {
+            return NotFound(new HttpResponseDto<object>(false, "Account not found") );
+        }
+
+        return Ok(new HttpResponseDto<object?>(true, "Account Successfully Updated" ));
     }
 
     [HttpPost]

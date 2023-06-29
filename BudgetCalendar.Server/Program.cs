@@ -23,12 +23,11 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy(CorsPolicy,
-                           builder => builder.AllowAnyOrigin()
-                                             .AllowAnyHeader()
-                                              
-                                             .Build()
-        );
+        options.AddPolicy("CorsPolicy",
+                    b => b.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
     }
 );
 

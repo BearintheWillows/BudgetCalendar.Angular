@@ -18,14 +18,22 @@ export class AccountService {
     .reduce((acc, account) => acc + account.balance!, 0));
 
   constructor() {
-    this.getAccount()
+    this.getAccounts()
 
   }
 
-  getAccount() {
+  getAccounts() {
     return this.http.get(`${this.baseUrl}/account`)
       .subscribe((data: any) => {
         this.accounts.set(data);
       });
+  }
+
+  updateAccounts() {
+    return this.http.put(`${this.baseUrl}/account/reconcile`, this.accounts())
+      .subscribe((data: any) => {
+        this.getAccounts();
+      });
+
   }
 }

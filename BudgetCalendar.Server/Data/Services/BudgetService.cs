@@ -15,7 +15,6 @@ public interface IBudgetService
     Task<BudgetDto?> CreateRecurringBudget( BudgetToCreateDto budgetDto );
     Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetDto);
     Task<bool?> Delete(int id);
-
 }
 
 public class BudgetService : IBudgetService
@@ -281,4 +280,6 @@ public class BudgetService : IBudgetService
 
         return intervalInDays;
     }
+    
+    
 }

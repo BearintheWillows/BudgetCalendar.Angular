@@ -14,6 +14,7 @@ public interface IAccountsService
     Task<AccountDto?> Update(int id, AccountDto accountDto);
     Task<bool?> Delete(int id);
 
+    Task<bool?> UpdateAllBalances(ICollection<AccountDto> accountDtos);
 }
 
 
@@ -119,6 +120,26 @@ public class AccountsService : IAccountsService
         }
 
         _context.Accounts.Remove(account);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+    
+    
+    public async Task<bool?> UpdateAllBalances(ICollection<AccountDto> accountDtos)
+    {
+        foreach (var accountDto in accountDtos)
+        {
+            var account = await _context.Accounts.Where(account => account.UserId == _userId).FirstOrDefaultAsync(account =>  account.Id == accountDto.Id);
+
+            if (account == null)
+            {
+                return null;
+            }
+
+            account.Balance = ( decimal ) accountDto.Balance;
+        }
+
         await _context.SaveChangesAsync();
 
         return true;
