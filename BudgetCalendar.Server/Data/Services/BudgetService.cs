@@ -7,14 +7,17 @@ using System.Security.Claims;
 
 namespace BudgetCalendar.Server.Data.Services;
 
+using System.Runtime.InteropServices.JavaScript;
+
 public interface IBudgetService
 {
     Task<List<BudgetDto>> GetAll();
-    Task<BudgetDto?> GetById(int id);
-    Task<BudgetDto?> CreateOneBudget(BudgetToCreateDto budgetDto);
-    Task<BudgetDto?> CreateRecurringBudget( BudgetToCreateDto budgetDto );
-    Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetDto);
-    Task<bool?> Delete(int id);
+    Task<BudgetDto?>      GetById(int                              id);
+    Task<BudgetDto?>      CreateOneBudget(BudgetToCreateDto        budgetDto);
+    Task<BudgetDto?>      CreateRecurringBudget( BudgetToCreateDto budgetDto );
+    Task<BudgetDto?>      Update(int                               id, BudgetToUpdateDto budgetDto);
+    Task<bool?>           Delete(int                               id);
+    Task<List<Budget>>    GetBudgetsByDates(DateTime            startDate, DateTime endDate);
 }
 
 public class BudgetService : IBudgetService
@@ -280,6 +283,19 @@ public class BudgetService : IBudgetService
 
         return intervalInDays;
     }
+    
+    public async Task<List<Budget>> GetBudgetsByDates(DateTime startDate, DateTime endDate)
+    {
+        var budgets = await _context.Budgets.Include(b => b.Account).Include(b => b.Category).Include(b => b.RecurringBudgetSequence).Where(b => b.UserId == _userId && b.Date >= startDate && b.Date <= endDate).ToListAsync();
+        if (budgets == null)
+        {
+            return null;
+        }
+        
+        return budgets;
+    }
+    
+   
     
     
 }

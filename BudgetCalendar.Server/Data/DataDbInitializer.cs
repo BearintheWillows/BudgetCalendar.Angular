@@ -11,25 +11,29 @@ public static class DataDbInitializer
 		if ( !context.Categories.Any() )
 		{
 			context.Categories.AddRange( GeneratCategories() );
+			context.SaveChanges();
 		}
 
 		if ( !context.Accounts.Any() )
 		{
 
 			context.Accounts.AddRange( GenerateAccounts() );
+			context.SaveChanges();
 		}
 
 		if ( ! context.RecurringBudgetSequences.Any() )
 		{
 			context.RecurringBudgetSequences.AddRange( GenerateRBS() );
+			context.SaveChanges();
 		}
 
 		if ( !context.Budgets.Any() )
 		{
 			context.Budgets.AddRange( GenerateBudgets() );
+			context.SaveChanges();
 		}
 
-		context.SaveChanges();
+		
 	}
 
 	public static IEnumerable<Category> GeneratCategories()
@@ -86,47 +90,47 @@ public static class DataDbInitializer
 				Note = "Test",
 				Color = "Test",
 				AccountId = 1,
-				CategoryId = 3,
-				RecurringBudgetSequenceId = 2,
+				CategoryId = 2,
+				RecurringBudgetSequenceId = 1,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
 			new()
 				{
 				Amount = 100,
-				Date = new DateTime( 2023 / 06 / 15 ),
+				Date = new DateTime( 2023 , 06 , 15 ),
 				IsArchived = false,
 				TransactionType = TransactionType.Expense,
 				Note = "Test",
 				Color = "Test",
 				AccountId = 1,
-				CategoryId = 4,
-				RecurringBudgetSequenceId = 2,
+				CategoryId = 2,
+				RecurringBudgetSequenceId = 1,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
 			new()
 				{
 				Amount = 100,
-				Date = new DateTime( 2023 / 06 / 02 ),
+				Date = new DateTime( 2023 , 06 , 02 ),
 				IsArchived = false,
 				TransactionType = TransactionType.Income,
 				Note = "Test",
 				Color = "Test",
-				AccountId = 1,
-				CategoryId = 3,
-				RecurringBudgetSequenceId = 2,
+				AccountId = 2,
+				CategoryId = 1,
+				RecurringBudgetSequenceId = 1,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
 			new()
 				{
 				Amount = 300,
-				Date = new DateTime( 2023 / 06 / 02 ),
+				Date = new DateTime( 2023 , 06 , 02 ),
 				IsArchived = false,
 				TransactionType = TransactionType.Expense,
 				Note = "Test",
 				Color = "Test",
 				AccountId = 2,
-				CategoryId = 4,
-				RecurringBudgetSequenceId = 2,
+				CategoryId = 2,
+				RecurringBudgetSequenceId = 1,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
 			};
