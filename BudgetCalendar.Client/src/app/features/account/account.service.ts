@@ -36,4 +36,16 @@ export class AccountService {
       });
 
   }
+
+
+  addAccount(account: IAccount): boolean {
+    this.http.post(`${this.baseUrl}/account`, account)
+      .subscribe((data: any) => {
+        this.getAccounts();
+        return true;
+      });
+
+    return false;
+
+  }
 }

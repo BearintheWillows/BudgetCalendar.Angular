@@ -4,14 +4,15 @@ import {AccountService} from "./account.service";
 import {TableModule} from "primeng/table";
 import {IAccount} from "./_interfaces/iAccount";
 import {ButtonModule} from "primeng/button";
-import {BalanceFormComponent} from "./components/balance-form/balance-form.component";
+
 import {PaginatorModule} from "primeng/paginator";
+import {AddAccountComponent} from "./components/add-account/add-account.component";
 
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, BalanceFormComponent, PaginatorModule],
+  imports: [CommonModule, TableModule, ButtonModule, PaginatorModule, AddAccountComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,12 +24,16 @@ export class AccountComponent {
 
   accountModels = signal<IAccount[]>([]);
   isReconcileMode: boolean = false
+  addAccountDialog: boolean = false;
 
   ngOnInit() {
    this.accountService.getAccounts();
    console.log(this.accounts())
   }
 
+  toggleAddAccountDialog() {
+    this.addAccountDialog ? this.addAccountDialog = false : this.addAccountDialog = true;
+  }
 
 
 
@@ -51,4 +56,5 @@ export class AccountComponent {
       this.accountService.updateAccounts();
     }
   }
+
 }

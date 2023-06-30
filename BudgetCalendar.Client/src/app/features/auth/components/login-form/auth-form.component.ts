@@ -40,7 +40,7 @@ export class AuthFormComponent {
   @Input()returnUrl: string = '';
   registerMode: boolean = true;
   form: FormGroup;
-  
+
 
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private authStateService: AuthStateService) {
@@ -69,13 +69,6 @@ export class AuthFormComponent {
     if (this.authMode === AuthMode.Login) {
       this.confirmPassword?.disable();
     }
-
-    console.log(this.returnUrl);
-    console.log(this.authMode);
-  }
-
-  ngOnChanges() {
-    console.log(this.form.errors);
   }
 
   onSubmit() {
@@ -83,13 +76,13 @@ export class AuthFormComponent {
     if (this.form.valid) {
 
       const val = this.form.value;
-     
+
       if (this.authMode == 'login') {
       const user: IUserForAuthenticationDto = {
       email: val.email,
       password: val.password,
       }
-      
+
       console.log(user);
 
       this.sendUserLogin(user);
@@ -110,7 +103,7 @@ export class AuthFormComponent {
     sendUserLogin(user: IUserForAuthenticationDto){
       this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
         if (response.isAuthSuccessful) {
-          
+
           localStorage.setItem('token', response.token || '');
           this.authStateService.sendAuthStateChange(response.isAuthSuccessful);
           this.router.navigate([this.returnUrl]);
@@ -130,9 +123,9 @@ export class AuthFormComponent {
         } else {
             //handle error
           }
-          
+
           console.log(response);
-          
+
         }
       )}
 
@@ -151,7 +144,7 @@ export class AuthFormComponent {
       public validateControl(controlName: string) {
         return this.form.controls[controlName].invalid && this.form.controls[controlName].touched;
       }
-    
+
       public hasError(controlName: string, errorName: string) {
         return this.form.controls[controlName].hasError(errorName);
       }

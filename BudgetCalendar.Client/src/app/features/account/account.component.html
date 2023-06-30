@@ -19,13 +19,18 @@
   <ng-template pTemplate="footer">
     <tr>
       <td colspan="1" class="text-right">Net Worth</td>
-      <td>account.balance</td>
+      <td>{{accountService.totalBalance() | currency: 'GBP':'symbol':'1.2-2':'en-GB'}}</td>
     </tr>
     <tr>
       <td colspan="1" class="text-right">Last Reconciled: </td>
       <td><p-button color="primary" (click)="reconcileAction()">{{isReconcileMode ? "Save" : "Reconcile"}}</p-button></td>
     </tr>
 
+    <p-button *ngIf="!isReconcileMode" label="Add Account" icon="pi pi-plus" (click)="toggleAddAccountDialog()" ></p-button>
+
+    <ng-template [ngIf]="addAccountDialog">
+      <app-add-account></app-add-account>
+    </ng-template>
   </ng-template>
 </p-table>
 

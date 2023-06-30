@@ -1,0 +1,20 @@
+<p-dialog header="Add Account" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <form [formGroup]="form">
+    <div class="formField">
+
+
+    <div class="field p-fluid mt-3">
+                <input pInputText formControlName="name" placeholder="Account Name"  />
+    </div>
+
+    <div class="field p-fluid mt-3">
+                <p-inputNumber [showButtons]="true" formControlName="balance"  mode="decimal" prefix="£" locale="en-GB" ></p-inputNumber>
+    </div>
+    </div>
+  </form>
+  <p-footer>
+    <p-button (click)="visible = false" styleClass="p-button-raised p-button-text p-button-warning" label="Cancel"></p-button>
+    <p-button (click)="onSubmit()" [loading]="loading"  label="Save" ></p-button>
+  </p-footer>
+
+</p-dialog>
