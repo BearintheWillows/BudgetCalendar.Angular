@@ -66,8 +66,7 @@ export class CalendarStateService {
     for (var i = 0; i < loopNumber * 7; i++) {
       const newDay :ICalendarDay = {
         date: dateToAddToCalendar,
-        title: dateToAddToCalendar.getDate().toString(),
-        isToday: dateToAddToCalendar.getDate() === new Date().getDate(),
+        KsisToday: dateToAddToCalendar.getDate() === new Date().getDate(),
         monthNumber: dateToAddToCalendar.getMonth() + 1,
         budgets: [],
         total: signal(0)

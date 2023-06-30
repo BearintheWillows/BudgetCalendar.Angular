@@ -4,7 +4,6 @@ import {IBudget} from "./iBudget";
 
 export interface ICalendarDay {
   date: Date;
-  title: string;
   isToday: boolean;
   monthNumber: number;
   budgets: IBudget[];
