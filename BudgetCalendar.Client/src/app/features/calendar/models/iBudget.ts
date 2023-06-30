@@ -1,6 +1,7 @@
-import {IAccount} from "./iAccount";
+
 import {ICategory} from "./iCategory";
 import {IRecurringBudgetSequence} from "./iRecurringBudgetSequence";
+import {IAccount} from "../../account/_interfaces/iAccount";
 
 export interface IBudget {
   id: number;
