@@ -1,6 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
+import {CalendarStateService} from "../../services/calendar-state.service";
+import {CalendarDay} from "../../models/calendar-day";
 
 @Component({
   selector: 'app-day-card',
@@ -11,9 +13,11 @@ import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 })
 export class DayCardComponent {
 
+  calendarService = inject(CalendarStateService);
+
   title: string = 'BudgetCalendar.Client';
   budgetSections: any[] = [];
-
+  @Input() day!: CalendarDay;
   @Input() dayNumber?: number;
   total: number = 0;
   previousDayTotal: number = 0;
@@ -36,7 +40,6 @@ export class DayCardComponent {
         amount: -100
       },
     ]
-
     this.budgetSections.forEach(element => {
       this.total += element.amount;
     });

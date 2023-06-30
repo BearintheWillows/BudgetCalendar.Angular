@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [ngClass]="{'month': day.month !== calendarService.selectedMonthNumber() , 'today': day.isToday}">
   <div class="day-number">
     {{dayNumber}}
   </div>
@@ -12,4 +12,6 @@
     <div class="total">
       <span class="total-text">Total:</span><span class="total-amount">{{total}}</span>
     </div>
+    <p>{{day}}</p>
   </div>
+</div>

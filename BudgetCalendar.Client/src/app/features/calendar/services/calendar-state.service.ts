@@ -1,4 +1,5 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
+import {CalendarDay} from "../models/calendar-day";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class CalendarStateService {
   firstDayOfSelectedMonth = computed(() => new Date(this.today().getFullYear(), this.today().getMonth() + this.monthIndex()));
   selectedMonthName = computed(() => this.monthNames[this.today().getMonth() + this.monthIndex()]);
   selectedMonthNumber = computed(() => this.today().getMonth() + this.monthIndex() );
-
+  calendar = signal<CalendarDay[]>([]);
 
 
   /// This method is used to get the number of full weeks that will fit in the calendar.
@@ -53,6 +54,20 @@ export class CalendarStateService {
     } else {
       return this.firstDayOfSelectedMonth();
     }
+  }
+
+  public generateCalendarDays(): void {
+
+    let dateToAddToCalendar = this.calendarStartDate();
+    let loopNumber = this.amountOfDaysInSelectedCalendar();
+    let cal: CalendarDay[] = [];
+
+    for (var i = 0; i < loopNumber * 7; i++) {
+      cal.push(new CalendarDay(new Date(dateToAddToCalendar)));
+      dateToAddToCalendar = new Date(dateToAddToCalendar.setDate(dateToAddToCalendar.getDate() + 1));
+
+    }
+    this.calendar.set(cal);
   }
 
 

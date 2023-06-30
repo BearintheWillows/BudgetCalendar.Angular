@@ -1,5 +1,5 @@
 
-<table class='calendar-table' *ngIf="calendar">
+<table class='calendar-table' *ngIf="calendarService.calendar().length > 1">
   <thead>
   <tr>
     <th>Monday</th>
@@ -12,14 +12,14 @@
   </tr>
   <tr>
     <th class="month-button" colspan="1" (click)="decreaseMonth()"><p><</p></th>
-    <th colspan="5">{{displayMonth()}}</th>
+    <th colspan="5">{{calendarService.selectedMonthName()}}</th>
     <th class="month-button" colspan="1" (click)="increaseMonth()"><p>></p></th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let row of calendar | calendarChunk: 7; let i = index">
-    <td class="calendar-day" *ngFor="let dayOfWeek of row; let j = index" [ngClass]="{ 'today': dayOfWeek.isToday, 'month': dayOfWeek.month != displayMonthNumber() }" >
-      <app-day-card [dayNumber]="dayOfWeek.date.getDate()" ></app-day-card>
+  <tr *ngFor="let row of  calendarService.calendar()| calendarChunk: 7; let i = index">
+    <td class="calendar-day" *ngFor="let dayOfWeek of row; let week = index" >
+      <app-day-card [dayNumber]="dayOfWeek.date.getDate()" [day]="dayOfWeek" ></app-day-card>
     </td>
   </tr>
   </tbody>
