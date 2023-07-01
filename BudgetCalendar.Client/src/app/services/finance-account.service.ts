@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {IAccount} from "../shared/_interfaces/iAccount";
+import {IAccount} from "../features/account/_interfaces/iAccount";
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import {IAccount} from "../shared/_interfaces/iAccount";
 export class FinanceAccountService {
 
   httpClient = inject(HttpClient);
+  accounts: IAccount[] = [];
 
 
   async getAccount(): Promise<IAccount> {

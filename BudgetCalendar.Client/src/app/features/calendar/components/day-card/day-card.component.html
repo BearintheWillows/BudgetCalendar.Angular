@@ -1,6 +1,4 @@
-<div  class="card" >
-  <div class="day-number">
-  </div>
+<p-card header="{{day.date.getDate()}}">
   <div>
 
     <div class="item-container" ng-scroll="$event.target.scrollTop = $event.target.scrollHeight">
@@ -12,4 +10,4 @@
       <span class="total-text">Total:</span><span class="total-amount">{{day.total}}</span>
     </div>
   </div>
-</div>
+</p-card>

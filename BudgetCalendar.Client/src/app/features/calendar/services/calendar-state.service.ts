@@ -1,8 +1,7 @@
 import {computed, inject, Injectable, Signal, signal} from '@angular/core';
-import {CalendarDay} from "../models/calendar-day";
 import {ICalendarDay} from "../models/iCalendarDay";
 import {HttpClient} from "@angular/common/http";
-import {D} from "@angular/cdk/keycodes";
+import {AccountService} from "../../account/account.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +9,7 @@ import {D} from "@angular/cdk/keycodes";
 export class CalendarStateService {
 
   http = inject(HttpClient);
+  accountsService = inject(AccountService);
 
   monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -68,17 +68,17 @@ export class CalendarStateService {
     let loopNumber = this.amountOfDaysInSelectedCalendar();
     let cal: ICalendarDay[] = [];
 
+
     for (var i = 0; i < loopNumber * 7; i++) {
 
-      let calendarDayWithBudgets = this.calendarDaysWithBudgets().find(( x => x.date.slice(0,10) === dateToAddToCalendar.toISOString().slice(0,10)));
+      let calendarDayWithBudgets = this.calendarDaysWithBudgets().find(( x => x.date.toISOString().slice(0,10) === dateToAddToCalendar.toISOString().slice(0,10)));
 
       if(calendarDayWithBudgets) {
         calendarDayWithBudgets.total = calendarDayWithBudgets.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
-
         cal.push(calendarDayWithBudgets);
       } else {
         const newDay: ICalendarDay = {
-          date: dateToAddToCalendar.toISOString(),
+          date: dateToAddToCalendar,
           monthNumber: dateToAddToCalendar.getMonth() + 1,
           budgets: [],
           total: 0
@@ -96,6 +96,9 @@ export class CalendarStateService {
 
   public getCalendarDays(): void{
     this.http.get<ICalendarDay[]>('https://localhost:44381/api/budget/calendar-budgets?startDate=2023-06-01&endDate=2023-06-30').subscribe(result => {
+      for (let i = 0; i < result.length; i++) {
+        result[i].date = new Date(result[i].date);
+      }
       this.calendarDaysWithBudgets.set(result)
       console.log(result);
       this.generateCalendarDays();
