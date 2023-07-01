@@ -25,7 +25,6 @@ export class CalendarTableComponent implements OnInit{
   calendarService = inject(CalendarStateService);
 
   ngOnInit(): void {
-    this.calendarService.generateCalendarDays();
     this.calendarService.getCalendarDays();
   }
 

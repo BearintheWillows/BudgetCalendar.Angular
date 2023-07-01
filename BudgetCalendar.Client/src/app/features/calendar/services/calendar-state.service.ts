@@ -2,6 +2,7 @@ import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {CalendarDay} from "../models/calendar-day";
 import {ICalendarDay} from "../models/iCalendarDay";
 import {HttpClient} from "@angular/common/http";
+import {D} from "@angular/cdk/keycodes";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class CalendarStateService {
   today: Signal<Date> = signal(new Date());
   monthIndex= signal(0);
 
+  calendarDaysWithBudgets= signal<ICalendarDay[]>([]);
   calendarStartDate = computed(() => this.getStartDateForSelectedCalendarMonth(this.firstDayOfSelectedMonth()));
   amountOfDaysInSelectedCalendar: Signal<number> = computed(() => this.getNumberOfFullWeeksToFitInCalendar(this.calendarStartDate()));
   firstDayOfSelectedMonth = computed(() => new Date(this.today().getFullYear(), this.today().getMonth() + this.monthIndex()));
@@ -67,13 +69,23 @@ export class CalendarStateService {
     let cal: ICalendarDay[] = [];
 
     for (var i = 0; i < loopNumber * 7; i++) {
-      const newDay :ICalendarDay = {
-        date: dateToAddToCalendar,
-        monthNumber: dateToAddToCalendar.getMonth() + 1,
-        budgets: [],
-        total: signal(0)
+
+      let calendarDayWithBudgets = this.calendarDaysWithBudgets().find(( x => x.date.slice(0,10) === dateToAddToCalendar.toISOString().slice(0,10)));
+
+      if(calendarDayWithBudgets) {
+        calendarDayWithBudgets.total = calendarDayWithBudgets.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
+
+        cal.push(calendarDayWithBudgets);
+      } else {
+        const newDay: ICalendarDay = {
+          date: dateToAddToCalendar.toISOString(),
+          monthNumber: dateToAddToCalendar.getMonth() + 1,
+          budgets: [],
+          total: 0
+          }
+          newDay.total = newDay.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
+        cal.push(newDay);
       }
-      cal.push(newDay);
       dateToAddToCalendar = new Date(dateToAddToCalendar.setDate(dateToAddToCalendar.getDate() + 1));
 
     }
@@ -84,7 +96,9 @@ export class CalendarStateService {
 
   public getCalendarDays(): void{
     this.http.get<ICalendarDay[]>('https://localhost:44381/api/budget/calendar-budgets?startDate=2023-06-01&endDate=2023-06-30').subscribe(result => {
+      this.calendarDaysWithBudgets.set(result)
       console.log(result);
+      this.generateCalendarDays();
     });
   }
 

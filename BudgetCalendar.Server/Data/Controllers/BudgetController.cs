@@ -90,11 +90,11 @@ public class BudgetController : ControllerBase
                 budgetDate = budgetDate.AddDays( 1 );
             }
 
-            return Ok(new HttpResponseDto<List<DayDto>>( true, days, "Budgets Successfully Retrieved" ));
+            return Ok(days);
 
         }
 
-        return NotFound( new HttpResponseDto<object>( false, "No Budgets Found" ));
+        return NotFound();
     }
 
     [HttpGet("{id}")]

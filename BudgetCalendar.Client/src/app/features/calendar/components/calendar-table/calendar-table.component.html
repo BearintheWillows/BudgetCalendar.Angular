@@ -19,7 +19,7 @@
   <tbody>
   <tr *ngFor="let row of  calendarService.calendar()| calendarChunk: 7; let i = index">
     <td class="calendar-day" *ngFor="let dayOfWeek of row; let week = index" >
-      <app-day-card [date]="dayOfWeek" ></app-day-card>
+      <app-day-card [day]="dayOfWeek"   ></app-day-card>
     </td>
   </tr>
   </tbody>

@@ -4,12 +4,12 @@
   <div>
 
     <div class="item-container" ng-scroll="$event.target.scrollTop = $event.target.scrollHeight">
-<!--      <div  *ngFor="let item of budgetSections">-->
-<!--        <app-day-card-item [name]="item.name" [amount]="item.amount" ></app-day-card-item>-->
-<!--      </div>-->
+      <div  *ngFor="let item of day.budgets">
+        <app-day-card-item [name]="item.category.name" [amount]="item.amount" ></app-day-card-item>
+      </div>
     </div>
     <div class="total">
-      <span class="total-text">Total:</span><span class="total-amount">172</span>
+      <span class="total-text">Total:</span><span class="total-amount">{{day.total}}</span>
     </div>
   </div>
 </div>

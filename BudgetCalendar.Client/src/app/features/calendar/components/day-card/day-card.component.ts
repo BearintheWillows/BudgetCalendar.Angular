@@ -2,6 +2,7 @@ import {Component, inject, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 import {CalendarStateService} from "../../services/calendar-state.service";
+import {ICalendarDay} from "../../models/iCalendarDay";
 
 @Component({
   selector: 'app-day-card',
@@ -14,13 +15,14 @@ export class DayCardComponent {
 
   calendarService = inject(CalendarStateService);
 
+
   constructor() {
 
   }
 
-  @Input() date!: Date;
+  @Input() day!: ICalendarDay;
   today = new Date();
   ngOnInit(): void {
-
+  console.log(this.day);
   }
 }
