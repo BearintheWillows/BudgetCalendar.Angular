@@ -26,6 +26,7 @@ export class CalendarTableComponent implements OnInit{
 
   ngOnInit(): void {
     this.calendarService.generateCalendarDays();
+    this.calendarService.getCalendarDays();
   }
 
   public increaseMonth() {

@@ -1,11 +1,14 @@
-import {computed, Injectable, Signal, signal} from '@angular/core';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {CalendarDay} from "../models/calendar-day";
 import {ICalendarDay} from "../models/iCalendarDay";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarStateService {
+
+  http = inject(HttpClient);
 
   monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -66,7 +69,6 @@ export class CalendarStateService {
     for (var i = 0; i < loopNumber * 7; i++) {
       const newDay :ICalendarDay = {
         date: dateToAddToCalendar,
-        KsisToday: dateToAddToCalendar.getDate() === new Date().getDate(),
         monthNumber: dateToAddToCalendar.getMonth() + 1,
         budgets: [],
         total: signal(0)
@@ -80,18 +82,14 @@ export class CalendarStateService {
     console.log(this.calendar());
   }
 
-
-
-
-  private getCurrentMonthIndex(): number {
-    let today = new Date();
-    return today.getMonth();
+  public getCalendarDays(): void{
+    this.http.get<ICalendarDay[]>('https://localhost:44381/api/budget/calendar-budgets?startDate=2023-06-01&endDate=2023-06-30').subscribe(result => {
+      console.log(result);
+    });
   }
 
 
-  public setSelectedMonth(today: Date, monthIndex: number): Date {
-    return new Date(today.getFullYear(), today.getMonth() + monthIndex);
-  }
+
 
 
 
