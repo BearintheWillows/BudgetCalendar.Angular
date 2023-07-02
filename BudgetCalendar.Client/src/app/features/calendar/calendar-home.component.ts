@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarTableComponent } from './components/calendar-table/calendar-table.component';
+import {GenerateCalendarService} from "../../Data/services/calendar/generate-calendar.service";
 
 @Component({
   standalone: true,
@@ -9,5 +10,9 @@ import { CalendarTableComponent } from './components/calendar-table/calendar-tab
   styleUrls: ['./calendar-home.component.scss']
 })
 export class CalendarHomeComponent {
+calendarService = inject(GenerateCalendarService)
 
+  ngOnInit(): void {
+    this.calendarService.generateCalendarDays();
+  }
 }

@@ -64,34 +64,34 @@ export class CalendarStateService {
 
   public generateCalendarDays(): void {
 
-    let dateToAddToCalendar = this.calendarStartDate();
-    let loopNumber = this.amountOfDaysInSelectedCalendar();
-    let cal: ICalendarDay[] = [];
-
-
-    for (var i = 0; i < loopNumber * 7; i++) {
-
-      let calendarDayWithBudgets = this.calendarDaysWithBudgets().find(( x => x.date.toISOString().slice(0,10) === dateToAddToCalendar.toISOString().slice(0,10)));
-
-      if(calendarDayWithBudgets) {
-        calendarDayWithBudgets.total = calendarDayWithBudgets.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
-        cal.push(calendarDayWithBudgets);
-      } else {
-        const newDay: ICalendarDay = {
-          date: dateToAddToCalendar,
-          monthNumber: dateToAddToCalendar.getMonth() + 1,
-          budgets: [],
-          total: 0
-          }
-          newDay.total = newDay.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
-        cal.push(newDay);
-      }
-      dateToAddToCalendar = new Date(dateToAddToCalendar.setDate(dateToAddToCalendar.getDate() + 1));
-
-    }
-    this.calendar.set(cal);
-
-    console.log(this.calendar());
+    // let dateToAddToCalendar = this.calendarStartDate();
+    // let loopNumber = this.amountOfDaysInSelectedCalendar();
+    // let cal: ICalendarDay[] = [];
+    //
+    //
+    // for (var i = 0; i < loopNumber * 7; i++) {
+    //
+    //   let calendarDayWithBudgets = this.calendarDaysWithBudgets().find(( x => x.date.toISOString().slice(0,10) === dateToAddToCalendar.toISOString().slice(0,10)));
+    //
+    //   if(calendarDayWithBudgets) {
+    //     calendarDayWithBudgets.total = calendarDayWithBudgets.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
+    //     cal.push(calendarDayWithBudgets);
+    //   } else {
+    //     const newDay: ICalendarDay = {
+    //       date: dateToAddToCalendar,
+    //       monthNumber: dateToAddToCalendar.getMonth() + 1,
+    //       budgets: [],
+    //       total: 0
+    //       }
+    //       newDay.total = newDay.budgets.reduce((a, b) => a + b.amount, 0) + cal[cal.length - 1]?.total || 0;
+    //     cal.push(newDay);
+    //   }
+    //   dateToAddToCalendar = new Date(dateToAddToCalendar.setDate(dateToAddToCalendar.getDate() + 1));
+    //
+    // }
+    // this.calendar.set(cal);
+    //
+    // console.log(this.calendar());
   }
 
   public getCalendarDays(): void{
