@@ -1,23 +1,18 @@
 
-import { AuthStateService } from './../../../../services/auth-state.service';
-import { IUserForAuthenticationDto } from 'src/app/features/auth/_interfaces/iUserForAuthentication.dto';
-import { IUserForRegistration } from '../../_interfaces/iUserForRegistration.dto';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import { AuthService } from 'src/app/features/auth/auth.service';
 import { MessageModule } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AuthMode } from '../../auth.constants';
-import { IUserForAuthenticationResponse } from '../../_interfaces/iAuthenticationResponse.dto';
-import { HttpErrorResponse } from '@angular/common/http';
-import { IRegistrationResponse } from '../../_interfaces/iRegistrationResponse.dto';
-import ValidatePasswordMatch from '../../_validators/password-match.validator';
 import validatePasswordMatch from '../../_validators/password-match.validator';
+import {AuthStateService} from "../../../../Data/services/auth-state.service";
+import {IUserForAuthenticationDto} from "../../../../Data/types/auth/iUserForAuthentication.dto";
+import {IUserForRegistration} from "../../../../Data/types/auth/iUserForRegistration.dto";
 
 
 @Component({
@@ -43,7 +38,7 @@ export class AuthFormComponent {
 
 
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private authStateService: AuthStateService) {
+  constructor(private fb: FormBuilder, private router: Router, private authStateService: AuthStateService) {
     this.form = this.fb.group({
       email: ['', {
         validators: [Validators.required, Validators.email],
@@ -101,33 +96,14 @@ export class AuthFormComponent {
   }
 
     sendUserLogin(user: IUserForAuthenticationDto){
-      this.authService.login(user).subscribe((response: IUserForAuthenticationResponse) => {
-        if (response.isAuthSuccessful) {
-
-          localStorage.setItem('token', response.token || '');
-          this.authStateService.sendAuthStateChange(response.isAuthSuccessful);
-          this.router.navigate([this.returnUrl]);
-        } else {
-          console.log(response);
-        }
-      }
-      , (error: HttpErrorResponse) => {
-        console.log(error);
-      });
+      this.authStateService.login(user);
     }
 
+
     sendUserRegistration(user: IUserForRegistration){
-      this.authService.register(user).subscribe((response: IRegistrationResponse) => {
-        if (response.isSuccessful) {
-          this.router.navigate(['/auth/register-confirm'])
-        } else {
-            //handle error
-          }
-
-          console.log(response);
-
-        }
-      )}
+      if (this.authStateService.register(user)) {
+        this.router.navigate(['/login']);
+      }}
 
       public get email() {
         return this.form.get('email');
