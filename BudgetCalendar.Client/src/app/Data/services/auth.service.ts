@@ -4,15 +4,16 @@ import {LoginService} from "./auth/login.service";
 import {RegisterService} from "./auth/register.service";
 import {IUserForAuthenticationDto} from "../types/auth/iUserForAuthentication.dto";
 import {IUserForRegistration} from "../types/auth/iUserForRegistration.dto";
-import {IUserForAuthenticationResponse} from "../types/auth/iAuthenticationResponse.dto";
+import {LogoutService} from "./auth/logout.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthStateService {
+export class AuthService {
 
   loginService = inject(LoginService);
   registerService = inject(RegisterService);
+  logoutService = inject(LogoutService);
   jwtHelper = inject(JwtHelperService);
 
   public authenticationState = signal(false);
@@ -39,18 +40,12 @@ export class AuthStateService {
   }
 
   logout = () => {
-    localStorage.removeItem("token");
+    this.logoutService.logout();
     this.authenticationState.set(false);
   }
 
-  public register = (body: IUserForRegistration): boolean => {
-    this.registerService.register(body).subscribe((res) => {
-      if (res.isSuccessful) {
-        return true;
-      }
-      return false;
-    });
-    return false;
+  public register = (body: IUserForRegistration)=> {
+    this.registerService.register(body);
   }
 
 

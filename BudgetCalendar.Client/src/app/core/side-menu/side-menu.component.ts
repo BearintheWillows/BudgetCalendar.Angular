@@ -2,7 +2,8 @@ import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DockModule} from "primeng/dock";
 import {Router} from "@angular/router";
-import {AuthStateService} from "../../Data/services/auth-state.service";
+import {AuthService} from "../../Data/services/auth.service";
+
 
 @Component({
   selector: 'app-side-menu',
@@ -13,13 +14,14 @@ import {AuthStateService} from "../../Data/services/auth-state.service";
 })
 export class SideMenuComponent {
 
-  authStateService = inject(AuthStateService);
+  authService = inject(AuthService);
   router = inject(Router);
-  authState = this.authStateService.authenticationState;
+
+  authState = this.authService.authenticationState;
   public items!: any[];
   ngOnInit() {
-    this.authStateService.isUserAuthenticated();
-    console.log(this.authState())
+    this.authService.isUserAuthenticated();
+
     this.items = [
       {
         label: 'Logout',
@@ -41,8 +43,7 @@ export class SideMenuComponent {
   }
 
   logout() {
-    this.authStateService.logout();
-    this.router.navigate(['/auth/login']);
+    this.authService.logout();
   }
 
   getDayToday() {

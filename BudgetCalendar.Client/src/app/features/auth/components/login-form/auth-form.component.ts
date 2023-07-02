@@ -1,5 +1,5 @@
 
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { AuthMode } from '../../auth.constants';
 import validatePasswordMatch from '../../_validators/password-match.validator';
-import {AuthStateService} from "../../../../Data/services/auth-state.service";
+import {AuthService} from "../../../../Data/services/auth.service";
 import {IUserForAuthenticationDto} from "../../../../Data/types/auth/iUserForAuthentication.dto";
 import {IUserForRegistration} from "../../../../Data/types/auth/iUserForRegistration.dto";
 
@@ -31,6 +31,8 @@ import {IUserForRegistration} from "../../../../Data/types/auth/iUserForRegistra
 })
 export class AuthFormComponent {
 
+  authService = inject(AuthService);
+
   @Input()authMode!: AuthMode;
   @Input()returnUrl: string = '';
   registerMode: boolean = true;
@@ -38,7 +40,7 @@ export class AuthFormComponent {
 
 
 
-  constructor(private fb: FormBuilder, private router: Router, private authStateService: AuthStateService) {
+  constructor(private fb: FormBuilder, private router: Router, private authStateService: AuthService) {
     this.form = this.fb.group({
       email: ['', {
         validators: [Validators.required, Validators.email],
@@ -101,9 +103,8 @@ export class AuthFormComponent {
 
 
     sendUserRegistration(user: IUserForRegistration){
-      if (this.authStateService.register(user)) {
-        this.router.navigate(['/login']);
-      }}
+      this.authStateService.register(user);
+      }
 
       public get email() {
         return this.form.get('email');
