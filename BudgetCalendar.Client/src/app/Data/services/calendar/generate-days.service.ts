@@ -14,24 +14,20 @@ export class GenerateDaysService {
 
   public generateDays(startDate: Date, endDate: Date, loopNum: number): Promise<ICalendarDay[]> {
     return new Promise((resolve, reject) => {
-      let allDays: ICalendarDay[] = [];
-      let currentDate = new Date(startDate);
       this.getCalendarBudgets(startDate, endDate).subscribe(daysWithBudgets => {
+        let allDays: ICalendarDay[] = [];
+        let currentDate = new Date(startDate);
 
         for (let i = 0; i < loopNum  ; i++) {
           let previousDayTotal = allDays[i - 1]?.total ?? 0;
-          let currentDayBudgets = daysWithBudgets.find(x => x.date.toISOString().slice(0,10) === currentDate.toISOString().slice(0, 10))?.budgets ;
-          console.log(currentDate);
+          let currentDayBudgets = daysWithBudgets.find(x => x.date.toISOString().slice(0, 10) === currentDate.toISOString().slice(0,10))?.budgets ?? null;
+
           let currentDay = this.createDay(currentDate, previousDayTotal, currentDayBudgets ?? null);
-          console.log(currentDay)
 
-          allDays.push(currentDay);
-          console.log(allDays.length)
-          console.log(allDays[0])
-
+          allDays.push(JSON.parse(JSON.stringify(currentDay)));
           currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+
         }
-        console.log(allDays);
         resolve(allDays);
       }, err => {
         reject(err);
@@ -44,10 +40,13 @@ export class GenerateDaysService {
     let endD = endDate.toISOString().slice(0, 10);
     return this.http.get<ICalendarDay[]>(`${CalendarPaths.DayBudgetsByRange}startDate=${startD}&endDate=${endD}`).pipe(
       map(result => {
+        if (result == null) return [];
+
         for (let i = 0; i < result.length; i++) {
           result[i].date = new Date(result[i].date);
         }
-        return result;
+
+        return result ;
       })
     );
   }

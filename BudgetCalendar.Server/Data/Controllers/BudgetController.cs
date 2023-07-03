@@ -82,11 +82,11 @@ public class BudgetController : ControllerBase
                 }
 
                 if ( dayBudgets.Count > 0 )
-                    {
-                        day = new DayDto() { Date = budgetDate, Budgets = new Collection<BudgetDto>( dayBudgets ) };
-                        days.Add( day );
+                {
+                    day = new DayDto() { Date = budgetDate, Budgets = new Collection<BudgetDto>( dayBudgets ) };
+                    days.Add( day );
                         
-                    }
+                }
                 budgetDate = budgetDate.AddDays( 1 );
             }
 
@@ -94,7 +94,7 @@ public class BudgetController : ControllerBase
 
         }
 
-        return NotFound();
+        return NoContent();
     }
 
     [HttpGet("{id}")]

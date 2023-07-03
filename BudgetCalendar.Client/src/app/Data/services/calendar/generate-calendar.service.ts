@@ -59,7 +59,7 @@ export class GenerateCalendarService {
     let endDate: Date = new Date(new Date().setDate(startDate.getDate() + this.getNumberOfDaysToGenerate(startDate)));
     let loopNumber = Math.ceil(this.getNumberOfDaysToGenerate(startDate) / 7);
 
-    let cal: ICalendarDay[] = await this.generateDaysService.generateDays(new Date(2023, 5, 1), new Date(2023, 6, 31), this.getNumberOfDaysToGenerate(startDate));
+    let cal: ICalendarDay[] = await this.generateDaysService.generateDays(new Date(Date.UTC(startDate.getUTCFullYear(),startDate.getUTCDate(),startDate.getUTCDay())), new Date(Date.UTC(endDate.getUTCFullYear(),endDate.getUTCDate(), endDate.getUTCDay())), this.getNumberOfDaysToGenerate(startDate));
 
 
     console.log(cal);
