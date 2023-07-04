@@ -21,6 +21,9 @@ Below are some screenshots of the current state of the app. **Updated: 04/07/202
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/fab9c757-7134-428a-9265-2aee57b16c14)
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/c4541fd7-ff75-4591-a413-794577e07a0a)
 - **Fig 7 & 8 - Add Account Form Modal Functional**
+![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/b7d859c8-db0d-446c-8a20-12008304570b)
+![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/86617194-34aa-461e-ae4c-f4cd65eb9681)
+- **Fig 9 & 10 - Back-end REST Api end-points implemented **
 
 
 
