@@ -2,6 +2,8 @@
 
 BudgetCalendar is a Full-stack project built using Angular 16 and .Net to showcase various skills in Web App Development. Though early days, the Back-end is functional through the usage of simple Rest API calls and a User authentication system using JWT tokens and .Net Identity.
 
+Project can be seen working by running `ng serve` from within the BudgetTracker.Client folder and starting the .net server https in Visual Studio.
+
 Below are some screenshots of the current state of the app. **Updated: 04/07/2023**
 
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/f0c925ed-1538-46ac-affb-c2519041163b)
