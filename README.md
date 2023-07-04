@@ -8,7 +8,7 @@ Below are some screenshots of the current state of the app. **Updated: 04/07/202
 
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/f0c925ed-1538-46ac-affb-c2519041163b)
 - **Fig 1 - Login Form Display. Functional.**
-![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/6f73050f-d69d-4208-9bbf-8225ae8d95f2)
+![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/ebda2ce1-b4a0-4dcc-8573-76d763a34f99)
 - **Fig 2 - Register Form Diplay. Functional**
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/77176409-8b7a-4152-8151-1895c7eb42fa)
 - **Fig 3 - View of Side-Menu and the basic Calendar skeleton**
