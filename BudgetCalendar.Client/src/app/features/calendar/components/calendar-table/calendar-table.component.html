@@ -12,7 +12,7 @@
   </tr>
   <tr>
     <th class="month-button" colspan="1" (click)="decreaseMonth()"><p><</p></th>
-    <th colspan="5">{{calendarService.selectedMonthName()}}</th>
+    <th colspan="5">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</th>
     <th class="month-button" colspan="1" (click)="increaseMonth()"><p>></p></th>
   </tr>
   </thead>

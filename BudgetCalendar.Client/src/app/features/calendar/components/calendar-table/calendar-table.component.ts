@@ -4,6 +4,7 @@ import {CalendarChunkPipe} from "../../pipes/calendar-chunk.pipe";
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 import {DayCardComponent} from "../day-card/day-card.component";
 import {CalendarStateService} from "../../services/calendar-state.service";
+import {CalendarService} from "../../../../Data/services/calendar.service";
 
 
 
@@ -22,20 +23,18 @@ import {CalendarStateService} from "../../services/calendar-state.service";
 })
 export class CalendarTableComponent implements OnInit{
 
-  calendarService = inject(CalendarStateService);
+  calendarService = inject(CalendarService);
 
   ngOnInit(): void {
-    this.calendarService.getCalendarDays();
+    this.calendarService.createCalendar();
   }
 
   public increaseMonth() {
-    this.calendarService.monthIndex.set(this.calendarService.monthIndex() + 1);
-    this.calendarService.generateCalendarDays();
+    this.calendarService.increaseMonthIndex();
   }
 
   public decreaseMonth() {
-    this.calendarService.monthIndex.set(this.calendarService.monthIndex() - 1);
-    this.calendarService.generateCalendarDays();
+    this.calendarService.decreaseMonthIndex();
   }
 
 

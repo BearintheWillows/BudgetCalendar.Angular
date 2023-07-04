@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {ICalendarDay} from "../../../features/calendar/models/iCalendarDay";
 import {MonthIndexService} from "./month-index.service";
 import {GenerateDaysService} from "./generate-days.service";
@@ -37,6 +37,7 @@ export class GenerateCalendarService {
     const today = new Date();
     const monthIndex = this.monthIndexService.getMonthIndex();
     let firstDayOfSelectedMonth = new Date(today.getFullYear(), today.getMonth() + monthIndex, 1);
+    console.log(firstDayOfSelectedMonth);
 
     if (firstDayOfSelectedMonth.getDay() != 1) {
 
@@ -53,7 +54,7 @@ export class GenerateCalendarService {
   }
 
 
-  public async generateCalendarDays(): Promise<void> {
+  public async generateCalendarDays(): Promise<ICalendarDay[]> {
 
     let startDate = this.getStartDateForSelectedCalendarMonth();
     let endDate: Date = new Date(new Date().setDate(startDate.getDate() + this.getNumberOfDaysToGenerate(startDate)));
@@ -62,6 +63,6 @@ export class GenerateCalendarService {
     let cal: ICalendarDay[] = await this.generateDaysService.generateDays(new Date(Date.UTC(startDate.getUTCFullYear(),startDate.getUTCDate(),startDate.getUTCDay())), new Date(Date.UTC(endDate.getUTCFullYear(),endDate.getUTCDate(), endDate.getUTCDay())), this.getNumberOfDaysToGenerate(startDate));
 
 
-    console.log(cal);
+    return cal;
   }
 }

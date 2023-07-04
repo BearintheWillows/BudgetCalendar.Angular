@@ -5,7 +5,7 @@ import {Injectable, signal} from '@angular/core';
 })
 export class MonthIndexService {
 
-  private monthIndex = signal(-1);
+  private monthIndex = signal(0);
 
   incrementMonthIndex = () => {
     this.monthIndex.set(this.monthIndex() + 1);

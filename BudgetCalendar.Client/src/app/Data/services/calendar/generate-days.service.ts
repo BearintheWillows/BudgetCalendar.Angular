@@ -24,7 +24,7 @@ export class GenerateDaysService {
 
           let currentDay = this.createDay(currentDate, previousDayTotal, currentDayBudgets ?? null);
 
-          allDays.push(JSON.parse(JSON.stringify(currentDay)));
+          allDays.push(currentDay);
           currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
 
         }
@@ -53,8 +53,8 @@ export class GenerateDaysService {
 
     private createDay(date: Date, previousDayTotal: number, budgets: IBudget[] | null): ICalendarDay{
       return {
-        date: date,
-        budgets: budgets ?? null,
+        date: new Date(date),
+        budgets: budgets ? [...budgets] : [],
         total: previousDayTotal + (budgets?.reduce((a, b) => a + b.amount, 0) ?? 0)
       };
     }

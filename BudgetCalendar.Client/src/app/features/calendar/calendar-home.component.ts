@@ -10,9 +10,8 @@ import {GenerateCalendarService} from "../../Data/services/calendar/generate-cal
   styleUrls: ['./calendar-home.component.scss']
 })
 export class CalendarHomeComponent {
-calendarService = inject(GenerateCalendarService)
 
   ngOnInit(): void {
-    this.calendarService.generateCalendarDays();
+
   }
 }

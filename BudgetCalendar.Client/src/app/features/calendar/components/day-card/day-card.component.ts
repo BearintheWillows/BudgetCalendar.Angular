@@ -23,8 +23,9 @@ export class DayCardComponent {
   }
 
   @Input() day!: ICalendarDay;
-  today = new Date();
   ngOnInit(): void {
+
     console.log(this.day.date.getDate());
+
   }
 }
