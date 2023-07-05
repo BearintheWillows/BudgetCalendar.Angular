@@ -1,27 +1,15 @@
 
-<table class='calendar-table' *ngIf="calendarService.calendar().length > 1">
-  <thead>
-  <tr>
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Sunday</th>
-  </tr>
-  <tr>
-    <th class="month-button" colspan="1" (click)="decreaseMonth()"><p><</p></th>
-    <th colspan="4">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</th>
-    <th colspan="1" class="month-button" (click)="onToday()">Today</th>
-    <th class="month-button" colspan="1" (click)="increaseMonth()"><p>></p></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let row of  calendarService.calendar()| calendarChunk: 7; let i = index">
-    <td class="calendar-day" *ngFor="let dayOfWeek of row; let week = index" >
-      <app-day-card [day]="dayOfWeek"></app-day-card>
-    </td>
-  </tr>
-  </tbody>
-</table>
+
+<div class="grid-month-header">
+  <button class="month-button" (click)="decreaseMonth()"><</button>
+  <div class="month-name">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</div>
+  <button class="month-button" (click)="increaseMonth()">></button>
+</div>
+<div class="grid-day-header" >
+  <div *ngFor="let day of DayNames" class="grid-header-item">{{day}}</div>
+</div>
+<div class="calendar-grid">
+  <div *ngFor="let dayOfWeek of calendarService.calendar(); let week = index">
+    <app-day-card [day]="dayOfWeek"></app-day-card>
+  </div>
+</div>
