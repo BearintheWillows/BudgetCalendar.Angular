@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {CalendarChunkPipe} from "../../pipes/calendar-chunk.pipe";
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 import {DayCardComponent} from "../day-card/day-card.component";
-import {CalendarStateService} from "../../services/calendar-state.service";
 import {CalendarService} from "../../../../Data/services/calendar.service";
 
 
@@ -35,6 +34,10 @@ export class CalendarTableComponent implements OnInit{
 
   public decreaseMonth() {
     this.calendarService.decreaseMonthIndex();
+  }
+
+  public onToday(){
+    this.calendarService.resetToTodayMonthIndex();
   }
 
 

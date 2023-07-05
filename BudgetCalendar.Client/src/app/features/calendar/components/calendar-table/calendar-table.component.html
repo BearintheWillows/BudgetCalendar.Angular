@@ -12,7 +12,8 @@
   </tr>
   <tr>
     <th class="month-button" colspan="1" (click)="decreaseMonth()"><p><</p></th>
-    <th colspan="5">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</th>
+    <th colspan="4">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</th>
+    <th colspan="1" class="month-button" (click)="onToday()">Today</th>
     <th class="month-button" colspan="1" (click)="increaseMonth()"><p>></p></th>
   </tr>
   </thead>

@@ -35,6 +35,11 @@ export class CalendarService {
       this.createCalendar();
     }
 
+    public resetToTodayMonthIndex = () => {
+      this.monthIndexService.resetMonthIndex();
+      this.createCalendar();
+    }
+
 
 }
 
