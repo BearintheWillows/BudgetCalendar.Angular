@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {ifStmt} from "@angular/compiler";
+import {Component, computed, Input} from '@angular/core';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
+
 
 @Component({
   selector: 'app-day-card-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './day-card-item.component.html',
   styleUrls: ['./day-card-item.component.scss'],
 })
@@ -15,17 +15,9 @@ export class DayCardItemComponent {
   @Input() amount?: number;
 
   logo: string = '';
-  color: string = '';
+  amountType = computed(() => this.amount! >= 0 ? '' : '-');
 
   ngOnInit(): void {
-    if (this.amount! >= 0) {
-      this.logo = 'assets/plus-svgrepo-com.svg';
-      this.color = 'green';
-    } else {
-      this.logo = 'assets/minus-svgrepo-com.svg';
-    }
   }
 
-
-  protected readonly ifStmt = ifStmt;
 }

@@ -22,7 +22,6 @@
 }
 
 .item__logo {
-  background-color: ;
   img{
     width: 1.5rem;
     height:1.5rem;
@@ -32,4 +31,12 @@
 
 .item__amount {
   font-size: 1.2rem;
+}
+
+.item__amount_positive {
+  background-color: green;
+}
+
+.item__amount_negative {
+  background-color: red;
 }

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgSwitch, NgSwitchDefault, NgSwitchCase } from '@angular/common';
-import {CalendarTableComponent} from "./features/calendar/components/calendar-table/calendar-table.component";
+import {CalendarGridComponent} from "./features/calendar/components/calendar-table/calendar-grid.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PrimeNGConfig } from 'primeng/api';
 import {SideMenuComponent} from "./core/side-menu/side-menu.component";
@@ -15,7 +15,7 @@ import {GenerateCalendarService} from "./Data/services/calendar/generate-calenda
     NgSwitchDefault,
     NgSwitchCase,
     RouterOutlet,
-    CalendarTableComponent, SideMenuComponent]
+    CalendarGridComponent, SideMenuComponent]
 })
 export class AppComponent {
 

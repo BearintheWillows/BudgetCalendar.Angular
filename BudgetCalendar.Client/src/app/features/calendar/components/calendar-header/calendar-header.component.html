@@ -1,0 +1,13 @@
+<div class="calendar-header">
+  <button class="calendar-header__button" (click)="decreaseMonth()"><</button>
+  <div class="calendar-header__monthName">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</div>
+  <div class="calendar-header__rightButtons">
+    <button class="calendar-header__button" (click)="onToday()">Today</button>
+    <button class="calendar-header__button" (click)="increaseMonth()">></button>
+  </div>
+
+  <div>
+
+  </div>
+</div>
+

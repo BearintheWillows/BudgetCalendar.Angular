@@ -1,0 +1,44 @@
+.calendar-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0.2rem;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
+  height: 4vh;
+  background-color: coral;
+
+  .calendar-header__button{
+    background-color: lightblue;
+    font-size: 1rem;
+    border: none;
+    height:100%;
+    width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .calendar-header__monthName{
+    font-weight: bold;
+    font-size: 1.5rem;
+    flex: 1;
+    text-align: center;
+  }
+
+  button{
+    padding: 0 0.5rem;
+    transition: background 0.2s ease-in-out;
+    &:hover{
+      background: dodgerblue;
+      transform: scale(1.05);
+    }
+  }
+
+  .calendar-header__rightButtons > button:nth-child(1) {
+    margin-right: 0.5rem;
+    padding: 0 1rem;
+  }
+
+}
