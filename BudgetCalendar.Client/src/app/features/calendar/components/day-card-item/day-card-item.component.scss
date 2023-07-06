@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  width: 100%;
   padding: 0 0.4rem;
   margin: 0.2rem 0.2rem;
   border-radius: 5px;
@@ -16,24 +16,20 @@
   }
 }
 
-
-.Item-Name{
+.item__name {
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
-.Item-Name, .Item-Amount{
-  margin-right: 0;
-  width: 50%;
-}
-
-
-
-.Item-Amount{
-  text-align: right;
-
-  color: green;
-
-  &.expense{
-    color: red;
+.item__logo {
+  background-color: ;
+  img{
+    width: 1.5rem;
+    height:1.5rem;
   }
+
+}
+
+.item__amount {
+  font-size: 1.2rem;
 }

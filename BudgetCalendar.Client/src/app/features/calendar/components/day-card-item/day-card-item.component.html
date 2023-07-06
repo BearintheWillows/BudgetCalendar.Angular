@@ -1,8 +1,11 @@
 <div class="item">
-  <div class="Item-Name">
+  <div class="item__logo">
+    <img src="{{logo}}" alt="logo">
+  </div>
+  <div class="item__name">
     {{name}}
   </div>
-  <div class="Item-Amount" [ngClass]="{'expense' : amount! < 0}">
+  <div class="item__amount" [ngClass]="{'expense' : amount! < 0}">
     {{amount}}
   </div>
 </div>

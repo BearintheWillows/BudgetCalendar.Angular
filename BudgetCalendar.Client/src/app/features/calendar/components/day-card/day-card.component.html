@@ -1,15 +1,15 @@
 
-<div class="card-item">
-    <div class="card-item__name">
+<div class="day-card">
+    <div class="day-card__header">
       {{day.date.getDate()}}
     </div>
 
-    <div class="item-container" ng-scroll="$event.target.scrollTop = $event.target.scrollHeight">
+    <div class="day-card__item" ng-scroll="$event.target.scrollTop = $event.target.scrollHeight">
       <div  *ngFor="let item of day.budgets">
         <app-day-card-item [name]="item.category.name" [amount]="item.amount" ></app-day-card-item>
       </div>
     </div>
-    <div class="total">
+    <div class="day-card__footer">
       <span class="total-text">Total:</span><span class="total-amount">{{day.total}}</span>
     </div>
 </div>

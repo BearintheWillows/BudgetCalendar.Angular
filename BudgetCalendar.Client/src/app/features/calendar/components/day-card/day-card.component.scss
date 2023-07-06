@@ -1,11 +1,4 @@
-
-
-  .day-number{
-    font-size: 1.2em;
-    font-weight: bold;
-  }
-
-.card-item {
+.day-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,21 +12,33 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, .3);
   }
-  .card-item__name {
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-align:left;
 
+  .day-card__header{
+    font-size: 1.2em;
+    font-weight: bold;
+    align-self:baseline;
   }
-  .card-item__amount {
+
+  .day-card__item{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .day-card__footer{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
     font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0 0.5rem;
   }
-  .card-item__icon {
-    margin-right: 0.5rem;
-  }
+
 }
 
 
