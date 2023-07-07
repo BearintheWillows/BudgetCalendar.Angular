@@ -1,16 +1,23 @@
+
 .calendar-header{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.calendar-header-monthBar{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  padding: 0.2rem;
-  margin: 0.5rem 0;
-  border-radius: 5px;
+  padding: 0.2rem 0.2rem 0.5rem 0.2rem;
+  margin: 0.5rem 0 0 0;
+  border-radius: 5px 5px 0 0;
   box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
   height: 4vh;
   background-color: coral;
 
-  .calendar-header__button{
+  &__button{
     background-color: lightblue;
     font-size: 1rem;
     border: none;
@@ -18,9 +25,10 @@
     width: fit-content;
     border-radius: 5px;
     cursor: pointer;
+    margin-top:0.1rem;
   }
 
-  .calendar-header__monthName{
+  &__monthName{
     font-weight: bold;
     font-size: 1.5rem;
     flex: 1;
@@ -36,9 +44,31 @@
     }
   }
 
-  .calendar-header__rightButtons > button:nth-child(1) {
+  &__rightButtons > button:nth-child(1) {
     margin-right: 0.5rem;
     padding: 0 1rem;
   }
-
 }
+
+.calendar-header-dayBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgb(0, 0, 255, 0.8);
+  background-color: coral;
+  border-radius: 0 0 5px 5px;
+  font-size: 1.2rem;
+
+  & > *:not(:first-child){
+    border-left: 1px solid rgba(0,0,0,.2);
+  }
+
+  &__item{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+

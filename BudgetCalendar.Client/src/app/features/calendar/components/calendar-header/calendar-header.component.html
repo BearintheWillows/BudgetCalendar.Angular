@@ -1,13 +1,23 @@
-<div class="calendar-header">
-  <button class="calendar-header__button" (click)="decreaseMonth()"><</button>
-  <div class="calendar-header__monthName">{{calendarService.displayMonthName()}} {{calendarService.displayMonth().getFullYear()}}</div>
-  <div class="calendar-header__rightButtons">
-    <button class="calendar-header__button" (click)="onToday()">Today</button>
-    <button class="calendar-header__button" (click)="increaseMonth()">></button>
-  </div>
+<section class="calendar-header">
+  <div class="calendar-header-monthBar">
+    <button class="calendar-header-monthBar__button" (click)="decreaseMonth()"><</button>
+    <div class="card flex justify-content-center">
 
-  <div>
+      <p-calendar  [(ngModel)]="date" name="date" view="month" dateFormat="MM yy" [readonlyInput]="true"  (ngModelChange)="onDateSelect($event)">
+        <ng-template pTemplate="footer">
+          <p-button type="button" (click)="onToday()" label="Today"></p-button>
+        </ng-template>
+      </p-calendar>
 
+    </div> <div class="calendar-header-monthBar__rightButtons">
+      <button class="calendar-header-monthBar__button" (click)="onToday()">Today</button>
+      <button class="calendar-header-monthBar__button" (click)="increaseMonth()">></button>
+    </div>
   </div>
-</div>
+  <div class="calendar-header-dayBar">
+    <div class="calendar-header-dayBar__item" *ngFor="let day of DayNames">
+      {{day}}
+    </div>
+  </div>
+</section>
 

@@ -21,8 +21,7 @@ export class CalendarService {
    public createCalendar = async () => {
      this.calendar.set(await this.generateCalendarService.generateCalendarDays());
       this.displayMonth.set(new Date(this.currentMonth().getFullYear(), this.currentMonth().getMonth() + this.monthIndexService.getMonthIndex(), 1));
-      console.log(this.displayMonth());
-      console.log(this.monthIndexService.getMonthIndex());
+
    }
 
    public increaseMonthIndex = () => {
@@ -41,5 +40,9 @@ export class CalendarService {
     }
 
 
+  public setMonthIndex(month: number) {
+    this.monthIndexService.setMonthIndex(month);
+    this.createCalendar();
+  }
 }
 
