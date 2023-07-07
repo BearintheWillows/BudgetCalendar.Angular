@@ -6,6 +6,7 @@ import { APP_ROUTES } from './app/app.routes';
 import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import { JwtModule } from '@auth0/angular-jwt';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {DialogService, DynamicDialogModule} from "primeng/dynamicdialog";
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -19,11 +20,14 @@ bootstrapApplication(AppComponent, {
             },
           allowedDomains: ['localhost:44381'],
         }
-      })),
+      }),
+      DynamicDialogModule,
+    ),
       provideHttpClient(
         withInterceptorsFromDi(),
       ),
     provideAnimations(),
+
 ]
 })
   .catch(err => console.error(err));

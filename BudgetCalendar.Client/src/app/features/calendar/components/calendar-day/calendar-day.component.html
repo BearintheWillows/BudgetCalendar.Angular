@@ -1,5 +1,5 @@
 
-<div class="day-card">
+<div class="day-card" (click)="show()">
     <div class="day-card__header">
       {{day.date.getDate()}}
     </div>
@@ -13,3 +13,4 @@
       <span class="total-amount">{{day.total | currency: 'GBP' }}</span>
     </div>
 </div>
+
