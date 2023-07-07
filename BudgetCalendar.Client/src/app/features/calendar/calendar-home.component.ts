@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CalendarGridComponent } from './components/calendar-table/calendar-grid.component';
 import {GenerateCalendarService} from "../../Data/services/calendar/generate-calendar.service";
 import {CalendarHeaderComponent} from "./components/calendar-header/calendar-header.component";
+import {CalendarService} from "../../Data/services/calendar.service";
 
 @Component({
   standalone: true,
@@ -12,7 +13,9 @@ import {CalendarHeaderComponent} from "./components/calendar-header/calendar-hea
 })
 export class CalendarHomeComponent {
 
-  ngOnInit(): void {
+  calendarService = inject(CalendarService);
 
+  ngOnInit(): void {
+      this.calendarService.resetToTodayMonthIndex();
   }
 }

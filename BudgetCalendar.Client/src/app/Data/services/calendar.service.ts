@@ -44,5 +44,9 @@ export class CalendarService {
     this.monthIndexService.setMonthIndex(month);
     this.createCalendar();
   }
+
+  getWeeksInCalendar() {
+    return this.generateCalendarService.weeksInCalendar()
+  }
 }
 

@@ -1,11 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {CalendarChunkPipe} from "../../pipes/calendar-chunk.pipe";
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
-import {DayCardComponent} from "../day-card/day-card.component";
 import {CalendarService} from "../../../../Data/services/calendar.service";
 import {DayNames} from "../../../../Data/types/calendar/day-names.constants";
 import {ButtonModule} from "primeng/button";
+import {CalendarDayComponent} from "../calendar-day/calendar-day.component";
 
 
 
@@ -16,7 +16,7 @@ import {ButtonModule} from "primeng/button";
     CommonModule,
     CalendarChunkPipe,
     DayCardItemComponent,
-    DayCardComponent,
+    CalendarDayComponent,
     ButtonModule,
   ],
   templateUrl: './calendar-grid.component.html',
@@ -27,8 +27,7 @@ export class CalendarGridComponent implements OnInit{
 
   calendarService = inject(CalendarService);
 
-  protected readonly DayNames = DayNames;
-
+  gridSize = computed(() => this.calendarService.getWeeksInCalendar());
   ngOnInit(): void {
     this.calendarService.createCalendar();
   }

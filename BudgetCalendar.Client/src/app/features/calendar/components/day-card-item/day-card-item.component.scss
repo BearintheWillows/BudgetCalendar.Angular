@@ -2,41 +2,23 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 0.4rem;
-  margin: 0.2rem 0.2rem;
+
+  padding: 0.1rem 0.5rem;
+  margin: 0.1rem 0.2rem;
   border-radius: 5px;
   background-color: #fff;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
+  border: 1px solid #ccc;
+  font-size: 0.8rem;
 
   &:hover{
     box-shadow: 0 0 5px 0 rgba(0,0,0,.5);
-    cursor: pointer;
     background-color: lightskyblue;
   }
 }
 
 .item__name {
   font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.item__logo {
-  img{
-    width: 1.5rem;
-    height:1.5rem;
-  }
 
 }
 
-.item__amount {
-  font-size: 1.2rem;
-}
 
-.item__amount_positive {
-  background-color: green;
-}
-
-.item__amount_negative {
-  background-color: red;
-}

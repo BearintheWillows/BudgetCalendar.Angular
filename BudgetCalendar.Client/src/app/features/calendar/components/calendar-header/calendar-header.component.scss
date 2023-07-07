@@ -3,50 +3,47 @@
   display: flex;
   flex-direction: column;
   margin: 0 0 0.2rem 0;
-
+  background-color: lightblue;
+  border-radius: 1px 1px 5px 5px;
+  border: 1px solid rgb(0, 0, 255, 0.2);
 }
+
 
 .calendar-header-monthBar{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0;
   padding: 0 0.2rem;
   border-radius: 5px 5px 0 0;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,.2);
   height: 4vh;
-  background-color: coral;
 
-  &__button{
-    background-color: lightblue;
-    font-size: 1rem;
-    border: none;
-    height:100%;
-    width: fit-content;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top:0.1rem;
-  }
+  &__info{
 
-  &__monthName{
-    font-weight: bold;
-    font-size: 1.5rem;
-    flex: 1;
-    text-align: center;
-  }
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    margin-top: 0.3rem;
 
-  button{
-    padding: 0 0.5rem;
-    transition: background 0.2s ease-in-out;
-    &:hover{
-      background: dodgerblue;
-      transform: scale(1.05);
+    & button{
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 0.3rem;
+      transition: all 0.3s ease-in-out;
+      margin: 0 0.4rem;
+      border-radius: 5px;
+      height: 93.2%;
+
+      border: 1px solid rgb(0, 0, 255, 0.2);
+      &:hover{
+        border-color: orange;
+        transform: scale(1.05);
+      }
     }
-  }
 
-  &__rightButtons > button:nth-child(1) {
-    margin-right: 0.5rem;
-    padding: 0 1rem;
+
   }
 }
 
@@ -55,8 +52,7 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 0.5rem 0;
- background-color: coral;
-  border-radius: 0 0 5px 5px;
+
   font-size: 1.2rem;
 
   & > *:not(:first-child){

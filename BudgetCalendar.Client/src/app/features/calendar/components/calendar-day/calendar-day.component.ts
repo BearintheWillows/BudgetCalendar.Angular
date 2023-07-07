@@ -5,23 +5,13 @@ import {ICalendarDay} from "../../models/iCalendarDay";
 import {CardModule} from "primeng/card";
 
 @Component({
-  selector: 'app-day-card',
+  selector: 'app-calendar-day',
   standalone: true,
   imports: [CommonModule, DayCardItemComponent, CardModule],
-  templateUrl: './day-card.component.html',
-  styleUrls: ['./day-card.component.scss']
+  templateUrl: './calendar-day.component.html',
+  styleUrls: ['./calendar-day.component.scss']
 })
-export class DayCardComponent {
-
-
-  dayNumber: number = 0;
-
-  constructor() {
-
-  }
+export class CalendarDayComponent {
 
   @Input() day!: ICalendarDay;
-  ngOnInit(): void {
-
-  }
 }

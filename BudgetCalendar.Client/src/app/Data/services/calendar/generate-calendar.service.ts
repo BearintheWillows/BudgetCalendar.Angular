@@ -1,4 +1,4 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {ICalendarDay} from "../../../features/calendar/models/iCalendarDay";
 import {MonthIndexService} from "./month-index.service";
 import {GenerateDaysService} from "./generate-days.service";
@@ -8,8 +8,11 @@ import {GenerateDaysService} from "./generate-days.service";
 })
 export class GenerateCalendarService {
 
+
   generateDaysService = inject(GenerateDaysService);
   monthIndexService = inject(MonthIndexService);
+
+  weeksInCalendar = signal<number>(0);
 
 
   /// This method is used to get the number of full weeks that will fit in the calendar.
@@ -60,6 +63,7 @@ export class GenerateCalendarService {
 
     let endDate: Date = new Date(new Date().setDate(startDate.getDate() + this.getNumberOfDaysToGenerate(startDate)));
     let loopNumber = Math.ceil(this.getNumberOfDaysToGenerate(startDate) / 7);
+    this.weeksInCalendar.set(loopNumber);
 
     let cal: ICalendarDay[] = await this.generateDaysService.generateDays(startDate, new Date(Date.UTC(endDate.getUTCFullYear(),endDate.getUTCDate(), endDate.getUTCDay())), loopNumber * 7);
 

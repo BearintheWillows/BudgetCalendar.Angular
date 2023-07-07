@@ -1,6 +1,6 @@
 
-<div class="calendar-grid">
-  <div *ngFor="let dayOfWeek of calendarService.calendar(); let week = index">
-    <app-day-card [day]="dayOfWeek"></app-day-card>
+<div class="calendar-grid" [class.largeGrid]="gridSize() == 6">
+  <div class="gridItem" *ngFor="let dayOfWeek of calendarService.calendar(); let week = index">
+    <app-calendar-day [day]="dayOfWeek"></app-calendar-day>
   </div>
 </div>

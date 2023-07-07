@@ -1,0 +1,15 @@
+
+<div class="day-card">
+    <div class="day-card__header">
+      {{day.date.getDate()}}
+    </div>
+
+    <div class="day-card__item">
+      <div  *ngFor="let item of day.budgets">
+        <app-day-card-item [budget]="item" ></app-day-card-item>
+      </div>
+    </div>
+    <div class="day-card__footer">
+      <span class="total-amount">{{day.total | currency: 'GBP' }}</span>
+    </div>
+</div>

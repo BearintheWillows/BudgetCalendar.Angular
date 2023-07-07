@@ -1,5 +1,6 @@
 import {Component, computed, Input} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
+import {IBudget} from "../../models/iBudget";
 
 
 @Component({
@@ -11,13 +12,11 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 })
 export class DayCardItemComponent {
 
-  @Input() name?: string;
-  @Input() amount?: number;
+  @Input() budget?: IBudget | null;
 
-  logo: string = '';
-  amountType = computed(() => this.amount! >= 0 ? '' : '-');
 
-  ngOnInit(): void {
-  }
+  amountType = computed(() => this.budget?.amount! >= 0 ? '' : '-');
+
+
 
 }
