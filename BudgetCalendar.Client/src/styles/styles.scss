@@ -13,6 +13,8 @@
     padding: 0.3rem;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    margin-top: 0.2rem;
+
     border: 1px solid rgb(0, 0, 255, 0.2);
     &:hover{
       transform: scale(1.05);
