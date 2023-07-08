@@ -1,12 +1,12 @@
 <form [formGroup]="createBudgetForm" (ngSubmit)="onSubmit()">
 
-    <p-dropdown [options]="categories"
-                formControlName="categoryName"
-                optionLabel="name"
-                placeholder="Select a Category"
-                [filter]="true"
-                filterBy="name">
-    </p-dropdown>
+    <p-autoComplete
+      formControlName="categoryName"
+      [suggestions]="filteredCategories"
+      (completeMethod)="searchCategory($event)"
+      [dropdown]="true"
+      field="name"
+      [forceSelection]="false"></p-autoComplete>
 
     <p-inputNumber formControlName="amount"
                    inputId="currency-gbp"
@@ -69,7 +69,7 @@
   <button pButton
           type="submit"
           label="Create"
-          [disabled]="!createBudgetForm.valid">
+          >
 </button>
 
 

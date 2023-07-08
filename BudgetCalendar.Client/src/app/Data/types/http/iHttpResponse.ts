@@ -1,8 +1,9 @@
-import { IUserForAuthenticationDto } from "src/app/features/auth/_interfaces/iUserForAuthentication.dto";
+import {ICategory} from "../../../features/calendar/models/iCategory";
+import {IUserForAuthenticationDto} from "../auth/iUserForAuthentication.dto";
 
 export interface IHttpResponse {
     isSuccess: boolean;
-    data: IUserForAuthenticationDto | null;
+    data: IUserForAuthenticationDto | ICategory | null;
     errors?: string[] | null;
     message?: string | null;
 

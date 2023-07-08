@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, Input, OnInit} from '@angular/core';
+import {Component, computed, effect, inject, Input, OnInit, Signal, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
@@ -18,20 +18,26 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {ColorPickerModule} from "primeng/colorpicker";
 import {IBudget} from "../../models/iBudget";
 import {IBudgetToCreate} from "../../models/iBudgetToCreate";
+import {CategoryService} from "../../../../Data/services/category.service";
+import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
   selector: 'app-add-budget-dialog',
   standalone: true,
-  imports: [CommonModule, ButtonModule, DialogModule, InputNumberModule, InputTextModule, PaginatorModule, ReactiveFormsModule, SharedModule, CalendarModule, SelectButtonModule, InputSwitchModule, RadioButtonModule, InputTextareaModule, ColorPickerModule],
+  imports: [CommonModule, ButtonModule, DialogModule, InputNumberModule, InputTextModule, PaginatorModule, ReactiveFormsModule, SharedModule, CalendarModule, SelectButtonModule, InputSwitchModule, RadioButtonModule, InputTextareaModule, ColorPickerModule, AutoCompleteModule],
   templateUrl: './add-budget-dialog.component.html',
   styleUrls: ['./add-budget-dialog.component.scss']
 })
 
 export class AddBudgetDialogComponent implements OnInit{
 
-  categories!: ICategory[] | undefined;
-
+  categoryService = inject(CategoryService);
   dialog: DynamicDialogConfig<ICalendarDay> = inject(DynamicDialogConfig);
+
+  categories = computed(() => this.categoryService.categories());
+  filteredCategories: ICategory[] = [];
+
+  selectedCategory!: ICategory;
   transactionTypeOptions = [
     {label: 'Income', value: 'Income'},
     {label: 'Expense', value: 'Expense'}];
@@ -59,29 +65,22 @@ export class AddBudgetDialogComponent implements OnInit{
   createBudgetForm!: FormGroup;
   ngOnInit() {
     this.createBudgetForm = this.fb.group({
-      categoryName: ['', Validators.required],
-      amount: ['', Validators.required],
-      date: [{value: this.dialog?.data?.date.toLocaleDateString(), disabled: true},
-            [Validators.required],],
-      transactionType: ['Income', Validators.required],
-      isRecurring: [false, Validators.required],
-      recurringBudgetForm: this.fb.group({
-        frequency: ['Weekly', Validators.required],
-        endDate: ['', Validators.required],
-      }),
-      account: ['', Validators.required],
-      note: ['',],
-      color: ['#ffffff',]
-    }
-  );
+        categoryName: ['', Validators.required],
+        amount: ['', Validators.required],
+        date: [{value: this.dialog?.data?.date.toLocaleDateString(), disabled: true},
+          [Validators.required],],
+        transactionType: ['Income', Validators.required],
+        isRecurring: [false, Validators.required],
+        recurringBudgetForm: this.fb.group({
+          frequency: ['Weekly', Validators.required],
+          endDate: ['', Validators.required],
+        }),
+        account: ['', Validators.required],
+        note: ['',],
+        color: ['#ffffff',]
+      }
+    );
 
-    this.categories = [
-      {id: 1, name: 'Food'},
-      {id: 2, name: 'Transportation'},
-      {id: 3, name: 'Entertainment'},
-      {id: 4, name: 'Utilities'},
-      {id: 5, name: 'Rent'},
-    ];
 
 
     this.createBudgetForm.get('isRecurring')?.valueChanges.subscribe((value) => {
@@ -93,14 +92,19 @@ export class AddBudgetDialogComponent implements OnInit{
     })
 
 
+
+  console.log(this.categories())
+    this.filteredCategories = this.categories();
+    console.log(this.filteredCategories)
   }
 
   onSubmit() {
 
     const formValues = this.createBudgetForm.value;
+    let newCategory = this.categories().find(c => c.name == formValues.categoryName) ?? {id: -1, name: formValues.categoryName};
 
     let newBudget: IBudgetToCreate = {
-      categoryId: formValues.categoryName.id,
+      category: newCategory,
       amount: formValues.amount,
       date: new Date(formValues.date),
       transactionType: formValues.transactionType,
@@ -114,11 +118,26 @@ export class AddBudgetDialogComponent implements OnInit{
       note: formValues.note ?? '',
       color: formValues.color,
       isArchived: false,
+    }
 
-      }
+      console.log(formValues.categoryName)
+      console.log(newBudget);
+
   }
 
+  searchCategory(event: AutoCompleteCompleteEvent) {
+      let filtered: any[] = [];
+      let query = event.query;
 
+      for (let i = 0; i < (this.categories() as any[]).length; i++) {
+        let country = (this.categories() as any[])[i];
+        if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          filtered.push(country);
+        }
+      }
+
+      this.filteredCategories = filtered;
+  }
 
 
 

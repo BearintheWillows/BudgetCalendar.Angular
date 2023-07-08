@@ -9,3 +9,8 @@ export const AuthPaths = {
 export const CalendarPaths  = {
   DayBudgetsByRange: `${baseUrl}/budget/calendar-budgets?`,
 }
+
+export const CategoryPaths = {
+  GetAllCategories: `${baseUrl}/category`,
+  GetCategoryById: `${baseUrl}/category/`,
+}

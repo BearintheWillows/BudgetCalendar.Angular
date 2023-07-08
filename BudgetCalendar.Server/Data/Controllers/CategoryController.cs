@@ -21,7 +21,7 @@ public class CategoryController : ControllerBase
 	{
 		List<CategoryDto> categories = await _categoryService.GetAll();
 		
-		return Ok(new HttpResponseDto<List<CategoryDto>>(true, categories, "Categories Successfully Retrieved"));
+		return Ok(categories);
 	}
 	
 	[HttpGet("{id}")]

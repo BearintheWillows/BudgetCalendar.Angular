@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { PrimeNGConfig } from 'primeng/api';
 import {SideMenuComponent} from "./core/side-menu/side-menu.component";
 import {GenerateCalendarService} from "./Data/services/calendar/generate-calendar.service";
+import {CategoryService} from "./Data/services/category.service";
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -21,10 +22,13 @@ export class AppComponent {
 
  title = 'BudgetCalendar.Client';
 
+ categoryService = inject(CategoryService);
   constructor(private PrimeNGConfigrime: PrimeNGConfig) {}
 
   ngOnInit() {
     this.PrimeNGConfigrime.ripple = true;
+    this.categoryService.getCategories();
+
   }
 }
 

@@ -1,4 +1,5 @@
 import {IRecurringBudgetSequence} from "./iRecurringBudgetSequence";
+import {ICategory} from "./iCategory";
 
 export interface IBudgetToCreate{
   amount: number;
@@ -9,7 +10,7 @@ export interface IBudgetToCreate{
   icon?: string;
   transactionType: string;
   accountId: number;
-  categoryId: number;
+  category: ICategory;
   recurringBudgetSequence?: IRecurringBudgetSequence;
 
 }
