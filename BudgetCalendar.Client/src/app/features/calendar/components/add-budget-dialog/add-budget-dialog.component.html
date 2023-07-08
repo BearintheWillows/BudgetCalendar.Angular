@@ -1,3 +1,78 @@
-{{dialog.data?.date | date:'dd.MM.yyyy'}}
-<br>
-{{dialog.data?.budgets | json}}
+<form [formGroup]="createBudgetForm" (ngSubmit)="onSubmit()">
+
+    <p-dropdown [options]="categories"
+                formControlName="categoryName"
+                optionLabel="name"
+                placeholder="Select a Category"
+                [filter]="true"
+                filterBy="name">
+    </p-dropdown>
+
+    <p-inputNumber formControlName="amount"
+                   inputId="currency-gbp"
+                   mode="currency"
+                   currency="GBP"
+                   locale="en-GB"
+                   [showButtons]="true"
+                   [step]="0.01">
+    </p-inputNumber>
+
+    <input formControlName="date"
+            type="text"
+            pInputText
+    />
+  <p-selectButton [options]="transactionTypeOptions"
+                  formControlName="transactionType"
+                  optionLabel="label"
+                  optionValue="value">
+
+  </p-selectButton>
+
+  <p-inputSwitch  formControlName="isRecurring">
+
+  </p-inputSwitch>
+
+  <ng-template [ngIf]="createBudgetForm.controls['isRecurring'].value">
+
+    <form formGroupName="recurringBudgetForm">
+      <p-dropdown [options]="recurringFrequencyOptions"
+                  formControlName="frequency"
+                  optionLabel="label"
+                  optionValue="value">
+      </p-dropdown>
+      <p-calendar formControlName="endDate"
+                  dateFormat="dd/mm/yy"
+                  [showIcon]="true"
+                   >
+      </p-calendar>
+    </form>
+  </ng-template>
+
+  <p-dropdown [options]="accountOptions"
+              formControlName="account"
+              optionLabel="label"
+              optionValue="value">
+  </p-dropdown>
+
+  <textarea formControlName="note"
+            pInputTextarea
+            rows="3"
+            cols="30"
+            placeholder="Notes..."
+            [autoResize]="true">
+  </textarea>
+
+  <p-colorPicker formControlName="color"
+                 [style]="{'width':'100%'}">
+  </p-colorPicker>
+
+  <button pButton
+          type="submit"
+          label="Create"
+          [disabled]="!createBudgetForm.valid">
+</button>
+
+
+
+
+</form>

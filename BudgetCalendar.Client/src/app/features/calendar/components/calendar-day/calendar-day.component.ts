@@ -22,10 +22,11 @@ export class CalendarDayComponent {
 
   ref: DynamicDialogRef | undefined;
   @Input() day!: ICalendarDay;
-  show() {
+  showAddBudgetDialog() {
     this.ref = this.dialogService.open(AddBudgetDialogComponent, {
-      header: 'Add Budget',
-      width: '70%',
+      header: `Add budget for ${this.day.date.toDateString()}`,
+      width: '50%',
+      height: '50%',
       data: this.day
     });
 
