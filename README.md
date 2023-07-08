@@ -4,13 +4,13 @@ BudgetCalendar is a Full-stack project built using Angular 16 and .Net to showca
 
 Project can be seen working by running `ng serve` from within the BudgetTracker.Client folder and starting the .net server https in Visual Studio.
 
-Below are some screenshots of the current state of the app. **Updated: 04/07/2023**
+Below are some screenshots of the current state of the app. **Updated: 07/07/2023**
 
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/f0c925ed-1538-46ac-affb-c2519041163b)
 - **Fig 1 - Login Form Display. Functional.**
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/ebda2ce1-b4a0-4dcc-8573-76d763a34f99)
 - **Fig 2 - Register Form Diplay. Functional**
-![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/f81bf8f6-d9fc-461e-bfbd-51d9e75daa95)
+![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/87c95c9c-9ca9-4a6d-97e9-2d8569d88c1a)
 - **Fig 3 - View of Side-Menu and the basic Calendar skeleton, including budget examples**
 ![image](https://github.com/BearintheWillows/BudgetCalendar.Angular/assets/47339755/5cc9a72f-df06-414d-b1af-0f7c67f79f75)
 - **Fig 4 - Basic Accouts page View**

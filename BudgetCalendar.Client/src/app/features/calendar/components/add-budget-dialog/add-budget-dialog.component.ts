@@ -101,7 +101,7 @@ export class AddBudgetDialogComponent implements OnInit{
   onSubmit() {
 
     const formValues = this.createBudgetForm.value;
-    let newCategory = this.categories().find(c => c.name == formValues.categoryName) ?? {id: -1, name: formValues.categoryName};
+    let newCategory = this.categories().find(c => c.name == formValues.categoryName) ?? {id: -1, name: formValues.categoryName.name};
 
     let newBudget: IBudgetToCreate = {
       category: newCategory,

@@ -6,7 +6,9 @@
       (completeMethod)="searchCategory($event)"
       [dropdown]="true"
       field="name"
-      [forceSelection]="false"></p-autoComplete>
+      [forceSelection]="false"
+      [minLength]="1"
+      ></p-autoComplete>
 
     <p-inputNumber formControlName="amount"
                    inputId="currency-gbp"
