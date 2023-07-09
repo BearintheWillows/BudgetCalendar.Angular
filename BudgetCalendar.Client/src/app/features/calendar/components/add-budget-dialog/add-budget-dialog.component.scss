@@ -1,0 +1,102 @@
+.fieldset{
+  display: flex;
+  flex-direction: column;
+
+  &__categoryAndAccounts{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0.4rem 0.4rem;
+  }
+
+  &__budgetDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 0.4rem 0.4rem;
+
+    &_topRow{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      padding: 0.4rem 0.4rem;
+
+      &_item{
+        width:50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        label{
+          margin-right: 0.5rem;
+        }
+      }
+    }
+
+    &_middleRow{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding: 0.4rem 0.4rem;
+      justify-content: flex-start;
+      &_left{
+        display: flex;
+        flex-direction: column;
+        width:50%;
+        padding: 0.4rem 0.4rem;
+
+        &_item{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          padding: 0.4rem 0.4rem;
+        }
+      }
+
+      &_right{
+        display: flex;
+        flex-direction: column;
+        width:50%;
+        padding: 0.4rem 0.4rem;
+
+        &_item{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          padding: 0.4rem 0.4rem;
+        }
+      }
+    }
+
+    &_bottomRow{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      padding: 0.4rem 0.4rem;
+
+      textArea#note{
+        width: 40rem;
+
+      }
+    }
+
+
+
+
+
+  }
+
+}

@@ -140,8 +140,7 @@ export class AddBudgetDialogComponent implements OnInit{
       this.filteredCategories = filtered;
   }
 
-
-
-
-
+  onToggleRecurring(event: any) {
+    console.log(event)
+  }
 }

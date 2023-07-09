@@ -26,7 +26,7 @@ export class CalendarDayComponent {
     this.ref = this.dialogService.open(AddBudgetDialogComponent, {
       header: `Add budget for ${this.day.date.toDateString()}`,
       width: '50%',
-      height: '50%',
+      height: '65%',
       data: this.day
     });
 
