@@ -7,14 +7,15 @@ using System.Security.Claims;
 
 namespace BudgetCalendar.Server.Data.Services;
 
+using System.Diagnostics;
 using System.Runtime.InteropServices.JavaScript;
 
 public interface IBudgetService
 {
     Task<List<BudgetDto>> GetAll();
     Task<BudgetDto?>      GetById(int                              id);
-    Task<BudgetDto?>      CreateOneBudget(BudgetToCreateDto        budgetDto);
-    Task<BudgetDto?>      CreateRecurringBudget( BudgetToCreateDto budgetDto );
+    Task<bool>      CreateOneBudget(BudgetToCreateDto        budgetDto);
+    Task<bool>      CreateRecurringBudget( BudgetToCreateDto budgetDto );
     Task<BudgetDto?>      Update(int                               id, BudgetToUpdateDto budgetDto);
     Task<bool?>           Delete(int                               id);
     Task<List<Budget>>    GetBudgetsByDates(DateTime            startDate, DateTime endDate);
@@ -88,44 +89,56 @@ public class BudgetService : IBudgetService
         };
     }
 
-    public async Task<BudgetDto?> CreateOneBudget(BudgetToCreateDto budgetDto)
+    public async Task<bool> CreateOneBudget(BudgetToCreateDto budgetDto)
     {
 
         if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ))
         {
-            return null;
+            Console.WriteLine("Could not parse TransactionType");
+            return false;
         }
-        var budget = new Budget()
+        
+        Console.WriteLine("$userid: {_userid}");
+ Console.WriteLine($"note: {budgetDto.Note}");
+        if ( _userId != null )
         {
-            Amount = budgetDto.Amount,
-        TransactionType = transactionType,
-            AccountId = budgetDto.AccountId,
-            CategoryId = budgetDto.CategoryId,
-            UserId = _userId
-//TODO: Add the rest of the properties
-        };
+            
+            
+            var budget = new Budget()
+                {
+                Amount = budgetDto.Amount,
+                Date = budgetDto.Date ,
+                TransactionType = transactionType,
+                AccountId = budgetDto.AccountId,
+                CategoryId = budgetDto.CategoryId,
+                Color = budgetDto.Color ?? string.Empty,
+                UserId = _userId,
+                RecurringBudgetSequence = null,
+                RecurringBudgetSequenceId = null,
+                Note = budgetDto.Note ?? string.Empty,
+                
+                };
+            
+           
+            _context.Budgets.Add(budget);
+            await _context.SaveChangesAsync();
 
-        _context.Budgets.Add(budget);
-        await _context.SaveChangesAsync();
-
-        return new BudgetDto()
-        {
-            Id = budget.Id,
-            Amount = budget.Amount,
-      
-            TransactionType = budget.TransactionType.ToString().ToLower()
-        //TODO: Add the rest of the properties
-        };
+            return true;
+        }
+        
+        return false;
     }
 
-    public async Task<BudgetDto?> CreateRecurringBudget(BudgetToCreateDto budgetDto)
+    public async Task<bool> CreateRecurringBudget(BudgetToCreateDto budgetDto)
     {
         List<Budget> budgets = new List<Budget>();
+        
+        Console.WriteLine($"BudgetDto: {budgetDto.RecurringBudgetSequence.StartDate}");
 
 
         if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ) )
         {
-            return null;
+            return false;
         }
         
         
@@ -163,31 +176,7 @@ public class BudgetService : IBudgetService
 
         
         //TODO FIX RETURN DTO
-        return new BudgetDto()
-        {
-            Id = 1,
-            Amount = budgets[0].Amount,
-            Date = budgets[0].Date,
-            Note = budgets[0].Note,
-            Color = budgets[0].Color,
-            Account = new AccountDto()
-            {
-                Name = budgets[0].Account.Name,
-            },
-            Category = new CategoryDto()
-            {
-                Name = budgets[0].Category.Name,
-            },
-            TransactionType = budgets[0].TransactionType.ToString().ToLower(),
-            RecurringBudgetSequence = new RecurringBudgetSequenceDto()
-            {
-                Id = rbs.Id,
-                StartDate = rbs.StartDate,
-                EndDate = rbs.EndDate,
-                Interval = rbs.Interval.ToString().ToLower()
-            },
-        
-        };
+        return true;
     }
 
     public async Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetToUpdateDto)

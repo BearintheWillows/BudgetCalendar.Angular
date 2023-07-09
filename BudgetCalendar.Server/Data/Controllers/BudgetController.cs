@@ -112,20 +112,29 @@ public class BudgetController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult<BudgetDto>> Post(BudgetToCreateDto budgetDto)
+    public async Task<ActionResult> Post(BudgetToCreateDto budgetDto)
     {
-        BudgetDto? budget;
-     if (budgetDto.RecurringBudgetSequence != null)
+        
+        Console.WriteLine(budgetDto.Date);
+        bool response = false;
+        if ( budgetDto.RecurringBudgetSequence != null )
         {
-            budget = await _budgetService.CreateRecurringBudget( budgetDto );
+            response = await _budgetService.CreateRecurringBudget( budgetDto );
         } else
         {
-            budget = await _budgetService.CreateOneBudget(budgetDto);
+            response = await _budgetService.CreateOneBudget( budgetDto );
         }
 
-        return CreatedAtAction(nameof(GetById), new { Id = budget.Id }, new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Created" ));
+
+        if ( response == false )
+        {
+            return BadRequest( new HttpResponseDto<object>( false, "Budget not created" ) );
+        } else
+        {
+            return Ok( new HttpResponseDto<object>( true, "Budget Successfully Created" ) );
+        }
     }
-    
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, BudgetToUpdateDto budgetDto)

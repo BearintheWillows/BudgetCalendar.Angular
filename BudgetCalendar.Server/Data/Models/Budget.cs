@@ -21,13 +21,13 @@ public class Budget : IHasTimestamps
     public byte[] Icon { get; set; } = new byte[0];
 
     // Relationships
-    public int       AccountId  { get; set; } = 0;
-    public int       CategoryId { get; set; } = 0;
-    public int RecurringBudgetSequenceId { get; set; } = 0;
-    public TransactionType TransactionType { get; set; } = TransactionType.Expense;
-    public Account Account { get; set; } = null!;
-    public Category Category { get; set; } = null!;
-    public RecurringBudgetSequence RecurringBudgetSequence { get; set; } = null!;
+    public int                      AccountId                 { get; set; } = 0;
+    public int                      CategoryId                { get; set; } = 0;
+    public int?                    RecurringBudgetSequenceId { get; set; } = 0;
+    public TransactionType          TransactionType           { get; set; } = TransactionType.Expense;
+    public Account                  Account                   { get; set; } = null!;
+    public Category                 Category                  { get; set; } = null!;
+    public RecurringBudgetSequence? RecurringBudgetSequence   { get; set; } = null!;
 
     public string UserId { get; set; } = string.Empty;
 

@@ -22,6 +22,8 @@ import {CategoryService} from "../../../../Data/services/category.service";
 import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
 import {AccountService} from "../../../../Data/services/calendar/account.service";
 import {FieldsetModule} from "primeng/fieldset";
+import {BudgetService} from "../../../../Data/services/budget.service";
+import {IRecurringBudgetSequence} from "../../models/iRecurringBudgetSequence";
 
 @Component({
   selector: 'app-add-budget-dialog',
@@ -35,6 +37,7 @@ export class AddBudgetDialogComponent implements OnInit{
 
   categoryService = inject(CategoryService);
   accountService = inject(AccountService);
+  budgetService = inject(BudgetService);
   dialog: DynamicDialogConfig<ICalendarDay> = inject(DynamicDialogConfig);
 
   categories = computed(() => this.categoryService.categories());
@@ -65,7 +68,7 @@ export class AddBudgetDialogComponent implements OnInit{
     this.createBudgetForm = this.fb.group({
         categoryName: ['', Validators.required],
         amount: ['', Validators.required],
-        date: [{value: this.dialog?.data?.date.toLocaleDateString(), disabled: true},
+        date: [{value: this.dialog?.data?.date, disabled: true},
           [Validators.required],],
         transactionType: ['Income', Validators.required],
         isRecurring: [false, Validators.required],
@@ -78,6 +81,7 @@ export class AddBudgetDialogComponent implements OnInit{
         color: ['#ffffff',]
       }
     );
+      console.log(this.createBudgetForm.get('date')?.valueChanges)
 
 
 
@@ -105,25 +109,27 @@ export class AddBudgetDialogComponent implements OnInit{
     let newCategory = this.categories().find(c => c.name == formValues.categoryName) ?? {id: -1, name: formValues.categoryName.name};
 
     let newBudget: IBudgetToCreate = {
-      category: newCategory,
+      categoryId: formValues.categoryName.id == -1 ? -1 : formValues.categoryName.id,
       amount: formValues.amount,
-      date: new Date(formValues.date),
+      date: this.dialog!.data!.date.toISOString(),
       transactionType: formValues.transactionType,
-      recurringBudgetSequence: {
+      recurringBudgetSequence: formValues.isRecurring ?   {
         id: 0,
         interval: formValues.recurringBudgetForm.frequency,
         startDate: new Date(formValues.date),
         endDate: new Date(formValues.recurringBudgetForm.endDate),
-      },
-      account: formValues.account,
-      note: formValues.note ?? '',
+      } as IRecurringBudgetSequence : null,
+      accountId: formValues.account.id,
+      note: formValues.note,
       color: formValues.color,
       isArchived: false,
     }
 
+    console.log(formValues.note)
+
       console.log(formValues.categoryName)
       console.log(newBudget);
-
+    this.budgetService.postBudget(newBudget);
   }
 
   searchCategory(event: AutoCompleteCompleteEvent) {

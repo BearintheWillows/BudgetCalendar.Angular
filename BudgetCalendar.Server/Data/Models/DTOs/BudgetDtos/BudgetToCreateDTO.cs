@@ -6,7 +6,7 @@ public class BudgetToCreateDto
 {
     public decimal Amount { get; set; }
 
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     public string? Note { get; set; }
 
@@ -14,7 +14,7 @@ public class BudgetToCreateDto
 
     public string? Icon { get; set; }
 
-    public string TransactionType { get; set; }
+    public string? TransactionType { get; set; }
 
     public int AccountId { get; set; }
 

@@ -4,14 +4,14 @@ import {IAccount} from "../../account/_interfaces/iAccount";
 
 export interface IBudgetToCreate{
   amount: number;
-  date: Date;
+  date: string;
   isArchived: boolean;
   note?: string;
   color?: string;
   icon?: string;
   transactionType: string;
-  account: IAccount;
-  category: ICategory;
-  recurringBudgetSequence?: IRecurringBudgetSequence;
+  accountId: number;
+  categoryId: number;
+  recurringBudgetSequence?: IRecurringBudgetSequence | null;
 
 }

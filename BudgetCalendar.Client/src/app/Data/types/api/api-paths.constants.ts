@@ -18,3 +18,7 @@ export const CategoryPaths = {
 export const AccountPaths = {
   GetAllAccounts: `${baseUrl}/account`,
 }
+
+export const BudgetPaths = {
+  PostBudget: `${baseUrl}/budget`,
+}
