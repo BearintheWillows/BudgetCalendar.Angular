@@ -1,5 +1,6 @@
 import {IRecurringBudgetSequence} from "./iRecurringBudgetSequence";
 import {ICategory} from "./iCategory";
+import {IAccount} from "../../account/_interfaces/iAccount";
 
 export interface IBudgetToCreate{
   amount: number;
@@ -9,7 +10,7 @@ export interface IBudgetToCreate{
   color?: string;
   icon?: string;
   transactionType: string;
-  accountId: number;
+  account: IAccount;
   category: ICategory;
   recurringBudgetSequence?: IRecurringBudgetSequence;
 

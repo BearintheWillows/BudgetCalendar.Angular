@@ -20,6 +20,7 @@ import {IBudget} from "../../models/iBudget";
 import {IBudgetToCreate} from "../../models/iBudgetToCreate";
 import {CategoryService} from "../../../../Data/services/category.service";
 import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
+import {AccountService} from "../../../../Data/services/calendar/account.service";
 
 @Component({
   selector: 'app-add-budget-dialog',
@@ -32,10 +33,13 @@ import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplet
 export class AddBudgetDialogComponent implements OnInit{
 
   categoryService = inject(CategoryService);
+  accountService = inject(AccountService);
   dialog: DynamicDialogConfig<ICalendarDay> = inject(DynamicDialogConfig);
 
   categories = computed(() => this.categoryService.categories());
   filteredCategories: ICategory[] = [];
+
+  accounts = computed(() => this.accountService.accounts());
 
   selectedCategory!: ICategory;
   transactionTypeOptions = [
@@ -51,14 +55,7 @@ export class AddBudgetDialogComponent implements OnInit{
     {label: 'Yearly', value: 'Yearly'}
   ]
 
-  accountOptions = [
-    {label: 'Cash', value: 'Cash'},
-    {label: 'Credit Card', value: 'Credit Card'},
-    {label: 'Checking', value: 'Checking'},
-    {label: 'Savings', value: 'Savings'},
-    {label: 'Investment', value: 'Investment'},
-    {label: 'Other', value: 'Other'}
-  ]
+
 
   fb = inject(FormBuilder);
 
@@ -91,6 +88,9 @@ export class AddBudgetDialogComponent implements OnInit{
       }
     })
 
+    this.categoryService.getCategories();
+    this.accountService.getAccounts();
+
 
 
   console.log(this.categories())
@@ -114,7 +114,7 @@ export class AddBudgetDialogComponent implements OnInit{
         startDate: new Date(formValues.date),
         endDate: new Date(formValues.recurringBudgetForm.endDate),
       },
-      accountId: formValues.account,
+      account: formValues.account,
       note: formValues.note ?? '',
       color: formValues.color,
       isArchived: false,

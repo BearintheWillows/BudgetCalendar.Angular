@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, computed, inject, signal, Signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AccountService} from "./account.service";
+
 import {TableModule} from "primeng/table";
 import {IAccount} from "./_interfaces/iAccount";
 import {ButtonModule} from "primeng/button";
 
 import {PaginatorModule} from "primeng/paginator";
 import {AddAccountComponent} from "./components/add-account/add-account.component";
+import {AccountService} from "../../Data/services/calendar/account.service";
 
 
 @Component({

@@ -14,3 +14,7 @@ export const CategoryPaths = {
   GetAllCategories: `${baseUrl}/category`,
   GetCategoryById: `${baseUrl}/category/`,
 }
+
+export const AccountPaths = {
+  GetAllAccounts: `${baseUrl}/account`,
+}

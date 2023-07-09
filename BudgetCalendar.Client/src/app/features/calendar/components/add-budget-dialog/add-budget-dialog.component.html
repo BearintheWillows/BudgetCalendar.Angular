@@ -50,10 +50,10 @@
     </form>
   </ng-template>
 
-  <p-dropdown [options]="accountOptions"
+  <p-dropdown [options]="accounts()"
               formControlName="account"
-              optionLabel="label"
-              optionValue="value">
+              optionLabel="name"
+              placeholder="Select a Account">
   </p-dropdown>
 
   <textarea formControlName="note"

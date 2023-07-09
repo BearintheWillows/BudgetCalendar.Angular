@@ -2,13 +2,13 @@ import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DialogModule} from "primeng/dialog";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AccountService} from "../../account.service";
 import {Router} from "@angular/router";
 import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from "primeng/inputnumber";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {IAccount} from "../../_interfaces/iAccount";
+import {AccountService} from "../../../../Data/services/calendar/account.service";
 
 @Component({
   selector: 'app-add-account',

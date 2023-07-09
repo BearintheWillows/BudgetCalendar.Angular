@@ -1,8 +1,10 @@
 import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { environment } from 'src/environments/environment.development';
-import {IAccount} from "./_interfaces/iAccount";
+
 import {toSignal} from "@angular/core/rxjs-interop";
+import {IAccount} from "../../../features/account/_interfaces/iAccount";
+import {AccountPaths} from "../../types/api/api-paths.constants";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class AccountService {
   }
 
   getAccounts() {
-    return this.http.get(`${this.baseUrl}/account`)
+    return this.http.get(`${AccountPaths.GetAllAccounts}`)
       .subscribe((data: any) => {
         this.accounts.set(data);
       });
