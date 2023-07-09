@@ -21,11 +21,12 @@ import {IBudgetToCreate} from "../../models/iBudgetToCreate";
 import {CategoryService} from "../../../../Data/services/category.service";
 import {AutoCompleteCompleteEvent, AutoCompleteModule} from "primeng/autocomplete";
 import {AccountService} from "../../../../Data/services/calendar/account.service";
+import {FieldsetModule} from "primeng/fieldset";
 
 @Component({
   selector: 'app-add-budget-dialog',
   standalone: true,
-  imports: [CommonModule, ButtonModule, DialogModule, InputNumberModule, InputTextModule, PaginatorModule, ReactiveFormsModule, SharedModule, CalendarModule, SelectButtonModule, InputSwitchModule, RadioButtonModule, InputTextareaModule, ColorPickerModule, AutoCompleteModule],
+  imports: [CommonModule, ButtonModule, DialogModule, InputNumberModule, InputTextModule, PaginatorModule, ReactiveFormsModule, SharedModule, CalendarModule, SelectButtonModule, InputSwitchModule, RadioButtonModule, InputTextareaModule, ColorPickerModule, AutoCompleteModule, FieldsetModule],
   templateUrl: './add-budget-dialog.component.html',
   styleUrls: ['./add-budget-dialog.component.scss']
 })

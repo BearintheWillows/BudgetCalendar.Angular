@@ -1,35 +1,27 @@
 <form [formGroup]="createBudgetForm" (ngSubmit)="onSubmit()">
 
-    <p-autoComplete
-      formControlName="categoryName"
-      [suggestions]="filteredCategories"
-      (completeMethod)="searchCategory($event)"
-      [dropdown]="true"
-      field="name"
-      [forceSelection]="false"
-      [minLength]="1"
-      ></p-autoComplete>
+  <p-fieldset legend="Budget Details">
 
-    <p-inputNumber formControlName="amount"
-                   inputId="currency-gbp"
-                   mode="currency"
-                   currency="GBP"
-                   locale="en-GB"
-                   [showButtons]="true"
-                   [step]="0.01">
-    </p-inputNumber>
+    <div></div>
+    <label for="categoryName">Category Name: </label>
+    <p-autoComplete formControlName="categoryName" [suggestions]="filteredCategories"
+                    (completeMethod)="searchCategory($event)" [dropdown]="true" field="name"
+                    [forceSelection]="false" [minLength]="1" id="categoryName"></p-autoComplete>
 
-    <input formControlName="date"
-            type="text"
-            pInputText
-    />
-  <p-selectButton [options]="transactionTypeOptions"
-                  formControlName="transactionType"
-                  optionLabel="label"
-                  optionValue="value">
+    <label for="amount">Amount: </label>
+    <p-inputNumber formControlName="amount" inputId="currency-gbp" mode="currency" currency="GBP" locale="en-GB"
+                   [showButtons]="true" [step]="0.01" id="amount"></p-inputNumber>
 
-  </p-selectButton>
+    <label for="date">Date: </label>
+    <input formControlName="date" type="text" id="date" pInputText/>
 
+    <label for="transactionType">Select Transaction Type: </label>
+    <p-selectButton [options]="transactionTypeOptions" formControlName="transactionType" optionLabel="label"
+                    optionValue="value" id="transactionType"> </p-selectButton>
+
+  </p-fieldset>
+
+  <p-fieldset [legend]="'Does budget Recur?'">
   <p-inputSwitch  formControlName="isRecurring">
 
   </p-inputSwitch>
@@ -49,7 +41,7 @@
       </p-calendar>
     </form>
   </ng-template>
-
+  </p-fieldset>
   <p-dropdown [options]="accounts()"
               formControlName="account"
               optionLabel="name"
