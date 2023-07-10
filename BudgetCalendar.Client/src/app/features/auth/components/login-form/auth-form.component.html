@@ -1,48 +1,42 @@
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="authForm">
-        
-        <div class="field p-fluid mt-3">
-            <span class="p-float-label">
-                <input class="authInputs" [ngClass]="{'ng-invalid': email?.invalid}"  pInputText formControlName="email" required />
-                <label for="email">Email*</label>
-            </span>
-             <small *ngIf="validateControl('email') && hasError('email', 'required')" id="email-error" class="p-error">Email is required</small>
-             <small *ngIf="validateControl('email') && hasError('email', 'email')" class="p-error"> Email Fomat Invalid</small>
-            </div>
-        
-        <div class="field p-fluid mt-3">
+<div class="auth-form-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="authForm">
+  <div class="auth-form-input">
+    <div class="auth-form-input__email">
+      <span class="p-float-label">
+        <input class="authInputs" [ngClass]="{'ng-invalid': email?.invalid}"  pInputText formControlName="email" required />
+        <label for="email">Email*</label>
+      </span>
+      <small *ngIf="validateControl('email') && hasError('email', 'required')" id="email-error" class="p-error">Email is required</small>
+      <small *ngIf="validateControl('email') && hasError('email', 'email')" class="p-error"> Email Fomat Invalid</small>
+    </div>
+    <div class="auth-form-input__password">
         <span class="p-float-label">
-            <p-password class="authInputs" [ngClass]="{'ng-invalid': password?.invalid}" formControlName="password" [feedback]="false" > </p-password>   
-            <label for="password">Password*</label>
+          <p-password class="authInputs" [ngClass]="{'ng-invalid': password?.invalid}" formControlName="password" [feedback]="false" > </p-password>
+          <label for="password">Password*</label>
         </span>
-        <div class="errors">
-        <small *ngIf="validateControl('password') && hasError('password', 'required')" class="p-error">- Password is required</small>
-        <small *ngIf="validateControl('password') && form.errors?.['misMatch'] && confirmPassword" class="p-error">- Passwords do not match.</small>
-        <small *ngIf="validateControl('password') && password?.errors?.['minlength']" class="p-error">- Minimum Password Length - 6</small>
-        
+        <div class="auth-form-inputs__password_errors">
+          <small *ngIf="validateControl('password') && hasError('password', 'required')" class="p-error">- Password is required</small>
+          <small *ngIf="validateControl('password') && form.errors?.['misMatch'] && confirmPassword" class="p-error">- Passwords do not match.</small>
+          <small *ngIf="validateControl('password') && password?.errors?.['minlength']" class="p-error">- Minimum Password Length - 6</small>
         </div>
     </div>
-
-        <ng-container *ngIf="authMode == 'register'">
-
-        <div class="field p-fluid mt-3">
-            <span class="p-float-label">
-                    <p-password class="authInputs" [ngClass]="{'ng-invalid': confirmPassword?.invalid}"  formControlName="confirmPassword" [feedback]="false" > </p-password>   
-                    <label for="confirmPassword">Confirm Password*</label>
-            </span>
-            <div class="errors">
-            <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['required']" class="p-error">Confirm Password is required</small>
-            <small *ngIf="validateControl('confirmPassword') && form.errors?.['misMatch']" class="p-error">Passwords do not match.</small>
-            <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['minlength']" class="p-error">Minimum Password Length - 6</small>
-            </div>
+    <ng-container *ngIf="authMode == 'register'">
+      <div class="auth-form-input__password_confirm">
+        <span class="p-float-label">
+          <p-password class="authInputs" [ngClass]="{'ng-invalid': confirmPassword?.invalid}"  formControlName="confirmPassword" [feedback]="false" > </p-password>
+          <label for="confirmPassword">Confirm Password*</label>
+        </span>
+        <div class="auth-form-input__password_confirm_errors">
+          <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['required']" class="p-error">Confirm Password is required</small>
+          <small *ngIf="validateControl('confirmPassword') && form.errors?.['misMatch']" class="p-error">Passwords do not match.</small>
+          <small *ngIf="validateControl('confirmPassword') && confirmPassword?.errors?.['minlength']" class="p-error">Minimum Password Length - 6</small>
         </div>
+      </div>
     </ng-container>
-
+  </div>
         <div class="buttonGroup">
         <button pButton pRipple class="submitButton" type="submit" label={{authMode.toString()}}  [disabled]="!form.valid"></button>
         <button pButton pRipple type="reset" label="Reset"></button>
-   </div> 
-</form>
-
-  
-
+   </div>
+  </form>
+</div>

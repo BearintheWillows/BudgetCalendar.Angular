@@ -1,4 +1,4 @@
-<div class="item">
+<div class="item desktop">
   <div class="item__name" [ngStyle]="{'background-color': budget?.color}">
     {{budget?.category!.name}}
   </div>
@@ -6,3 +6,4 @@
     {{amountType()}}{{budget?.amount | currency: '£'}}
   </div>
 </div>
+

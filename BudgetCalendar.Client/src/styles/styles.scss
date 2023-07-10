@@ -1,9 +1,18 @@
+html{
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
 
+body {
+  margin: 0;
+  padding: 0;
+}
 
-@import  'base/base-dir';
-@import  'components/components-dir';
-@import 'vendors/vendors-dir';
-
+.mobile{
+  display: none;
+}
 .p-calendar{
   .p-inputtext{
     background-color: transparent;
@@ -22,3 +31,20 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .mobile{
+    display: inline;
+  }
+
+  .add-budget-dialog {
+    width: 90% !important;
+  }
+
+  .calendar-header-monthBar{
+    &__info{
+      .p-inputtext{
+        font-size: 1rem;
+      }
+    }
+  }
+}

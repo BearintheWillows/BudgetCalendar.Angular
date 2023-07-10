@@ -2,7 +2,14 @@
   height: 99vh; // Equivalent to 100vh
   max-height: 100vh;
   padding: 0;
-  width:80vw;
+  width:95vw;
 
 
+}
+
+@media screen  and (max-width: 600px) {
+  .calendar-container{
+    width: 100%;
+    height: 100%;
+  }
 }

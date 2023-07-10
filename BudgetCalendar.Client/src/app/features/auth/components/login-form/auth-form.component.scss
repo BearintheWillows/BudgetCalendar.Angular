@@ -1,3 +1,18 @@
+.auth-form-container{
+  width: 90%;
+}
+.auth-form-input{
+  margin-bottom: 1rem;
+  width: 90%;
+
+  & > div{
+    width: 100%;
+    margin: 2rem 0;
+    }
+}
+
+
+
 .submitButton{
     text-transform: capitalize;
 }

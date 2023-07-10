@@ -27,7 +27,9 @@ export class CalendarDayComponent {
       header: `Add budget for ${this.day.date.toDateString()}`,
       width: '50%',
       height: '65%',
-      data: this.day
+      data: this.day,
+      styleClass: 'add-budget-dialog',
+      resizable: true,
     });
 
     this.ref.onClose.subscribe((budget) => {

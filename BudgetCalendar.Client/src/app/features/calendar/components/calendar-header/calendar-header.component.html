@@ -14,9 +14,16 @@
 
   </div>
   <div class="calendar-header-dayBar">
-    <div class="calendar-header-dayBar__item" *ngFor="let day of DayNames">
-      {{day}}
-    </div>
+      <div class="desktop" *ngFor="let day of DayNames">
+        <div class="calendar-header-dayBar__item">
+          {{day}}
+        </div>
+      </div>
+      <div class="mobile" *ngFor="let day of DayNames">
+        <div class="calendar-header-dayBar__item">
+          {{day.substring(0, 1)}}
+        </div>
+      </div>
   </div>
 </section>
 

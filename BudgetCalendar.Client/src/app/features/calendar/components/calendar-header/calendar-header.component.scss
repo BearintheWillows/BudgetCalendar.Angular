@@ -1,3 +1,6 @@
+.mobile{
+  display: none;
+}
 
 .calendar-header{
   display: flex;
@@ -52,7 +55,6 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 0.5rem 0;
-
   font-size: 1.2rem;
 
   & > *:not(:first-child){
@@ -67,3 +69,33 @@
 
 
 
+
+@media screen and  (max-width: 600px) {
+  .desktop{
+    display: none;
+  }
+
+  .mobile{
+    display: inline;
+  }
+
+  .calendar-header{
+    width: 100%;
+  }
+  .calendar-header-monthBar{
+    &__info{
+      button{
+        font-size: 1rem;
+        padding: 0.2rem;
+        margin: 0 0.2rem;
+      }
+    }
+  }
+
+  .calendar-header-dayBar{
+    font-size: 0.8rem;
+    & > *:not(:first-child){
+      border-left: none;
+    }
+  }
+}
