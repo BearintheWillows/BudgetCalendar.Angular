@@ -1,5 +1,6 @@
-<div class="container">
-<p-tabMenu [model]="tabMenuItems" [activeItem]="activeItem"  (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+<div class="background">
+  <div class="container">
+    <p-tabMenu [model]="tabMenuItems" [activeItem]="activeItem"  (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
     <app-auth-form [returnUrl]="returnUrl" [authMode]="authMode"></app-auth-form>
+  </div>
 </div>
-

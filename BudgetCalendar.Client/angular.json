@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/saga-orange/theme.css",
+              "src/assets/cust-theme.css",
               "node_modules/primeng/resources/primeng.css",
               "src/styles/styles.scss"
             ],
@@ -101,7 +101,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/saga-orange/theme.css",
+              "src/assets/cust-theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles/styles.scss"
             ],

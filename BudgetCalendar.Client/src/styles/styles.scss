@@ -5,6 +5,9 @@ html{
   height: 100vh;
 }
 
+$myPrimaryColor: rgb(59, 89, 195);
+$mySecondaryColor: rgb(225, 173, 33);
+
 body {
   position: fixed;
   overflow: hidden;
@@ -52,3 +55,33 @@ body {
     }
   }
 }
+
+
+.auth-form-input{
+
+  .auth-input, .p-inputtext{
+    width: 100%;
+    border: 2px solid rgb(0, 0, 255, 0.7);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 rgba(255, 255, 0, .8);
+
+    font-size: 1.2rem;
+
+  }
+}
+
+.calendar-header-monthBar{
+
+  button{
+    color: $myPrimaryColor;
+  }
+}
+
+.calendar-header-dayBar{
+
+  &__item{
+    color: $mySecondaryColor;
+  }
+}
+
+
