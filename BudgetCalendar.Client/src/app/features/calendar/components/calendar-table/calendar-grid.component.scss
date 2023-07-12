@@ -1,29 +1,36 @@
 
-
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(5, minmax(0, 1fr));
-  grid-gap: 0.5rem;
-  margin: 0.4rem 0 0 0;
-  height: 91vh;
-  max-height: 91vh;
-  width: 100%;
-  align-items: stretch;
+  height: 92vh;
+  max-height: 92vh;
 
+  .gridItem{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    border: 1px solid rgb(255, 255, 255, 0.5);
+  }
 
+  .gridItem:nth-child(7n+1){
+    border-left: none;
+  }
+
+  .gridItem:nth-child(7n+7) {
+    border-right: none;
+  }
 
 }
 
 .calendar-grid.largeGrid{
     grid-template-rows: repeat(6, 1fr);
-
 }
 
 
 @media screen and (max-width: 600px) {
   .calendar-grid{
-    grid-gap: 0.2rem;
 
   }
 }

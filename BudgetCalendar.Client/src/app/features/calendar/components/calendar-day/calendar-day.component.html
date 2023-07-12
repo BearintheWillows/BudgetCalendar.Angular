@@ -8,7 +8,7 @@
       <div class="desktop"  *ngFor="let item of day.budgets">
         <app-day-card-item [budget]="item" ></app-day-card-item>
       </div>
-      <div class="mobile">
+      <div class="mobile" *ngIf="day!.budgets!.length > 0">
         {{day.budgets?.length}}
       </div>
     </div>

@@ -1,17 +1,16 @@
-
+:host{
+  width: 100%;
+}
 .day-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0.3rem;
-  border-radius: 5px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
   height:100%;
   max-height: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  justify-content: flex-start;
-
+  width: 100%;
   &:hover {
     transform: scale(1.02);
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, .3);
@@ -50,12 +49,17 @@
 @media screen and (max-width: 600px){
   .day-card {
 
-    &__header {
-      font-size: 0.7rem !important;
+    &__header, &__footer {
+      font-size: 0.8rem !important;
     }
 
-    &__footer {
-      font-size: 0.7rem !important;
+    &__item{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width:50%;
+      height: 50%;
+      font-size:1.3rem;
     }
   }
 }
