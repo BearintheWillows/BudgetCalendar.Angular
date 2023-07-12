@@ -1,10 +1,7 @@
 <form [formGroup]="createBudgetForm" xmlns="http://www.w3.org/1999/html" (ngSubmit)="onSubmit()">
-
-
-
     <p-fieldset class="fieldset" legend="'Category and Account Details">
       <div class="fieldset__categoryAndAccounts">
-        <div class="fieldset_categoryAndAccounts__item">
+        <div class="fieldset__categoryAndAccounts__item">
           <label for="categoryName">Category Name: </label>
           <p-autoComplete formControlName="categoryName" [suggestions]="filteredCategories"
                         (completeMethod)="searchCategory($event)" [dropdown]="true" field="name"

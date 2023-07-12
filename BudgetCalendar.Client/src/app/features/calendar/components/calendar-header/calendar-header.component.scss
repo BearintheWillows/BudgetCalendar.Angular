@@ -5,27 +5,22 @@
 .calendar-header{
   display: flex;
   flex-direction: column;
-  margin: 0 0 0.2rem 0;
   background-color: black;
   border-radius: 1px 1px 5px 5px;
 }
 
-
 .calendar-header-monthBar{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 0;
-  padding: 0 0.2rem;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-between;
+
   border-radius: 5px 5px 0 0;
   height: 4vh;
-
-  &__info{
-
+  &_datePick{
     display: flex;
     flex-direction: row;
     align-items:center;
-    margin-top: 0.3rem;
 
 
     & button{
@@ -44,9 +39,22 @@
         border-color: orange;
         transform: scale(1.05);
       }
+
+
     }
+  }
 
-
+  &_menuButton{
+    .p-button-text{
+      margin: 0.1rem;
+      padding: 0;
+      border: none;
+    }
+    img{
+      width: 3rem;
+      height: 3rem;
+      margin: 0 0.2rem;
+    }
   }
 }
 
@@ -80,15 +88,22 @@
   }
 
   .calendar-header{
+    height: 10vh;
     width: 100%;
   }
   .calendar-header-monthBar{
-    &__info{
-      button{
-        font-size: 1rem;
-        padding: 0.2rem;
-        margin: 0 0.2rem;
-      }
+      justify-content: flex-start;
+      height: 3rem;
+      &_datePick {
+        width: 60%;
+        padding: 0.55rem 0;
+
+
+
+        button {
+          margin:0;
+        }
+
     }
   }
 
@@ -96,6 +111,12 @@
     font-size: 0.8rem;
     & > *:not(:first-child){
       border-left: none;
+      height: 0.7rem;
     }
   }
+}
+
+
+.p-sidebar.sidebar{
+  width: 15rem;
 }

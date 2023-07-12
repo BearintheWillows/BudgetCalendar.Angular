@@ -17,7 +17,7 @@ export class AuthService {
   jwtHelper = inject(JwtHelperService);
 
   public authenticationState = signal(false);
-
+  public userName = signal("");
 
   public sendAuthStateChange = (isAuthenticated: boolean) => {
     this.authenticationState.set(isAuthenticated);
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   login = (body: IUserForAuthenticationDto): void => {
-    this.loginService.login(body);
+    this.userName.set(this.loginService.login(body) ?? "");
   }
 
   logout = () => {

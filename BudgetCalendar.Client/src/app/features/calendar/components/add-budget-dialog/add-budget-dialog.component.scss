@@ -82,7 +82,7 @@
     &_bottomRow{
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      jusstify-content: space-around;
       align-items: center;
       width: 100%;
       padding: 0.4rem 0.4rem;
@@ -95,13 +95,13 @@
   }
 }
 
-//@media screen and (max-width: 600px) {
-//  .fieldset {
-//
-//&__categoryAndAccounts {
-//      flex-direction: column;
-//      justify-content: space-around;
-//      align-items: center;
-//    }
-//  }
-//}
+@media screen and (max-width: 600px) {
+  .fieldset {
+
+&__categoryAndAccounts {
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+}

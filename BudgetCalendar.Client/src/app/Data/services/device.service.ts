@@ -22,7 +22,6 @@ export class DeviceService {
     }
 
     effect(() => {
-      console.log('innerWidth', this.innerWidth())
       console.log('deviceType', this.deviceType())
     })
 
@@ -36,7 +35,6 @@ export class DeviceService {
     } else  if (this.innerWidth() >= 768 && this.innerWidth() < 1024) {
       return DeviceType.laptop;
     }
-
     return DeviceType.desktop;
 }}
 

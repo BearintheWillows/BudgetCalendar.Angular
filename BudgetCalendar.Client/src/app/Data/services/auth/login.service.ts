@@ -13,17 +13,19 @@ export class LoginService {
 
   router = inject(Router);
   httpClient = inject(HttpClient);
-  public login = (body: IUserForAuthenticationDto) => {
+  public login = (body: IUserForAuthenticationDto)  : string | null => {
     this.httpClient.post<IUserForAuthenticationResponse>(`${AuthPaths.Login}`, body).subscribe(
       (res) => {
         if (res.isAuthSuccessful && res.token) {
           localStorage.setItem("token", res.token);
+
           this.router.navigate(["/"]);
 
-          return true;
+          return res.UserName;
         }
-        return false;
+        return null;
       }
     );
+    return null;
   };
 }

@@ -1,4 +1,4 @@
-
+<div *ngIf="isCalendarPage; then calendarHeader; else generalHeader"></div>
 <div class="mainContainer" >
   <div class="side-menu">
   <app-side-menu></app-side-menu>
@@ -6,3 +6,9 @@
   <router-outlet></router-outlet>
 </div>
 
+<ng-template #calendarHeader>
+  <app-calendar-header></app-calendar-header>
+</ng-template>
+<ng-template #generalHeader>
+  <app-header></app-header>
+</ng-template>

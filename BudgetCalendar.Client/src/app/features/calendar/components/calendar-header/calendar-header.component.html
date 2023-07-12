@@ -1,18 +1,24 @@
 <section class="calendar-header">
   <div class="calendar-header-monthBar">
-    <div class="calendar-header-monthBar__info">
 
+      <div class="calendar-header-monthBar_datePick">
+        <button  (click)="decreaseMonth()"><</button>
+        <p-calendar  [(ngModel)]="date" name="date" view="month" dateFormat="MM yy" [readonlyInput]="true"  (ngModelChange)="onDateSelect($event)">
+          <ng-template pTemplate="footer">
+            <p-button type="button" (click)="onToday()" label="Today"></p-button>
+          </ng-template>
+        </p-calendar>
+        <button  (click)="increaseMonth()">></button>
+      </div>
 
-    <button  (click)="decreaseMonth()"><</button>
-      <p-calendar  [(ngModel)]="date" name="date" view="month" dateFormat="MM yy" [readonlyInput]="true"  (ngModelChange)="onDateSelect($event)">
-        <ng-template pTemplate="footer">
-          <p-button type="button" (click)="onToday()" label="Today"></p-button>
-        </ng-template>
-      </p-calendar>
-      <button  (click)="increaseMonth()">></button>
+    <div class="calendar-header-monthBar_menuButton">
+      <p-button class="calendar-header-monthBar_menuButton__button" styleClass="p-button-text">
+        <img  src="assets/menu-alt-02-svgrepo-com.svg" (click)="sidebarVisible = true" alt="Menu icon" />
+
+      </p-button>
     </div>
-
   </div>
+
   <div class="calendar-header-dayBar">
       <div class="desktop" *ngFor="let day of DayNames">
         <div class="calendar-header-dayBar__item">
@@ -27,3 +33,8 @@
   </div>
 </section>
 
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="sidebar">
+  <div>
+    {{authService.userName()}}
+  </div>
+</p-sidebar>

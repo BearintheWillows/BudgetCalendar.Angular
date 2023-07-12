@@ -6,6 +6,7 @@ import {CardModule} from "primeng/card";
 import {AddAccountComponent} from "../../../account/components/add-account/add-account.component";
 import {AddBudgetDialogComponent} from "../add-budget-dialog/add-budget-dialog.component";
 import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dynamicdialog";
+import {find} from "rxjs";
 
 @Component({
   selector: 'app-calendar-day',
@@ -19,9 +20,13 @@ import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dyna
 export class CalendarDayComponent {
 
   dialogService = inject(DialogService);
-
+  transactionTypeTotals = {incomeTotal: 0, expensesTotal: 0};
   ref: DynamicDialogRef | undefined;
   @Input() day!: ICalendarDay;
+
+  ngOnInit() {
+    this.getIncomeAndExpensesTotals();
+  }
   showAddBudgetDialog() {
     this.ref = this.dialogService.open(AddBudgetDialogComponent, {
       header: `Add budget for ${this.day.date.toDateString()}`,
@@ -42,4 +47,17 @@ export class CalendarDayComponent {
       this.ref.close();
     }
   }
+
+  getIncomeAndExpensesTotals = () => {
+    let incomeTotal = 0;
+    let expensesTotal = 0
+    this.day.budgets?.forEach(budget => {
+      if (budget.transactionType === "Income") {
+        incomeTotal++;
+      } else {
+        expensesTotal++;
+      }
+  });
+    return {incomeTotal, expensesTotal};
+}
 }

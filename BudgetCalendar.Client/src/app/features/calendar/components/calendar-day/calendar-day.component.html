@@ -8,12 +8,19 @@
       <div class="desktop"  *ngFor="let item of day.budgets">
         <app-day-card-item [budget]="item" ></app-day-card-item>
       </div>
-      <div class="mobile" *ngIf="day!.budgets!.length > 0">
-        {{day.budgets?.length}}
-      </div>
+      <div class="mobile transaction-type-totals" *ngIf="day!.budgets!.length > 0">
+        <div class="type-container">
+          <img src="./assets/up-arrow-svgrepo-com.svg" alt="up arrow" >
+          <span class="income">{{transactionTypeTotals.incomeTotal}}</span>
+        </div>
+        <div class="type-container">
+          <span class="expense">{{transactionTypeTotals.expensesTotal}}</span>
+          <img src="./assets/up-down-svgrepo-com.svg" alt="down arrow" >
+        </div>
+         </div>
     </div>
     <div class="day-card__footer">
-      <span class="total-amount desk">{{day.total | currency: 'GBP' }}</span>
+      <span class="total-aksmount desk">{{day.total| currency: 'GBP' : 'symbol' : '1.0-0'}}</span>
     </div>
 </div>
 

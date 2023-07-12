@@ -1,3 +1,5 @@
+@import "primeicons/primeicons.css";
+
 html{
   margin: 0;
   padding: 0;
@@ -85,3 +87,6 @@ body {
 }
 
 
+i.pi-angle-left{
+  color: $myPrimaryColor;
+}

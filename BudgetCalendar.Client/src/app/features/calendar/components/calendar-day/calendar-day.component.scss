@@ -49,17 +49,42 @@
 @media screen and (max-width: 600px){
   .day-card {
 
-    &__header, &__footer {
-      font-size: 0.8rem !important;
+    &__header{
+      font-size: 0.9rem !important;
+    }
+
+    &__footer{
+      font-size: 0.7rem !important;
     }
 
     &__item{
       display: flex;
       justify-content: center;
       align-items: center;
-      width:50%;
-      height: 50%;
-      font-size:1.3rem;
+      width:80%;
+      height: 10%;
+      font-size:0.9rem;
+      margin: 0;
+
+      .type-container{
+        img{
+          width: 0.5rem;
+          height: 0.5rem;
+        }
+      }
+
+      .income{
+        color: #00ff00;
+      }
+
+      .expense{
+        color: red;
+      }
+
+      .transaction-type-totals{
+        display: flex;
+
+      }
     }
   }
 }
