@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, effect, inject} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {NgSwitch, NgSwitchDefault, NgSwitchCase, NgIf} from '@angular/common';
 import {CalendarGridComponent} from "./features/calendar/components/calendar-table/calendar-grid.component";
@@ -10,6 +10,7 @@ import {CategoryService} from "./Data/services/category.service";
 import {DeviceService, DeviceType} from "./Data/services/device.service";
 import {HeaderComponent} from "./core/header/header.component";
 import {CalendarHeaderComponent} from "./features/calendar/components/calendar-header/calendar-header.component";
+import {AuthService} from "./Data/services/auth.service";
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -22,15 +23,17 @@ import {CalendarHeaderComponent} from "./features/calendar/components/calendar-h
     CalendarGridComponent, SideMenuComponent, HeaderComponent, NgIf, CalendarHeaderComponent]
 })
 export class AppComponent {
+    categoryService = inject(CategoryService);
+    deviceService = inject(DeviceService);
+    authService = inject(AuthService);
+    router= inject(Router);
 
  title = 'BudgetCalendar.Client';
-
- categoryService = inject(CategoryService);
- deviceService = inject(DeviceService);
- router= inject(Router);
-
+ authState = computed(() => this.authService.authenticationState());
  isCalendarPage = false;
-  constructor(private PrimeNGConfigrime: PrimeNGConfig) {}
+  constructor(private PrimeNGConfigrime: PrimeNGConfig) {
+    console.log(this.authState())
+  }
 
   ngOnInit() {
     this.PrimeNGConfigrime.ripple = true;
@@ -38,7 +41,8 @@ export class AppComponent {
 
     this.router.events.subscribe((val) => {
       this.isCalendarPage = this.router.url.includes('calendar');
-    });
+    }
+    );
 
   }
 
