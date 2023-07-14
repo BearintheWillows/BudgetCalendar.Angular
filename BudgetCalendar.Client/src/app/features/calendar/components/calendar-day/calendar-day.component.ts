@@ -26,6 +26,7 @@ export class CalendarDayComponent {
 
   ngOnInit() {
     this.getIncomeAndExpensesTotals();
+
   }
   showAddBudgetDialog() {
     this.ref = this.dialogService.open(AddBudgetDialogComponent, {
@@ -54,10 +55,12 @@ export class CalendarDayComponent {
     this.day.budgets?.forEach(budget => {
       if (budget.transactionType === "Income") {
         incomeTotal++;
+        console.log(incomeTotal)
       } else {
         expensesTotal++;
+        console.log(expensesTotal)
       }
   });
-    return {incomeTotal, expensesTotal};
+    this.transactionTypeTotals = {incomeTotal, expensesTotal};
 }
 }

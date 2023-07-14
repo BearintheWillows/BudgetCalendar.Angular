@@ -48,6 +48,8 @@ export class GenerateDaysService {
           result[i].date = new Date(result[i].date);
         }
 
+
+
         return result ;
       })
     );

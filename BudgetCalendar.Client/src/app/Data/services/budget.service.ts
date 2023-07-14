@@ -18,4 +18,10 @@ export class BudgetService {
       }
     );
   }
+
+  getBudgetsByRange = (startDate: Date, endDate: Date) => {
+    let startD = startDate.toISOString().slice(0, 10);
+    let endD = endDate.toISOString().slice(0, 10);
+    return this.httpClient.get<IBudget[]>(`${BudgetPaths.GetBudgetsByRange}startDate=${startD}&endDate=${endD}`);
+  }
 }

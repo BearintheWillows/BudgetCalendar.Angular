@@ -21,4 +21,5 @@ export const AccountPaths = {
 
 export const BudgetPaths = {
   PostBudget: `${baseUrl}/budget`,
+  GetBudgetsByRange: `${baseUrl}/budget?`,
 }
