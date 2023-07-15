@@ -53,7 +53,6 @@ public static class DataDbInitializer
 				{
 				Name = "FlexPlus",
 				Balance = 0,
-				IsArchived = false,
 				Added = DateTime.Now,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
@@ -61,7 +60,6 @@ public static class DataDbInitializer
 				{
 				Name = "Monzo",
 				Balance = 0,
-				IsArchived = false,
 				Added = DateTime.Now,
 				UserId = "67dc3800-b214-4eeb-aa21-a3b4526deee1"
 				},
@@ -85,7 +83,6 @@ public static class DataDbInitializer
 				{
 				Amount = 0,
 				Date = new DateTime( 2023, 06, 23 ),
-				IsArchived = false,
 				TransactionType = TransactionType.Income,
 				Note = "Test",
 				Color = "Test",
@@ -98,7 +95,6 @@ public static class DataDbInitializer
 				{
 				Amount = 100,
 				Date = new DateTime( 2023 , 06 , 15 ),
-				IsArchived = false,
 				TransactionType = TransactionType.Expense,
 				Note = "Test",
 				Color = "Test",
@@ -111,7 +107,6 @@ public static class DataDbInitializer
 				{
 				Amount = 100,
 				Date = new DateTime( 2023 , 06 , 02 ),
-				IsArchived = false,
 				TransactionType = TransactionType.Income,
 				Note = "Test",
 				Color = "Test",
@@ -124,7 +119,6 @@ public static class DataDbInitializer
 				{
 				Amount = 300,
 				Date = new DateTime( 2023 , 06 , 02 ),
-				IsArchived = false,
 				TransactionType = TransactionType.Expense,
 				Note = "Test",
 				Color = "Test",

@@ -32,7 +32,6 @@ public class BudgetDto
 			Id = budget.Id,
 			Amount = budget.Amount,
 			Date = budget.Date,
-			IsArchived = budget.IsArchived,
 			TransactionType = budget.TransactionType.ToString().ToLower(),
 			Note = budget.Note,
 			Color = budget.Color,

@@ -44,7 +44,6 @@ public class BudgetService : IBudgetService
             Id = dayOfWeek.Id,
             Amount = dayOfWeek.Amount,
             Date = dayOfWeek.Date,
-            IsArchived = dayOfWeek.IsArchived, 
             TransactionType = dayOfWeek.TransactionType.ToString().ToLower(),
             Note = dayOfWeek.Note,
             Color = dayOfWeek.Color,
