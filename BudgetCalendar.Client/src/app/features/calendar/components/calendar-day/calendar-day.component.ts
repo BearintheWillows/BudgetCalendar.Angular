@@ -1,46 +1,51 @@
-import {Component, inject, Input} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, computed, inject, Input, ViewEncapsulation} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {DayCardItemComponent} from "../day-card-item/day-card-item.component";
 import {ICalendarDay} from "../../models/iCalendarDay";
 import {CardModule} from "primeng/card";
 import {AddAccountComponent} from "../../../account/components/add-account/add-account.component";
-import {AddBudgetDialogComponent} from "../add-budget-dialog/add-budget-dialog.component";
 import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dynamicdialog";
-import {find} from "rxjs";
+import {DeviceService} from "../../../../Data/services/device.service";
+import {BudgetDialogComponent} from "../budgets/budget-dialog/budget-dialog.component";
 
 @Component({
   selector: 'app-calendar-day',
   standalone: true,
-  imports: [CommonModule, DynamicDialogModule, DayCardItemComponent, CardModule, AddAccountComponent, AddBudgetDialogComponent],
+  imports: [CommonModule, DynamicDialogModule, DayCardItemComponent, CardModule, AddAccountComponent],
   templateUrl: './calendar-day.component.html',
   styleUrls: ['./calendar-day.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService],
+  encapsulation: ViewEncapsulation.None,
 
 })
 export class CalendarDayComponent {
 
   dialogService = inject(DialogService);
+  devicService = inject(DeviceService);
   transactionTypeTotals = {incomeTotal: 0, expensesTotal: 0};
   ref: DynamicDialogRef | undefined;
+
+  device = computed(() => this.devicService.getDeviceType());
+
+
   @Input() day!: ICalendarDay;
+
 
   ngOnInit() {
     this.getIncomeAndExpensesTotals();
 
   }
   showAddBudgetDialog() {
-    this.ref = this.dialogService.open(AddBudgetDialogComponent, {
-      header: `Add budget for ${this.day.date.toDateString()}`,
-      width: '50%',
-      height: '65%',
+    this.ref = this.dialogService.open(BudgetDialogComponent, {
+      header: `Add budget for ${this.day.date.toLocaleDateString()}`,
+      width: '90%',
+      height: '90%',
       data: this.day,
-      styleClass: 'add-budget-dialog',
-      resizable: true,
+      maximizable: true,
+      styleClass: 'budget-dialog'
     });
 
-    this.ref.onClose.subscribe((budget) => {
-      console.log(budget);
-    });
+
   }
 
   ngOnDestroy() {

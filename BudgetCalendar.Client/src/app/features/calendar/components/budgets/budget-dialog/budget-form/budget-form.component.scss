@@ -1,0 +1,122 @@
+@media screen and (max-width: 640px) {
+    .budget-form__fieldset {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      .p-fieldset-content  {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 1rem;
+        label{
+            margin-bottom: 0.5rem;
+        }
+
+        .fieldset__categoryAndAccounts__item{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin-bottom: 0.5rem;
+            width: 13rem;
+
+        }
+
+
+      }
+
+      .fieldset__budgetDetails_topRow{
+        display: flex;
+        margin-bottom: 0.5rem;
+        .fieldset__budgetDetails_topRow_item {
+          margin-bottom: 0.5rem;
+          display: flex;
+          width: 55%;
+          flex-direction: column;
+          align-items:center;
+          margin-right: 2rem;
+
+          input#date.p-inputtext{
+            width:7rem;
+          }
+
+        }
+
+        .fieldset__budgetDetails_topRow_item+.budget-recur{
+          width: auto;
+        }
+
+      }
+
+      .fieldset__budgetDetails_middleRow_right{
+
+        display: flex;
+        margin-bottom: 0.5rem;
+        .fieldset__budgetDetails_middleRow_right_item{
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 0.5rem;
+
+          .p-dropdown{
+            width: 13rem;
+          }
+          .p-calendar-w-btn .p-inputtext{
+            width: 9rem;
+          }
+        }
+      }
+
+      .fieldset__budgetDetails_middleRow_left{
+
+
+        &_item{
+          display: flex;
+          flex-direction:column;
+          margin-bottom: 0.5rem;
+
+          input.p-inputtext{
+            width: 11rem;
+          }
+
+          .transaction-buttons{
+            div{
+                width: 50%;
+            }
+          }
+        }
+      }
+
+      .fieldset__budgetDetails_bottomRow{
+        &_item{
+          display:flex;
+          flex-direction: column;
+
+          textarea{
+            width: 13rem;
+          }
+        }
+      }
+
+
+
+    }
+
+  .form-control-with-buttons > .p-button,
+  .form-control-with-buttons > span > .p-button {
+    width: 2rem;
+  }
+
+  .buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    button{
+      width: 100%;
+    }
+  }
+
+
+}
