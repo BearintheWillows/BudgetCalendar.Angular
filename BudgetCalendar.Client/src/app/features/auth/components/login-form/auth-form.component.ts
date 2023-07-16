@@ -80,8 +80,6 @@ export class AuthFormComponent {
       password: val.password,
       }
 
-      console.log(user);
-
       this.sendUserLogin(user);
 
     } else if (this.authMode == 'register'){

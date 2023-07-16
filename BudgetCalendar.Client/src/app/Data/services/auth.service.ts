@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import {Injectable, inject, signal, computed} from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {LoginService} from "./auth/login.service";
 import {RegisterService} from "./auth/register.service";
@@ -17,7 +17,7 @@ export class AuthService {
   jwtHelper = inject(JwtHelperService);
 
   public authenticationState = signal(false);
-  public userName = signal("");
+  public userName = computed(() => this.loginService.userName());
 
   public sendAuthStateChange = (isAuthenticated: boolean) => {
     this.authenticationState.set(isAuthenticated);
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   login = (body: IUserForAuthenticationDto): void => {
-    this.userName.set(this.loginService.login(body) ?? "");
+    this.loginService.login(body);
   }
 
   logout = () => {

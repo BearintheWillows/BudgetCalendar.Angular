@@ -13,7 +13,7 @@ export class GenerateDaysService {
   http = inject(HttpClient);
 
   public generateDays(startDate: Date, endDate: Date, loopNum: number): Promise<ICalendarDay[]> {
-    console.log(startDate)
+
     return new Promise((resolve, reject) => {
       this.getCalendarBudgets(startDate, endDate).subscribe(daysWithBudgets => {
         let allDays: ICalendarDay[] = [];

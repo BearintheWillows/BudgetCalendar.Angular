@@ -1,9 +1,28 @@
-.calendar-header{
-  height: 5rem;
-  background-color: blue;
-
+.header{
+  height: 2.5rem;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  background-color: darkslategrey;
+  justify-content: space-between;
   align-items: center;
+
+  &__title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-left: 1rem;
+  }
+
+  &__menu-button {
+    .p-button-text{
+      margin: 0.1rem;
+      padding: 0;
+      border: none;
+    }
+    img{
+      width: 3rem;
+      height: 3rem;
+      margin: 0 0.2rem;
+    }
+  }
+
 }

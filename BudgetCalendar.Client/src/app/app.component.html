@@ -1,6 +1,7 @@
-<ng-container *ngIf="authState()">
-  <div *ngIf="isCalendarPage then calendarHeader; else generalHeader"></div>
+<ng-container *ngIf="isAuthenticated()">
+  <app-header></app-header>
 </ng-container>
+
 <div class="mainContainer" >
   <div class="side-menu">
   <app-side-menu></app-side-menu>
@@ -8,9 +9,4 @@
   <router-outlet></router-outlet>
 </div>
 
-<ng-template #calendarHeader>
-  <app-calendar-header></app-calendar-header>
-</ng-template>
-<ng-template #generalHeader>
-  <app-header></app-header>
-</ng-template>
+

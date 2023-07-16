@@ -22,34 +22,11 @@ import {SidebarModule} from "primeng/sidebar";
 export class CalendarHeaderComponent {
 
   protected readonly DayNames = DayNames;
-
-  sidebarVisible = false;
   calendarService = inject(CalendarService);
-  authService = inject(AuthService);
-  messageService = inject(MessageService);
 
 
-  items: any[] = []
 
   date: Date = new Date();
-  constructor() {
-  }
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'Options',
-        items: [
-          {
-            label: 'Logout',
-            icon: 'pi pi-refresh',
-            command: () => {
-              this.authService.logout();
-              this.messageService.add({severity:'success', summary: 'Success', detail: 'Logged out successfully'});
-            }
-          }
-        ]
-      }]
-  }
 
   public increaseMonth() {
     this.calendarService.increaseMonthIndex();

@@ -112,7 +112,7 @@ public class AuthController : ControllerBase
             authResponse.IsAuthSuccessful = true;
             authResponse.Token = jwtToken;
             authResponse.RefreshToken = user.RefreshToken;
-            authResponse.UserName = user.UserName;
+            authResponse.UserName = user.Email;
             
             await _userManager.UpdateAsync(user);
 

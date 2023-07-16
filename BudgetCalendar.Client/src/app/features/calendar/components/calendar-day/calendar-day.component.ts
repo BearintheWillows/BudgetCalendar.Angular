@@ -7,6 +7,7 @@ import {AddAccountComponent} from "../../../account/components/add-account/add-a
 import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dynamicdialog";
 import {DeviceService} from "../../../../Data/services/device.service";
 import {BudgetDialogComponent} from "../budgets/budget-dialog/budget-dialog.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-calendar-day',
@@ -27,7 +28,7 @@ export class CalendarDayComponent {
 
   device = computed(() => this.devicService.getDeviceType());
 
-
+  router = inject(Router);
   @Input() day!: ICalendarDay;
 
 
@@ -60,12 +61,17 @@ export class CalendarDayComponent {
     this.day.budgets?.forEach(budget => {
       if (budget.transactionType === "Income") {
         incomeTotal++;
-        console.log(incomeTotal)
+
       } else {
         expensesTotal++;
-        console.log(expensesTotal)
       }
   });
     this.transactionTypeTotals = {incomeTotal, expensesTotal};
-}
+  }
+
+  onClick = () => {
+
+    this.router.navigate([`calendar/day/${this.day.date.toISOString().slice(0, 10)}/detail`]);
+  }
+
 }

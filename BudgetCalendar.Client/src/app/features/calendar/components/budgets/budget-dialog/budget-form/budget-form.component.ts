@@ -76,9 +76,6 @@ export class BudgetFormComponent {
           color: ['#ffffff',]
         }
     );
-    console.log(this.createBudgetForm.get('date')?.valueChanges)
-
-
 
     this.createBudgetForm.get('isRecurring')?.valueChanges.subscribe((value) => {
       if (value) {
@@ -95,7 +92,7 @@ export class BudgetFormComponent {
 
 
     this.filteredCategories = this.categories();
-    console.log(this.filteredCategories)
+
   }
 
   onSubmit() {
@@ -139,9 +136,6 @@ export class BudgetFormComponent {
     this.filteredCategories = filtered;
   }
 
-  onToggleRecurring(event: any) {
-    console.log(event)
-  }
 
 
 }

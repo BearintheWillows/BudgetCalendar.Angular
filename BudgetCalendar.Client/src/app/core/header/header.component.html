@@ -1,13 +1,20 @@
-<nav class="calendar-header">
+<nav class="header">
 
-    <div >
+    <div class="header__title">
       Simple Calendar
     </div>
 
-  <p-button class="p-button-rounded p-button-secondary"  label="Calendar"></p-button>
-  <p-button class="p-button-rounded p-button-secondary"  label="Accounts"></p-button>
+  <div class="header__menu-button">
+    <p-button  styleClass="p-button-text">
+      <img  src="assets/menu-alt-02-svgrepo-com.svg" (click)="sidebarVisible = true" alt="Menu icon" />
 
-
+    </p-button>
+  </div>
 
 </nav>
+
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="sidebar">
+  <p-toast></p-toast>
+  <p-menu [model]="items"></p-menu>
+</p-sidebar>
 

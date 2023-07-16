@@ -29,7 +29,6 @@ export class AccountComponent {
 
   ngOnInit() {
    this.accountService.getAccounts();
-   console.log(this.accounts())
   }
 
   toggleAddAccountDialog() {
@@ -46,11 +45,9 @@ export class AccountComponent {
 
   reconcileAction() {
     this.toggleReconcileMode();
-    console.log(this.accounts())
 
     if (this.isReconcileMode) {
       this.accountModels.set(this.accounts());
-      console.log(this.accountModels())
 
     } else {
       this.accountService.accounts.set(this.accountModels());

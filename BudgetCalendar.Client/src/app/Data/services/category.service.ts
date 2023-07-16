@@ -17,9 +17,8 @@ export class CategoryService {
 
   public getCategories(): void {
      this.httpClient.get<ICategory[]>(`${CategoryPaths.GetAllCategories}`).subscribe(result => {
-      console.log(result)
+
        this.categories.mutate(value => value.push(...result));
-      console.log(this.categories());
     });
   }
 }

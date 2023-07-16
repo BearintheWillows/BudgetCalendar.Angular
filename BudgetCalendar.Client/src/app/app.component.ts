@@ -24,26 +24,19 @@ import {AuthService} from "./Data/services/auth.service";
 })
 export class AppComponent {
     categoryService = inject(CategoryService);
-    deviceService = inject(DeviceService);
+
     authService = inject(AuthService);
     router= inject(Router);
 
  title = 'BudgetCalendar.Client';
- authState = computed(() => this.authService.authenticationState());
- isCalendarPage = false;
+ isAuthenticated = computed(() => this.authService.authenticationState());
+
   constructor(private PrimeNGConfigrime: PrimeNGConfig) {
-    console.log(this.authState())
   }
 
   ngOnInit() {
     this.PrimeNGConfigrime.ripple = true;
     this.categoryService.getCategories();
-
-    this.router.events.subscribe((val) => {
-      this.isCalendarPage = this.router.url.includes('calendar');
-    }
-    );
-
   }
 
   protected readonly DeviceType = DeviceType;

@@ -11,12 +11,7 @@
         <button  (click)="increaseMonth()">></button>
       </div>
 
-    <div class="calendar-header-monthBar_menuButton">
-      <p-button class="calendar-header-monthBar_menuButton__button" styleClass="p-button-text">
-        <img  src="assets/menu-alt-02-svgrepo-com.svg" (click)="sidebarVisible = true" alt="Menu icon" />
 
-      </p-button>
-    </div>
   </div>
 
   <div class="calendar-header-dayBar">
@@ -33,8 +28,3 @@
   </div>
 </section>
 
-<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="sidebar">
-  <div>
-    {{authService.userName()}}
-  </div>
-</p-sidebar>

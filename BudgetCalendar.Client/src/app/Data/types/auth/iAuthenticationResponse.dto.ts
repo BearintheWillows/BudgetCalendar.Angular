@@ -3,5 +3,5 @@ export interface IUserForAuthenticationResponse {
     token?: string;
     errorMessage?: string;
     refreshToken?: string;
-    UserName?: string;
+    userName?: string;
 }
