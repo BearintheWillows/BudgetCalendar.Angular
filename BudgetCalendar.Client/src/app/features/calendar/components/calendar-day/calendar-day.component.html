@@ -1,30 +1,32 @@
-
 <div class="day-card" (click)="onClick()">
-    <div class="day-card__header">
-      {{day.date.getDate()}}
-    </div>
+  <div class="day-card__header">
+    {{day.date.getDate()}}
+  </div>
 
-    <div class="day-card__item ">
-<!--      <ng-container *ngIf="device === DeviceType.tablet || DeviceType.desktop || DeviceType.laptop">-->
-<!--       <div *ngFor="let item of day.budgets">-->
-<!--       <app-day-card-item [budget]="item" ></app-day-card-item>-->
-<!--       </div>-->
-<!--      </ng-container>-->
-      <ng-container *ngIf="device === DeviceType.mobile">
-        <div class="transaction-type-totals" *ngIf="day!.budgets!.length > 0">
-          <div class="type-container">
-            <img src="./assets/up-arrow-svgrepo-com.svg" alt="up arrow" >
-            <span class="income">{{transactionTypeTotals.incomeTotal}}</span>
-          </div>
-          <div class="type-container">
-            <span class="expense">{{transactionTypeTotals.expensesTotal}}</span>
-            <img src="./assets/up-down-svgrepo-com.svg" alt="down arrow" >
-          </div>
-        </div>
-      </ng-container>
-    </div>
-    <div class="day-card__footer">
-      <span class="total-aksmount desk">{{day.total| currency: 'GBP' : 'symbol' : '1.0-0'}}</span>
-    </div>
+  <div class="day-card__item ">
+    <ng-container *ngIf="device == DeviceType.mobile then mobileTemplate; else desktopTemplate">
+    </ng-container>
+  </div>
+  <div class="day-card__footer">
+    <span class="day-card__footer_amount ">{{day.total| currency: 'GBP' : 'symbol' : '1.0-0'}}</span>
+  </div>
 </div>
+
+<ng-template #desktopTemplate>
+  <div *ngFor="let item of day.budgets">
+    <app-day-card-item [budget]="item"></app-day-card-item>
+  </div>
+</ng-template>
+<ng-template #mobileTemplate>
+  <div class="transaction-type-totals" *ngIf="day!.budgets!.length > 0">
+    <div class="type-container">
+      <img src="./assets/up-arrow-svgrepo-com.svg" alt="up arrow">
+      <span class="income">{{transactionTypeTotals.incomeTotal}}</span>
+    </div>
+    <div class="type-container">
+      <span class="expense">{{transactionTypeTotals.expensesTotal}}</span>
+      <img src="./assets/up-down-svgrepo-com.svg" alt="down arrow">
+    </div>
+  </div>
+</ng-template>
 
