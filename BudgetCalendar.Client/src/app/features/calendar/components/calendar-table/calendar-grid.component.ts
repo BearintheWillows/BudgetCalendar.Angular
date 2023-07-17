@@ -6,6 +6,7 @@ import {CalendarService} from "../../../../Data/services/calendar.service";
 import {DayNames} from "../../../../Data/types/calendar/day-names.constants";
 import {ButtonModule} from "primeng/button";
 import {CalendarDayComponent} from "../calendar-day/calendar-day.component";
+import {DeviceService, DeviceType} from "../../../../Data/services/device.service";
 
 
 
@@ -26,9 +27,13 @@ import {CalendarDayComponent} from "../calendar-day/calendar-day.component";
 export class CalendarGridComponent implements OnInit{
 
   calendarService = inject(CalendarService);
+  deviceService = inject(DeviceService)
+
+  device = computed(() => this.deviceService.deviceType());
 
   gridSize = computed(() => this.calendarService.getWeeksInCalendar());
   ngOnInit(): void {
     this.calendarService.createCalendar();
+    console.log(this.device())
   }
 }

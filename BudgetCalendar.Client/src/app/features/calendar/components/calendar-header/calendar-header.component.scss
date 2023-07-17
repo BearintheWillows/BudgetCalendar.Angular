@@ -1,8 +1,4 @@
-.mobile{
-  display: none;
-}
-
-.calendar-header{
+.calendar-header {
   display: flex;
   flex-direction: column;
   background-color: black;
@@ -16,7 +12,7 @@
   align-content: center;
 
   border-radius: 5px 5px 0 0;
-  height: 4vh;
+  height: 2rem;
 
   &_datePick {
     display: flex;
@@ -45,64 +41,17 @@
   }
 }
 
-  .calendar-header-dayBar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 0.5rem 0;
-    font-size: 1.2rem;
 
-    & > *:not(:first-child) {
-      border-left: 1px solid rgba(0, 0, 0, .2);
-    }
+.calendar-header-dayBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0.5rem 0 0.5rem 0;
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
 
-    &__item {
-      width: 100%;
-      text-align: center;
-    }
+  &__item {
+    width: 100%;
+    text-align: center;
   }
-
-
-  @media screen and (max-width: 600px) {
-    .desktop {
-      display: none;
-    }
-
-    .mobile {
-      display: inline;
-    }
-
-    .calendar-header {
-      height: 10vh;
-      width: 100%;
-    }
-    .calendar-header-monthBar {
-      justify-content: flex-start;
-      height: 3rem;
-
-      &_datePick {
-        width: 60%;
-        padding: 0.55rem 0;
-
-
-        button {
-          margin: 0;
-        }
-
-      }
-    }
-
-    .calendar-header-dayBar {
-      font-size: 0.8rem;
-
-      & > *:not(:first-child) {
-        border-left: none;
-        height: 0.7rem;
-      }
-    }
-  }
-
-
-  .p-sidebar.sidebar {
-    width: 15rem;
-  }
+}

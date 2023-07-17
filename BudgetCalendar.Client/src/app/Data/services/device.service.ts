@@ -12,18 +12,12 @@ export enum DeviceType {
 })
 export class DeviceService {
 
-  innerWidth = signal(0);
-  deviceType  = computed(() => {
-    return this.getDeviceType();
-  });
+  innerWidth = signal(window.innerWidth);
+  deviceType = computed(() => this.getDeviceType());
   constructor() {
-    window.onresize = (e) => {
-      this.innerWidth.set(window.innerWidth);
-    }
-
-    effect(() => {
-      console.log('deviceType', this.deviceType())
-    })
+    // window.onresize = (e) => {
+    //   this.innerWidth.set(window.innerWidth);
+    // }
 
   }
 

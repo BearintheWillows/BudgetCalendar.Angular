@@ -4,15 +4,15 @@ html{
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 $myPrimaryColor: rgb(59, 89, 195);
 $mySecondaryColor: rgb(225, 173, 33);
 
 body {
-  position: fixed;
-  overflow: hidden;
+  //position: fixed;
+  overflow-x: hidden;
   width: 100%;
   height: 100vh;
   margin: 0;
@@ -41,9 +41,6 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-  .mobile{
-    display: inline;
-  }
 
   .add-budget-dialog {
     width: 90% !important;

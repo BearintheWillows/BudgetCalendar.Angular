@@ -1,5 +1,5 @@
-import {Component, computed, inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, computed, inject, ViewEncapsulation} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {MenuItem, MessageService, SharedModule} from "primeng/api";
@@ -14,7 +14,8 @@ import {MenuModule} from "primeng/menu";
   imports: [CommonModule, ButtonModule, CalendarModule, SharedModule, SidebarModule, ToastModule, MenuModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
+  encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {
   authService = inject(AuthService);

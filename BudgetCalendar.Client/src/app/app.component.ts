@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject} from '@angular/core';
+import {Component, computed, effect, inject, ViewEncapsulation} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {NgSwitch, NgSwitchDefault, NgSwitchCase, NgIf} from '@angular/common';
 import {CalendarGridComponent} from "./features/calendar/components/calendar-table/calendar-grid.component";
@@ -20,7 +20,8 @@ import {AuthService} from "./Data/services/auth.service";
     NgSwitchDefault,
     NgSwitchCase,
     RouterOutlet,
-    CalendarGridComponent, SideMenuComponent, HeaderComponent, NgIf, CalendarHeaderComponent]
+    CalendarGridComponent, SideMenuComponent, HeaderComponent, NgIf, CalendarHeaderComponent],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
     categoryService = inject(CategoryService);

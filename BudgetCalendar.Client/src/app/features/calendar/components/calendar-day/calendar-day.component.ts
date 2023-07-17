@@ -5,7 +5,7 @@ import {ICalendarDay} from "../../models/iCalendarDay";
 import {CardModule} from "primeng/card";
 import {AddAccountComponent} from "../../../account/components/add-account/add-account.component";
 import {DialogService, DynamicDialogModule, DynamicDialogRef} from "primeng/dynamicdialog";
-import {DeviceService} from "../../../../Data/services/device.service";
+import {DeviceService, DeviceType} from "../../../../Data/services/device.service";
 import {BudgetDialogComponent} from "../budgets/budget-dialog/budget-dialog.component";
 import {Router} from "@angular/router";
 
@@ -22,11 +22,10 @@ import {Router} from "@angular/router";
 export class CalendarDayComponent {
 
   dialogService = inject(DialogService);
-  devicService = inject(DeviceService);
   transactionTypeTotals = {incomeTotal: 0, expensesTotal: 0};
   ref: DynamicDialogRef | undefined;
 
-  device = computed(() => this.devicService.getDeviceType());
+  @Input() device: DeviceType = DeviceType.mobile;
 
   router = inject(Router);
   @Input() day!: ICalendarDay;
@@ -34,7 +33,6 @@ export class CalendarDayComponent {
 
   ngOnInit() {
     this.getIncomeAndExpensesTotals();
-
   }
   showAddBudgetDialog() {
     this.ref = this.dialogService.open(BudgetDialogComponent, {
@@ -74,4 +72,5 @@ export class CalendarDayComponent {
     this.router.navigate([`calendar/day/${this.day.date.toISOString().slice(0, 10)}/detail`]);
   }
 
+  protected readonly DeviceType = DeviceType;
 }

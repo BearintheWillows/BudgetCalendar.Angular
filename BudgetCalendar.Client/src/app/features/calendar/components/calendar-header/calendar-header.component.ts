@@ -1,4 +1,4 @@
-import {Component, inject, ViewEncapsulation} from '@angular/core';
+import {Component, computed, effect, inject, signal, Signal, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CalendarService} from "../../../../Data/services/calendar.service";
 import {DayNames} from "../../../../Data/types/calendar/day-names.constants";
@@ -9,6 +9,7 @@ import {AuthService} from "../../../../Data/services/auth.service";
 import {MessageService} from "primeng/api";
 import {MenuModule} from "primeng/menu";
 import {SidebarModule} from "primeng/sidebar";
+import {DeviceService, DeviceType} from "../../../../Data/services/device.service";
 
 @Component({
   selector: 'app-calendar-header',
@@ -23,10 +24,11 @@ export class CalendarHeaderComponent {
 
   protected readonly DayNames = DayNames;
   calendarService = inject(CalendarService);
+  deviceService = inject(DeviceService)
 
-
-
+  device = computed(() => this.deviceService.deviceType());
   date: Date = new Date();
+
 
   public increaseMonth() {
     this.calendarService.increaseMonthIndex();
@@ -51,4 +53,5 @@ export class CalendarHeaderComponent {
   }
 
 
+  protected readonly DeviceType = DeviceType;
 }
