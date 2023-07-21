@@ -1,24 +1,20 @@
 ﻿using BudgetCalendar.Server.Data.Enums;
 using BudgetCalendar.Server.Data.Models;
-using BudgetCalendar.Server.Data.Models.DTOs;
 using BudgetCalendar.Server.Data.Models.DTOs.BudgetDtos;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BudgetCalendar.Server.Data.Services;
 
-using System.Diagnostics;
-using System.Runtime.InteropServices.JavaScript;
-
 public interface IBudgetService
 {
-    Task<List<BudgetDto>> GetAll();
+    Task<List<BudgetDto>> GetBudgets();
+    Task<List<BudgetDto>> GetBudgets(DateTime?                     startDate, DateTime? endDate);
     Task<BudgetDto?>      GetById(int                              id);
     Task<bool>            CreateOneBudget(BudgetToCreateDto        budgetDto);
-    Task<bool>            CreateRecurringBudget( BudgetToCreateDto budgetDto );
+    // Task<bool>            CreateRecurringBudget( BudgetToCreateDto budgetDto );
     Task<BudgetDto?>      Update(int                               id, BudgetToUpdateDto budgetDto);
     Task<bool?>           Delete(int                               id);
-    Task<List<Budget>>    GetBudgetsByDates(DateTime?              startDate, DateTime? endDate);
 }
 
 public class BudgetService : IBudgetService
@@ -37,33 +33,23 @@ public class BudgetService : IBudgetService
         _userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 
-    public async Task<List<BudgetDto>> GetAll()
+    public async Task<List<BudgetDto>> GetBudgets()
     {
-        return await _context.Budgets.Include(dayOfWeek => dayOfWeek.Account).Include(dayOfWeek => dayOfWeek.Category).Where(dayOfWeek => dayOfWeek.UserId == _userId).Select(dayOfWeek => new BudgetDto()
-        {
-            Id = dayOfWeek.Id,
-            Amount = dayOfWeek.Amount,
-            Date = dayOfWeek.Date,
-            TransactionType = dayOfWeek.TransactionType.ToString().ToLower(),
-            Note = dayOfWeek.Note,
-            Color = dayOfWeek.Color,
-            Icon = dayOfWeek.Icon,
-            Account = new AccountDto()
-                {
-                Name = dayOfWeek.Account.Name,
-                },
-            Category = new CategoryDto()
-                {
-                Name = dayOfWeek.Category.Name,
-                },
-            RecurringBudgetSequence = new RecurringBudgetSequenceDto()
-                {
-                    Id = dayOfWeek.RecurringBudgetSequence.Id,
-                    StartDate = dayOfWeek.RecurringBudgetSequence.StartDate,
-                    EndDate = dayOfWeek.RecurringBudgetSequence.EndDate ,
-                    Interval = dayOfWeek.RecurringBudgetSequence.Interval.ToString().ToLower()
-                },
-        }).ToListAsync();
+        return await _context.Budgets
+                             .Include(budget => budget.Account)
+                             .Include(budget => budget.Category)
+                             .Where(budget => budget.UserId == _userId)
+                             .Select(budget => BudgetDto.ConvertTo(budget)).ToListAsync();
+    }
+    
+    public async Task<List<BudgetDto>> GetBudgets(DateTime? startDate, DateTime? endDate)
+    {
+        return await _context.Budgets
+                             .Include(budget => budget.Account)
+                             .Include(budget => budget.Category)
+                             .Include(budget => budget.RecurringBudgetSequence)
+                             .Where(budget => budget.UserId == _userId && budget.Date >= startDate && budget.Date <= endDate)
+                             .Select( budget => BudgetDto.ConvertTo(budget) ).ToListAsync( );
     }
 
     
@@ -128,55 +114,55 @@ public class BudgetService : IBudgetService
         return false;
     }
 
-    public async Task<bool> CreateRecurringBudget(BudgetToCreateDto budgetDto)
-    {
-        List<Budget> budgets = new List<Budget>();
-        
-        Console.WriteLine($"BudgetDto: {budgetDto.RecurringBudgetSequence.StartDate}");
-
-
-        if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ) )
-        {
-            return false;
-        }
-        
-        
-        var recurringBudgetSequence = new RecurringBudgetSequence(budgetDto.RecurringBudgetSequence!.StartDate, budgetDto.RecurringBudgetSequence.EndDate, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true));
-
-        var rbs = _context.RecurringBudgetSequences.Add(recurringBudgetSequence).Entity;
-        
-        _context.SaveChanges();
-
-        foreach (var item in this.GetDatesInRange(budgetDto.RecurringBudgetSequence.StartDate, null, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true)))
-        {
-            var budget = new Budget()
-            {
-                Amount = budgetDto.Amount,
-                Date = item,
-                Note = budgetDto.Note ?? null,
-                Color = budgetDto.Color ?? null,
-                AccountId = budgetDto.AccountId,
-                CategoryId = budgetDto.CategoryId,
-                TransactionType = transactionType,
-                RecurringBudgetSequenceId = rbs.Id,
-                UserId = _userId
-            };
-            budgets.Add( budget );
-        };
-
-
-
-        Console.WriteLine( $"Budgets = {budgets.Count()}" );
-
-        _context.Budgets.AddRange( budgets );
-
-        Console.WriteLine(_context.Budgets.CountAsync().Result);
-        _context.SaveChanges();
-
-        
-        //TODO FIX RETURN DTO
-        return true;
-    }
+    // public async Task<bool> CreateRecurringBudget(BudgetToCreateDto budgetDto)
+    // {
+    //     List<Budget> budgets = new List<Budget>();
+    //     
+    //     Console.WriteLine($"BudgetDto: {budgetDto.RecurringBudgetSequence.StartDate}");
+    //
+    //
+    //     if ( !Enum.TryParse<TransactionType>( budgetDto.TransactionType, out var transactionType ) )
+    //     {
+    //         return false;
+    //     }
+    //     
+    //     
+    //     var recurringBudgetSequence = new RecurringBudgetSequence(budgetDto.RecurringBudgetSequence!.StartDate, budgetDto.RecurringBudgetSequence.EndDate, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true));
+    //
+    //     var rbs = _context.RecurringBudgetSequences.Add(recurringBudgetSequence).Entity;
+    //     
+    //     _context.SaveChanges();
+    //
+    //     foreach (var item in this.GetDatesInRange(budgetDto.RecurringBudgetSequence.StartDate, null, Enum.Parse<RecurringBudgetInterval>(budgetDto.RecurringBudgetSequence.Interval, true)))
+    //     {
+    //         var budget = new Budget()
+    //         {
+    //             Amount = budgetDto.Amount,
+    //             Date = item,
+    //             Note = budgetDto.Note ?? null,
+    //             Color = budgetDto.Color ?? null,
+    //             AccountId = budgetDto.AccountId,
+    //             CategoryId = budgetDto.CategoryId,
+    //             TransactionType = transactionType,
+    //             RecurringBudgetSequenceId = rbs.Id,
+    //             UserId = _userId
+    //         };
+    //         budgets.Add( budget );
+    //     };
+    //
+    //
+    //
+    //     Console.WriteLine( $"Budgets = {budgets.Count()}" );
+    //
+    //     _context.Budgets.AddRange( budgets );
+    //
+    //     Console.WriteLine(_context.Budgets.CountAsync().Result);
+    //     _context.SaveChanges();
+    //
+    //     
+    //     //TODO FIX RETURN DTO
+    //     return true;
+    // }
 
     public async Task<BudgetDto?> Update(int id, BudgetToUpdateDto budgetToUpdateDto)
     {
@@ -224,27 +210,6 @@ public class BudgetService : IBudgetService
         return true;
     }
 
-    //get all dates within date range at a specific interval
-    private List<DateTime> GetDatesInRange(DateTime startDate, DateTime? endDate, RecurringBudgetInterval interval)
-    {
-
-        var dates = new List<DateTime>();
-        if (endDate == null)
-        {
-            endDate = startDate.AddYears( 10 );
-        }
-
-        //new datetime 10 years from startime
-
-
-        for (var dt = startDate; dt <= endDate; dt = dt.AddDays(this.GetInterval(interval)))
-        {
-            dates.Add(dt);
-        }
-
-        return dates;
-    }
-
     //get intervals for daily, weekly, bi-weekly, monthly and yearly
     private int GetInterval(RecurringBudgetInterval reccuringInterval)
     {
@@ -271,19 +236,5 @@ public class BudgetService : IBudgetService
 
         return intervalInDays;
     }
-    
-    public async Task<List<Budget>> GetBudgetsByDates(DateTime? startDate, DateTime? endDate)
-    {
-        var budgets = await _context.Budgets.Include(b => b.Account).Include(b => b.Category).Include(b => b.RecurringBudgetSequence).Where(b => b.UserId == _userId && b.Date >= startDate && b.Date <= endDate).ToListAsync();
-        if (budgets == null)
-        {
-            return null;
-        }
-        
-        return budgets;
-    }
-    
-   
-    
     
 }

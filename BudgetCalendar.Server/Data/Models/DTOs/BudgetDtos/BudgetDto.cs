@@ -38,13 +38,13 @@ public class BudgetDto
 			Icon = budget.Icon,
 			Account = new AccountDto { Name = budget.Account.Name, Id = budget.CategoryId} ,
 			Category = new CategoryDto { Name = budget.Category.Name, Id = budget.CategoryId},
-			RecurringBudgetSequence = new RecurringBudgetSequenceDto
+			RecurringBudgetSequence = budget.RecurringBudgetSequence != null ? new RecurringBudgetSequenceDto
 				{
 				Id = budget.RecurringBudgetSequence.Id,
 				StartDate = budget.RecurringBudgetSequence.StartDate,
 				EndDate = budget.RecurringBudgetSequence.EndDate,
 				Interval = budget.RecurringBudgetSequence.Interval.ToString().ToLower()
-				},
+				} : null,
 			};
 	}
 }
