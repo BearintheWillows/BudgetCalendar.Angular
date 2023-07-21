@@ -27,7 +27,7 @@ export class BudgetService {
   getBudgetsByRange = (startDate: Date, endDate: Date) => {
     this.getBudgetService.getBudgetsByRange(startDate, endDate).subscribe( result => {
       console.log(result)
-      this.budgets.mutate(() => result.data);
+      this.budgets.mutate(items => items.push(...result.sort((a, b) => a.date > b.date ? 1 : -1)));
       console.log(this.budgets())
     } );
   }

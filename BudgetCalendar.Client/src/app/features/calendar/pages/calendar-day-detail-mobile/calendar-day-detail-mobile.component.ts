@@ -1,4 +1,4 @@
-import {Component, computed, inject, Input, ViewEncapsulation} from '@angular/core';
+import {Component, computed, inject, Input, signal, Signal, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute, Router} from "@angular/router";
 import {BudgetService} from "../../../../Data/services/budget.service";
@@ -19,129 +19,39 @@ import {ICalendarDay} from "../../models/iCalendarDay";
 import {ICategory} from "../../models/iCategory";
 import {IBudgetToCreate} from "../../models/iBudgetToCreate";
 import {IRecurringBudgetSequence} from "../../models/iRecurringBudgetSequence";
+import {IBudget} from "../../models/iBudget";
+import {PanelModule} from "primeng/panel";
 
 @Component({
   selector: 'app-calendar-budgets-mobile',
   standalone: true,
-  imports: [CommonModule, AutoCompleteModule, ButtonModule, CalendarModule, DropdownModule, FieldsetModule, FormsModule, InputNumberModule, InputSwitchModule, InputTextModule, InputTextareaModule, ReactiveFormsModule, SelectButtonModule],
+  imports: [CommonModule, AutoCompleteModule, ButtonModule, CalendarModule, DropdownModule, FieldsetModule, FormsModule, InputNumberModule, InputSwitchModule, InputTextModule, InputTextareaModule, ReactiveFormsModule, SelectButtonModule, PanelModule],
   templateUrl: './calendar-day-detail-mobile.component.html',
   styleUrls: ['./calendar-day-detail-mobile.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CalendarDayDetailMobileComponent {
 
+  acivatedRoute = inject(ActivatedRoute);
+  budgetService = inject(BudgetService)
   router = inject(Router);
-  route = inject(ActivatedRoute);
-  categoryService = inject(CategoryService);
-  accountService = inject(AccountService);
-  budgetService = inject(BudgetService);
-
   date: Date = new Date();
-  budgets = computed(() => this.budgetService.budgets());
-
-
-  @Input() day!: ICalendarDay;
-  categories = computed(() => this.categoryService.categories());
-  filteredCategories: ICategory[] = [];
-
-  accounts = computed(() => this.accountService.accounts());
-
-  selectedCategory!: ICategory;
-  transactionTypeOptions = [
-    {label: 'Income', value: 'Income'},
-    {label: 'Expense', value: 'Expense'}];
-
-  recurringFrequencyOptions = [
-    {label: 'Daily', value: 'Daily'},
-    {label: 'Weekly', value: 'Weekly'},
-    {label: 'biWeekly', value: 'biWeekly'},
-    {label: 'Monthly', value: 'Monthly'},
-    {label: 'Quarterly', value: 'Quarterly'},
-    {label: 'Yearly', value: 'Yearly'}
-  ]
+  budgets = signal<IBudget[]>([])
 
 
 
-  fb = inject(FormBuilder);
-
-  createBudgetForm!: FormGroup;
-  ngOnInit() {
-    this.budgetService.getBudgetsByRange(new Date(2023, 6, 1), new Date(2023, 6, 31));
-
-    this.createBudgetForm = this.fb.group({
-        categoryName: ['', Validators.required],
-        amount: ['', Validators.required],
-        date: [{value: this.day?.date.toLocaleDateString(), disabled: true},
-          [Validators.required],],
-        transactionType: ['Income', Validators.required],
-        isRecurring: [false, Validators.required],
-        recurringBudgetForm: this.fb.group({
-          frequency: ['Weekly', Validators.required],
-          endDate: ['', Validators.required],
-        }),
-        account: ['', Validators.required],
-        note: ['',],
-        color: ['#ffffff',]
+  ngOnInit(): void {
+    this.acivatedRoute.paramMap.subscribe(params => {
+      let date = params.get('date');
+      if (date) {
+        this.date = new Date(date);
       }
-    );
 
-    this.createBudgetForm.get('isRecurring')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.createBudgetForm.get('recurringBudgetForm')?.enable();
-      } else {
-        this.createBudgetForm.get('recurringBudgetForm')?.disable();
-      }
-    })
+      this.budgets.set(this.budgetService.budgets().filter(b => b.date.getFullYear() === this.date.getFullYear() && b.date.getMonth() === this.date.getMonth() && b.date.getDate() === this.date.getDate()));
 
-    this.categoryService.getCategories();
-    this.accountService.getAccounts();
+      console.log(this.budgets());
 
-
-
-
-    this.filteredCategories = this.categories();
-
-  }
-
-  onSubmit() {
-
-    const formValues = this.createBudgetForm.value;
-    let newCategory = this.categories().find(c => c.name == formValues.categoryName) ?? {id: -1, name: formValues.categoryName.name};
-
-    let newBudget: IBudgetToCreate = {
-      categoryId: formValues.categoryName.id == -1 ? -1 : formValues.categoryName.id,
-      amount: formValues.amount,
-      date: this.day.date.toISOString(),
-      transactionType: formValues.transactionType,
-      recurringBudgetSequence: formValues.isRecurring ?   {
-        id: 0,
-        interval: formValues.recurringBudgetForm.frequency,
-        startDate: new Date(formValues.date),
-        endDate: new Date(formValues.recurringBudgetForm.endDate),
-      } as IRecurringBudgetSequence : null,
-      accountId: formValues.account.id,
-      note: formValues.note,
-      color: formValues.color,
-      isArchived: false,
-    }
-
-    this.budgetService.postBudget(newBudget);
-
-
-  }
-
-  searchCategory(event: AutoCompleteCompleteEvent) {
-    let filtered: any[] = [];
-    let query = event.query;
-
-    for (let i = 0; i < (this.categories() as any[]).length; i++) {
-      let country = (this.categories() as any[])[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(country);
-      }
-    }
-
-    this.filteredCategories = filtered;
+    });
   }
 
 

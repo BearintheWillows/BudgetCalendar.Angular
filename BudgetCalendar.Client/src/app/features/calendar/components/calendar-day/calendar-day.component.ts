@@ -69,7 +69,7 @@ export class CalendarDayComponent {
 
   onClick = () => {
 
-    this.router.navigate([`calendar/day/${this.day.date.toISOString().slice(0, 10)}/detail`]);
+    this.router.navigate([`calendar/day/${this.day.date.toISOString().slice(0, 10)}/detail`], {state: {day: this.day}});
   }
 
   protected readonly DeviceType = DeviceType;

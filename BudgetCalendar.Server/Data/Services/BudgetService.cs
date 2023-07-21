@@ -14,11 +14,11 @@ public interface IBudgetService
 {
     Task<List<BudgetDto>> GetAll();
     Task<BudgetDto?>      GetById(int                              id);
-    Task<bool>      CreateOneBudget(BudgetToCreateDto        budgetDto);
-    Task<bool>      CreateRecurringBudget( BudgetToCreateDto budgetDto );
+    Task<bool>            CreateOneBudget(BudgetToCreateDto        budgetDto);
+    Task<bool>            CreateRecurringBudget( BudgetToCreateDto budgetDto );
     Task<BudgetDto?>      Update(int                               id, BudgetToUpdateDto budgetDto);
     Task<bool?>           Delete(int                               id);
-    Task<List<Budget>>    GetBudgetsByDates(DateTime            startDate, DateTime endDate);
+    Task<List<Budget>>    GetBudgetsByDates(DateTime?              startDate, DateTime? endDate);
 }
 
 public class BudgetService : IBudgetService
@@ -272,7 +272,7 @@ public class BudgetService : IBudgetService
         return intervalInDays;
     }
     
-    public async Task<List<Budget>> GetBudgetsByDates(DateTime startDate, DateTime endDate)
+    public async Task<List<Budget>> GetBudgetsByDates(DateTime? startDate, DateTime? endDate)
     {
         var budgets = await _context.Budgets.Include(b => b.Account).Include(b => b.Category).Include(b => b.RecurringBudgetSequence).Where(b => b.UserId == _userId && b.Date >= startDate && b.Date <= endDate).ToListAsync();
         if (budgets == null)

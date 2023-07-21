@@ -9,160 +9,142 @@ namespace BudgetCalendar.Server.Data.Controllers;
 using System.Collections.ObjectModel;
 using Models;
 
-
 [ApiController]
-[Route("api/[controller]")]
+[Route( "api/[controller]" )]
 public class BudgetController : ControllerBase
 {
-    private readonly IBudgetService _budgetService;
+	private readonly IBudgetService _budgetService;
 
-    public BudgetController(IBudgetService budgetService)
-    {
-        _budgetService = budgetService;
-    }
+	public BudgetController(IBudgetService budgetService)
+	{
+		_budgetService = budgetService;
+	}
 
-    [HttpGet]
-    public async Task<ActionResult<List<BudgetDto>>> Get()
-    {
-        var budgets = await _budgetService.GetAll();
 
-        if ( budgets.Count > 0 )
-        {
-            return Ok(new HttpResponseDto<List<BudgetDto>>( true, budgets, "Budgets Successfully Retrieved" ));
-        }
 
-        return NotFound( new HttpResponseDto<object>( false, "No Budgets Found" ));
-    }
+	[HttpGet]
+	public async Task<ActionResult<List<DayDto>>> GetCalendarBudgets([FromQuery] DateTime? startDate, DateTime? endDate)
+	{
+		List<BudgetDto> budgetsDtos = new List<BudgetDto>();
+
+		if ( startDate != null && endDate != null )
+		{
+			List<Budget> budgets = await _budgetService.GetBudgetsByDates( startDate, endDate );
+
+			if ( budgets.Count > 0 )
+			{
+				DateTime? budgetDate = startDate;
+				foreach ( var budget in budgets )
+				{
+					if ( budgetDate != budget.Date ) continue;
+					BudgetDto budgetDto = new()
+						{
+						Id = budget.Id,
+						Amount = budget.Amount,
+						Date = budget.Date,
+						TransactionType = budget.TransactionType.ToString().ToLower(),
+						Note = budget.Note,
+						Color = budget.Color,
+						Icon = budget.Icon,
+						Account = new AccountDto() { Id = budget.Account.Id, },
+						Category =
+							new CategoryDto() { Name = budget.Category.Name, Id = budget.CategoryId, },
+						RecurringBudgetSequence = new RecurringBudgetSequenceDto()
+							{
+							Id = budget.RecurringBudgetSequence.Id,
+							StartDate = budget.RecurringBudgetSequence.StartDate,
+							EndDate = budget.RecurringBudgetSequence.EndDate ?? null,
+							Interval = budget.RecurringBudgetSequence.Interval.ToString().ToLower(),
+							}
+						};
+
+					budgetsDtos.Add( budgetDto );
+				}
+			}
+
+		} else
+		{
+			budgetsDtos = await _budgetService.GetAll();
+		}
+
+
+		if ( budgetsDtos.Count > 1  )
+		{
+			return Ok( budgetsDtos );
+		} else
+		{
+			return NotFound();
+		}
     
-    
-    [HttpGet("calendar-budgets")]
-    public async Task<ActionResult<List<DayDto>>> GetCalendarBudgets([FromQuery]DateTime startDate,DateTime endDate)
-    {
-        Console.WriteLine(startDate);
-        Console.WriteLine(endDate);
-        List<Budget> budgets = await _budgetService.GetBudgetsByDates(startDate,endDate);
-        List < DayDto > days = new List<DayDto>();
-        if ( budgets.Count > 0 )
-        {
-            DayDto? day = null;
-            DateTime budgetDate = startDate;
-            Console.WriteLine(budgetDate);
-            int daysDifference = (endDate - startDate).Days;
-            Console.WriteLine(daysDifference);
+}
 
-            for ( int i = 0; i < daysDifference; i++ )
-            {
-                var dayBudgets = new List<BudgetDto>();
-                foreach ( var budget in budgets )
-                {
-                    if ( budgetDate != budget.Date ) continue;
-                    BudgetDto budgetDto = new()
-                        {
-                        Id = budget.Id,
-                        Amount = budget.Amount,
-                        Date = budget.Date,
-                        TransactionType = budget.TransactionType.ToString().ToLower(),
-                        Note = budget.Note,
-                        Color = budget.Color,
-                        Icon = budget.Icon,
-                        Account = new AccountDto() { Id = budget.Account.Id, },
-                        Category =
-                            new CategoryDto() { Name = budget.Category.Name, Id = budget.CategoryId, },
-                        RecurringBudgetSequence = new RecurringBudgetSequenceDto()
-                            {
-                            Id = budget.RecurringBudgetSequence.Id,
-                            StartDate = budget.RecurringBudgetSequence.StartDate,
-                            EndDate = budget.RecurringBudgetSequence.EndDate ?? null,
-                            Interval = budget.RecurringBudgetSequence.Interval.ToString().ToLower(),
-                            }
-                        };
+[HttpGet( "{id}" )]
+public async Task<ActionResult<BudgetDto>> GetById(int id)
+{
+	var budget = await _budgetService.GetById( id );
 
-                    dayBudgets.Add( budgetDto );
-                }
+	if ( budget == null )
+	{
+		return NotFound( new HttpResponseDto<object>( false, "Budget not found" ) );
+	}
 
-                if ( dayBudgets.Count > 0 )
-                {
-                    day = new DayDto() { Date = budgetDate, Budgets = new Collection<BudgetDto>( dayBudgets ) };
-                    days.Add( day );
-                        
-                }
-                budgetDate = budgetDate.AddDays( 1 );
-            }
-
-            return Ok(days);
-
-        }
-
-        return NoContent();
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<BudgetDto>> GetById(int id)
-    {
-        var budget = await _budgetService.GetById(id);
-
-        if (budget == null)
-        {
-            return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
-        }
-
-        return Ok(new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Retrieved"));
-    }
+	return Ok( new HttpResponseDto<BudgetDto>( true, budget, "Budget Successfully Retrieved" ) );
+}
 
 
-    [HttpPost]
-    public async Task<ActionResult> Post(BudgetToCreateDto budgetDto)
-    {
-        
-        Console.WriteLine(budgetDto.Date);
-        bool response = false;
-        if ( budgetDto.RecurringBudgetSequence != null )
-        {
-            response = await _budgetService.CreateRecurringBudget( budgetDto );
-        } else
-        {
-            response = await _budgetService.CreateOneBudget( budgetDto );
-        }
+[HttpPost]
+public async Task<ActionResult> Post(BudgetToCreateDto budgetDto)
+{
+	Console.WriteLine( budgetDto.Date );
+	bool response = false;
+	if ( budgetDto.RecurringBudgetSequence != null )
+	{
+		response = await _budgetService.CreateRecurringBudget( budgetDto );
+	} else
+	{
+		response = await _budgetService.CreateOneBudget( budgetDto );
+	}
 
 
-        if ( response == false )
-        {
-            return BadRequest( new HttpResponseDto<object>( false, "Budget not created" ) );
-        } else
-        {
-            return Ok( new HttpResponseDto<object>( true, "Budget Successfully Created" ) );
-        }
-    }
+	if ( response == false )
+	{
+		return BadRequest( new HttpResponseDto<object>( false, "Budget not created" ) );
+	} else
+	{
+		return Ok( new HttpResponseDto<object>( true, "Budget Successfully Created" ) );
+	}
+}
 
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, BudgetToUpdateDto budgetDto)
-    {
-         if ( id != budgetDto.Id )
-         {
-             return BadRequest( new HttpResponseDto<object>( false, "Id mismatch" ) );
-         }
+[HttpPut( "{id}" )]
+public async Task<IActionResult> Put(int id, BudgetToUpdateDto budgetDto)
+{
+	if ( id != budgetDto.Id )
+	{
+		return BadRequest( new HttpResponseDto<object>( false, "Id mismatch" ) );
+	}
 
-         var budget = await _budgetService.Update(id, budgetDto);
+	var budget = await _budgetService.Update( id, budgetDto );
 
-         if (budget == null)
-         {
-             return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
-         }
+	if ( budget == null )
+	{
+		return NotFound( new HttpResponseDto<object>( false, "Budget not found" ) );
+	}
 
-         return Ok(new HttpResponseDto<BudgetDto>(true, budget, "Budget Successfully Updated" ));
-    }
+	return Ok( new HttpResponseDto<BudgetDto>( true, budget, "Budget Successfully Updated" ) );
+}
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var budget = await _budgetService.Delete(id);
+[HttpDelete( "{id}" )]
+public async Task<IActionResult> Delete(int id)
+{
+	var budget = await _budgetService.Delete( id );
 
-        if (budget == null)
-        {
-            return NotFound(new HttpResponseDto<object>(false, "Budget not found") );
-        }
+	if ( budget == null )
+	{
+		return NotFound( new HttpResponseDto<object>( false, "Budget not found" ) );
+	}
 
-        return Ok(new HttpResponseDto<BudgetDto>(true, "Budget Successfully Deleted" ));
-    }
+	return Ok( new HttpResponseDto<BudgetDto>( true, "Budget Successfully Deleted" ) );
+}
+
 }
